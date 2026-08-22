@@ -565,8 +565,33 @@
     font-size: 14px;
   }
 
+  #mobileChromeToggle { display: none; }
+
   @media (max-width: 640px) {
     body { padding: 14px 12px 40px; }
+    #mobileChromeToggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    #appRoot.chrome-collapsed #topChrome,
+    #appRoot.chrome-collapsed #appFooter {
+      display: none;
+    }
+    #appRoot.chrome-collapsed .matrix-scroll {
+      max-height: calc(100vh - 66px);
+    }
     header { flex-direction: column; align-items: flex-start; gap: 6px; }
     .toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
     .filter-bar { width: 100%; gap: 8px; }
@@ -738,49 +763,52 @@
 </div>
 
 <div class="wrap" id="appRoot" style="display:none">
-  <header>
-    <h1>Schoneveld - Vollebregt Klantenmixen</h1>
-    <div style="display:flex; align-items:center; gap:16px;">
-      <span class="header-stats" id="headerStats"></span>
-      <div class="user-bar">
-        <span class="sync-dot" id="syncDot" title="Verbonden"></span>
-        <span class="user-email" id="userEmail"></span>
-        <button type="button" class="btn-logout" id="logoutBtn">Uitloggen</button>
+  <button type="button" id="mobileChromeToggle" title="Menu tonen/verbergen">&#9776; Menu</button>
+  <div id="topChrome">
+    <header>
+      <h1>Schoneveld - Vollebregt Klantenmixen</h1>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <span class="header-stats" id="headerStats"></span>
+        <div class="user-bar">
+          <span class="sync-dot" id="syncDot" title="Verbonden"></span>
+          <span class="user-email" id="userEmail"></span>
+          <button type="button" class="btn-logout" id="logoutBtn">Uitloggen</button>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="toolbar">
-    <div class="filter-bar">
-      <div class="filter-field">
-        <label for="filterJaar">Jaar</label>
-        <select id="filterJaar"></select>
-      </div>
-      <div class="filter-field">
-        <label for="filterKlant">Klant</label>
-        <select id="filterKlant"></select>
-      </div>
-      <div class="filter-field">
-        <label for="filterSerie">Serie</label>
-        <select id="filterSerie"></select>
-      </div>
-      <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
-      <button type="button" class="btn-clear-filter" id="printBtn" title="Matrix printen">&#128424; Print</button>
-      <button type="button" class="btn-clear-filter" id="exportBtn" title="Download een backup (JSON) van alle gegevens">&#8681; Backup</button>
-      <button type="button" class="btn-clear-filter" id="importBtn" title="Recepten uit 2025 toevoegen aan de gedeelde data">&#8613; Importeer 2025</button>
-    </div>
-    <div class="toolbar-right">
-      <div class="display-bar">
+    <div class="toolbar">
+      <div class="filter-bar">
         <div class="filter-field">
-          <label for="decimalsBtn">Decimalen</label>
-          <button type="button" class="btn-toggle" id="decimalsBtn" data-value="0">0</button>
+          <label for="filterJaar">Jaar</label>
+          <select id="filterJaar"></select>
         </div>
         <div class="filter-field">
-          <label for="subnumBtn">Subnummers</label>
-          <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
+          <label for="filterKlant">Klant</label>
+          <select id="filterKlant"></select>
         </div>
+        <div class="filter-field">
+          <label for="filterSerie">Serie</label>
+          <select id="filterSerie"></select>
+        </div>
+        <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
+        <button type="button" class="btn-clear-filter" id="printBtn" title="Matrix printen">&#128424; Print</button>
+        <button type="button" class="btn-clear-filter" id="exportBtn" title="Download een backup (JSON) van alle gegevens">&#8681; Backup</button>
+        <button type="button" class="btn-clear-filter" id="importBtn" title="Recepten uit 2025 toevoegen aan de gedeelde data">&#8613; Importeer 2025</button>
       </div>
-      <button type="button" class="btn-new-serie" id="newSerieBtn">+ Serie aanmaken</button>
+      <div class="toolbar-right">
+        <div class="display-bar">
+          <div class="filter-field">
+            <label for="decimalsBtn">Decimalen</label>
+            <button type="button" class="btn-toggle" id="decimalsBtn" data-value="0">0</button>
+          </div>
+          <div class="filter-field">
+            <label for="subnumBtn">Subnummers</label>
+            <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
+          </div>
+        </div>
+        <button type="button" class="btn-new-serie" id="newSerieBtn">+ Serie aanmaken</button>
+      </div>
     </div>
   </div>
 
@@ -790,7 +818,7 @@
     </div>
   </div>
 
-  <footer>Versie 5.0 — 22 augustus 2026</footer>
+  <footer id="appFooter">Versie 5.0 — 22 augustus 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1228,6 +1256,24 @@
     filterKlantEl.value = '';
     filterSerieEl.value = '';
     buildMatrix();
+  });
+
+  // Op mobiel: header/werkbalk standaard verbergen, zodat direct de matrix
+  // zichtbaar is zonder eerst te hoeven scrollen. Met de knop weer terug te halen.
+  const appRootEl = document.getElementById('appRoot');
+  const mobileChromeToggle = document.getElementById('mobileChromeToggle');
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    appRootEl.classList.add('chrome-collapsed');
+  }
+  function updateMobileChromeToggleLabel() {
+    mobileChromeToggle.innerHTML = appRootEl.classList.contains('chrome-collapsed')
+      ? '&#9776; Menu'
+      : '&#10005; Menu verbergen';
+  }
+  updateMobileChromeToggleLabel();
+  mobileChromeToggle.addEventListener('click', () => {
+    appRootEl.classList.toggle('chrome-collapsed');
+    updateMobileChromeToggleLabel();
   });
 
   const printBtn = document.getElementById('printBtn');
