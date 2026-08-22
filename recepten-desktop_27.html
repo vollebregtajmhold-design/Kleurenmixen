@@ -1,0 +1,1544 @@
+<meta charset="UTF-8">
+<title>Kleurmengsels — Matrix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="512x512" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlNjaG9uZXZlbGQgLSBWb2xsZWJyZWd0IEtsYW50ZW5taXhlbiIsICJzaG9ydF9uYW1lIjogIktsZXVyZW5taXhlbiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAic3RhcnRfdXJsIjogIi4iLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRERFQkY5IiwgInRoZW1lX2NvbG9yIjogIiMzRjYzOEMiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FZQUFBQlMzR3dIQUFBRzBVbEVRVlI0bk8zZHpZMWNSUlRGOFpxUnhRNkpEVmxBQ01nQkVJWlRHSG5IaXAzbEZDWU1BaGdSQW1UQkJva2RHN05BWlQyUDMrdCtIL1Z4enIzLzMzcmNmVnM2cCtxK3NkVitLR0xldnZ2NGFmWU02T2ZsK2VsaDlneExVNGNoN0NobGJpbUd2ekdoeHkyanl6RHN6UWcramhoVmhPNXZRdkJ4UmU4aWRIdHhnbytXZWhXaCtZc1NmUFRVdWdpUExWK004S08zMWhscjBpYUNqeGxhM0FhWGJ3RENqMWxhWk85U0FRZy9acnVhd2RNRklQeFFjU1dMcHdwQStLSG1iQ1lQRjREd1E5V1piQjRxQU9HSHVxTVozVjBBd2c4WFI3SzZxd0NFSDI3Mlp2WnVBUWcvWE8zSmJ0Ti9DZ0c0dVZrQVRuKzR1NWZoelFJUWZrUnhLOHVzUUVodHRRQ2Mvb2htSzlQY0FFanRxd0p3K2lPcXRXeHpBeUMxTHdyQTZZL29YbWVjR3dDcGZTNEFweit5V0dhZEd3Q3BVUUNrOWxnSzZ3L3lxWm5uQmtCcUZBQ3BVUUNrUmdHUTJnTVB3TWlNR3dDcHZaazl3Q2kvL3YzN3JwLzc1YnVmT2s4eTE0ZWYvOXoxYys5Lys2SHpKQnBDcjBCN1E3OGxTaG4yaG41TDVES0VLOERWMEc5eEs4UFYwRytKVm9Zd0JlZ1YvTmZVaTlBcitLOUZLVUtJaCtCUjRSLzlYa2VOQ3Yvbzkrckp2Z0F6QXFsWWdobUJqRkFDMnhWSUpZU3pWeUtWRUxxdVJKWTNnRXI0UzVrN2kwcjRTOUdhNVFpN0FpaUZ2NW94azJMZ0ZHZTZ4NjRBUUV0V0JWQTgvYXVSc3ltZnRNcXpyYkVwZ0hMNHF4RXpPZ1RNWWNiS29nQU80YTk2enVvVUxKZFpMUW9BOUNKZkFLZlR2K294czh1SnV1UXdzM3dCZ0o0b0FGS1RMb0RqK2xPMW5OMWhsZGlpUHJ0MEFZRGVLQUJTa3kyQTgvcFR0ZmdNNml2RUhzcWZRYllBd0FnVUFLbFJBS1JHQVpBYUJVQnFGQUNwVVFDa1JnR1FHZ1ZBYXJJRm1QMTlPeTIwK0F5dTM3ZXpwUHdaWkFzQWpFQUJrSnAwQVp6WG9KYXpLNjhROTZqUExsMEFvRGNLZ05Ua0MrQzRCdldZV1gyVldPTXdzM3dCZ0o0c0N1QjBDL1NjMWVGRXJWeG10U2hBS1I0bEdER2pRN0FjWnF4c0NsQ0tkZ2xHenFZY01PWFoxbGdWQUdqTnJnQ0t0OENNbVJSUFdzV1o3ckVyUUNsYUpaZzVpMUxnbEdZNXd2Wi9pYXhtZlgrUVVnbExtZmZkTzY3QnJ5eHZnS1VaUVZRTGZ5bHpndWdlL2xJQ0ZLQ1VzWUZVREg4MU1wQVJ3bDlLZ0JYb3RWNHJrWEx3MS9SYWlhSUV2d3BYZ0tXclpYQUwvWmFyWllnVytxWFFCVmphVzRZb29kK3l0d3lSUTcrVXBnREFtaEFQd2NCWkZBQ3BVUUNrUmdHUUdnVkFhaFFBcVZFQXBFWUJrQm9GUUdvVUFLbFJBS1JHQVpBYUJVQnFGQUNwVVFDazltYjJBS044ZVBobjE4KzkvL1J0NTBubSt2R3ZiM2I5M0IvZi85dDVFZzJoQzdBMzlGdC9Ka29aOW9aKzY4OUVMa080QXB3Si9aN1hjaXZEbWREdmVhMW9aUWhUZ0piQnYvWDY2a1ZvR2Z4YnJ4K2xDQ0VlZ251SGY5WjdIZFU3L0xQZXF5ZjdBc3dJcEdJSlpnUXlRZ2xzVjZEWklWUlppV2FIMEgwbHNyd0Jab2QvYWVZc3M4Ty9wRFRMRVhZRlVBcC9OV01teGNBcHpuU1BYUUdBbHF3S29IajZWeU5uVXo1cGxXZGJZMU1BNWZCWEkyWjBDSmpEakpWRkFSekNYL1djMVNsWUxyTmFGQURvUmI0QVRxZC8xV05tbHhOMXlXRm0rUUlBUFZFQXBDWmRBTWYxcDJvNXU4TXFzVVY5ZHVrQ0FMMVJBS1FtV3dEbjlhZHE4Um5VVjRnOWxEK0RiQUdBRVNnQVVxTUFTSTBDSURVS2dOUW9BRktqQUVpTkFpQTFDb0RVWkFzdysvdDJXbWp4R1Z5L2IyZEorVFBJRmdBWWdRSWdOZWtDT0s5QkxXZFhYaUh1VVo5ZHVnQkFieFFBcWNrWHdIRU42akd6K2lxeHhtRm0rUUlBUFZrVXdPa1c2RG1ydzRsYXVjeHFVWUJTUEVvd1lrYUhZRG5NV05rVW9CVHRFb3ljVFRsZ3lyT3RzU29BMEpwZEFSUnZnUmt6S1o2MGlqUGRZMWVBVXJSS01ITVdwY0FwelhLRTdmOFNXWU0zNi91RFZFcFlnemZydTNkY2cxOVozZ0JMTTRLb0V2NmxHVUYwRDM4cEFRcFF5dGhBS29hL0dobklDT0V2eFhnRmVxMzNTcVFjL0tYZUsxR1U0RmRoQ2xBdGczcTFEQzZoWDdNTTZ0VXlSQXY5VXJnQ0xKMHBnM1BvdDV3cFErVFFMNFV1d0ZMRVlKK1JKZGg3aFhnSUJzNTZmSGwrZXBnOUJERER5L1BUQXpjQVVxTUFTSTBDSURVS2dOUWVTL24vWVdEMklNQklOZlBjQUVpTkFpQzF6d1ZnRFVJV3k2eHpBeUMxTHdyQUxZRG9YbWVjR3dDcGZWVUFiZ0ZFdFpadGJnQ2t0bG9BYmdGRXM1VnBiZ0NrdGxrQWJnRkVjU3ZMTjI4QVNnQjM5ekxNQ29UVTdoYUFXd0N1OW1SMzF3MUFDZUJtYjJaM3IwQ1VBQzZPWlBYUU13QWxnTHFqR1QzOEVFd0pvT3BNTmsvOUZvZ1NRTTNaVEo3K05TZ2xnSW9yV2J6MDl3Q1VBTE5kemVEbHZ3aWpCSmlsUmZhYWh2ZnR1NCtmV3I0ZXNLYmxvZHYwbjBKd0c2QzMxaG5yRmxodUE3VFU2M0R0Zm1KVEJGelJlNnNZdHJKUUJCd3hhcDBldnJOVEJOd3kramx5NmtNclpVQXBjMzk1SXZkYkcwb1JtOXB2Q3Y4RHhyZFdhQ2xrNm9JQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3BuZyJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFUbDBsRVFWUjRuTzNjelkwa1dSVUY0T2dSWW9mRVpyd0FFOUFZZ0JuakFwb2RLM2FqY1FFek1BQmhBbmpCQm9rZG0yWlJxdTdzcXN6S2pJeWY5KzQ5MzJkQWRlUzlKWjN6WG1UWHA0VXAvZkRqTDU5SFB3UEFIdjcrMXo5OUd2ME12R2NwZ3doNGdCY0t3aGlHZmdKaEQ3Q09VbkE4QXo2QXdBZllsMEt3UHdQZGdjQUhPSmRDc0owQlBrbm9BOHhCR1hpT29hMGc5QUhtcGd3OHpxRHVFUG9BTlNrREh6T2NHd1EvUUErS3dIV0dja0hvQS9TbURIeGxFSXZnQjBpakNJUVhBTUVQa0MyNUNFUitjTUVQd0tYRUloRDFnUVUvQUI5SktnSVJIMVR3QTdCR1FoSDRidlFESEUzNEE3QldRbmEwYlRnSnl3UGdlRjF2QTlwOUtNRVB3Qkc2RllGV3J3Q0VQd0JINlpZeExkcE10NlVBTUxjT3R3SGxid0NFUHdCbjY1QTlwUXRBaHdVQVVGUDFEQ3A1aFZGOTZBRDBVdkdWUUxrYkFPRVB3R3dxWmxPcEFsQnh3QUJrcUpaUkphNHNxZzBWZ0d3VlhnbE1md01nL0FHb3BrSjJUVjBBS2d3UUFLNlpQY09tTFFDekR3NEE3cGs1eTZZc0FETVBEQURXbURYVHBpc0FzdzRLQUo0MVk3Wk5WUUJtSEJBQTdHRzJqSnVtQU13MkdBRFkyMHhaTjBVQm1Ha2dBSENrV1RKdmVBR1laUkFBY0pZWnNtOW9BWmhoQUFBd3d1Z01IRllBUm45d0FCaHRaQllPS1FEQ0h3QmVqTXJFMHd1QThBZUFiNDNJeGxNTGdQQUhnT3ZPenNqVENvRHdCNENQblptVnB4UUE0UThBanprck00Zi9IUUFBNEh5SEZ3Q25md0JZNTR6c1BMUUFDSDhBZU03UkdYcFlBUkQrQUxETmtWbnFPd0FBRU9pUUF1RDBEd0Q3T0NwVGR5OEF3aDhBOW5WRXR1NWFBSVEvQUJ4ajc0ejFIUUFBQ0xSYkFYRDZCNEJqN1ptMXV4UUE0UThBNTlncmM3MENBSUJBbXd1QTB6OEFuR3VQN0hVREFBQ0JOaFVBcDM4QUdHTnJCajlkQUlRL0FJeTFKWXU5QWdDQVFFOFZBS2QvQUpqRHM1bnNCZ0FBQXEwdUFFNy9BRENYWjdMWkRRQUFCRnBWQUp6K0FXQk9helBhRFFBQUJIcTRBRGo5QThEYzFtUzFHd0FBQ1BSUUFYRDZCNEFhSHMxc053QUFFRWdCQUlCQWR3dUE2MzhBcU9XUjdIWURBQUNCUGl3QVR2OEFVTk85REhjREFBQ0JGQUFBQ0hTekFMaitCNERhUHNweU53QUFFRWdCQUlCQVZ3dUE2MzhBNk9GV3Byc0JBSUJBQ2dBQUJIcFhBRnovQTBBdjE3TGREUUFBQkZJQUFDQ1FBZ0FBZ2I0cEFONy9BMEJQYnpQZURRQUFCRklBQUNDUUFnQUFnYjRVQU8vL0FhQzN5NngzQXdBQWdSUUFBQWlrQUFCQUlBVUFBQUo5dHl5K0FBZ0FLVjR6M3cwQUFBUlNBQUFna0FJQUFJRVVBQUFJcEFBQVFDQUZBQUFDS1FBQUVPaVR2d0hBS0gvNXp6ODIvNHcvLy9ZUE96d0pQT2ZuUC81cjg4LzQ2VysvMitGSllEMEZnRlBzRWZhUFVnbzR3aDVoL3lpbGdETW9BQnppek1DL1J5SGdHV2NHL2owS0FVZFFBTmpGVElGL2owTEFOVE1GL2owS0FYdFFBTmlrVXZDL3BRaXdMTFdDL3kxRmdDMFVBRmFySFBxM0tBTlpLb2YrTGNvQWF5a0FQS3hqOEwrbENQVFdNZmpmVWdSNGxBTEFYUW5CLzVZaTBFdEM4TCtsQ0hDUEFzQk5pY0gvbGlKUVcyTHd2NlVJY0l1L0JNaFZ3ditGT2RRbC9GK1lBN2U0QWVBYkF1ODJ0d0UxQ0x6YjNBWnd5UTBBWHdqL2o1blAvSVQveDh5SFMyNEFFR3hQY0Jzd0Y4RzJudHNBM0FDRUUvN1BNYmQ1Q1Avbm1Cc0tRREFodG8zNWpTZkV0akcvYkY0QkJCSmMrL05LNEZ5Q2EzOWVDZVJ4QXhCRytCL0RYTThqL0k5aHJua1VnQ0JDNmxqbWV6d2hkU3p6emFJQWhCQk81ekRuNHdpbmM1aHpEZ1VnZ0ZBNmwzbnZUeWlkeTd3ektBRE5DYU14ekgwL3dtZ01jKzlQQVdoTUNJMWwvdHNKb2JITXZ6Y0ZvQ25oTXdkN2VKN3dtWU05OUtVQU5DUjA1bUlmNndtZHVkaEhUd29BQUFSU0FKcHgycHlUdlR6T2FYTk85dEtQQXRDSWtKbWIvZHduWk9abVA3MG9BRTBJbHhyczZUYmhVb005OWFFQUFFQWdCYUFCcDhwYTdPczlwOHBhN0tzSEJhQTRZVktUdlgwbFRHcXl0L29VQUFBSXBBQVU1aFJabS8wNVJWWm5mN1VwQUVVSmp4NlM5eWc4ZXJESHVoUUFBQWlrQUJTVWZHcnNLSEdmVG8yOTJHZE5DZ0FBQkZJQWlrazhMU1pJMnF2VFlrLzJXbzhDQUFDQkZJQkNrazZKaVJMMjY1VFltLzNXb2dBQVFDQUZBQUFDS1FCRkpGd1AwM3ZQcm9jejJITWRDZ0FBQkZJQUN1aDhLdVM5anZ0MktzeGkzelVvQUFBUVNBRUFnRUFLQUFBRVVnQW0xL0Y5TVBkMTJydjN3Wm5zZlg0S0FBQUVVZ0FBSUpBQ0FBQ0JGSUNKZFhvUHpIb2Q5dTg5Y0RiN241c0NBQUNCRkFBQUNLUUFBRUFnQlFBQUFpa0FrK3J3QlRDMnEveDc0QXRnTEl2Zmc1a3BBQUFRU0FFQWdFQUtBQUFFVWdBQUlKQUNBQUNCRkFBQUNLUUFBRUFnQlFBQUFpa0FBQkJJQVFDQVFBb0FBQVJTQUFBZ2tBSUFBSUVVQUFBSXBBQUFRQ0FGQUFBQ0tRQ1Qrdk52L3pENkVaaEE1ZCtEbi83MnU5R1B3QVQ4SHN4TEFRQ0FRQW9BQUFSU0FBQWdrQUlBQUlFVWdJbFYvZ0lZMjNYWXZ5K0FaYlAvdVNrQUFCQklBUUNBUUFvQUFBUlNBQ2JYNFQwdzYzWGF1L2ZBbWV4OWZnb0FBQVJTQUFBZ2tBSUFBSUVVZ0FJNnZRL212bzc3OWo0NGkzM1hvQUFBUUNBRm9JaU9wMExlNjd4bnA4SU05bHlIQWdBQWdSUUFBQWlrQUJUUytYcVlqUDI2SHU3TmZtdFJBQUFna0FKUVRNSXBNVkhTWHAwU2U3TFhlaFFBQUFpa0FCU1VkRnBNa0xoUHA4VmU3TE1tQlFBQUFpa0FSU1dlR2p0SzNxTlRZdy8yV0pjQ1VGaHllSFJnZjhLak92dXJUUUVBZ0VBS1FIRk9rVFhaMjFkT2tUWFpXMzBLUUFQQ3BCYjdlaytZMUdKZlBTZ0FBQkJJQVdqQ3FiSUdlN3JOcWJJR2UrcERBV2hFdU16TmZ1NFRMbk96bjE0VWdHYUV6SnpzNVhGQ1prNzIwbzhDQUFDQkZJQ0duRGJuWWgvck9XM094VDU2VWdDYUVqcHpzSWZuQ1owNTJFTmZDa0Jqd21jczg5OU8rSXhsL3IwcEFNMEpvVEhNZlQ5Q2FBeHo3MDhCQ0NDTXptWGUreE5HNXpMdkRBcEFDS0YwRG5NK2psQTZoem5uVUFDQ0NLZGptZS94aE5PeHpEZUxBaEJHU0IzRFhNOGpwSTVocm5rKy9mRGpMNTlIUHdSai9PVS8veGo5Q09VSi9yRisvdU8vUmo5Q2VZSS9seHVBWU1KckcvTWJUM2h0WTM3WkZJQndRdXc1NWpZUElmWWNjOE1yQUw3d1N1QSt3VDgzcndUdUUveThjZ1BBRjhMdFkrWXpQK0gyTWZQaGtoc0FybkliOEpYZ3I4bHR3RmVDbjJ2Y0FIQ1YwSHRoRG5VSnZSZm13QzF1QUxncjhUWkE4UGVTZUJzZytMbEhBZUJoQ1VWQThQZVdVQVFFUDQ5U0FGaXRZeEVRL0ZrNkZnSEJ6MW9LQUp0VUxnTkNuMldwWFFhRVBsc29BT3lpVWhFUS9GeFRxUWdJZnZhZ0FIQ0ltUXFCd09jWk14VUNnYzhSRkFCT2NXWWhFUGdjNGN4Q0lQQTVnd0xBTUh1VUFtSFBTSHVVQW1IUEtBb0FBQVR5bHdBQklKQUNBQUNCRkFBQUNLUUFBRUFnQlFBQUFpa0FBQkJJQVFDQVFBb0FBQVJTQUFBZ2tBSUFBSUVVQUFBSXBBQUFRQ0FGQUFBQ0tRQUFFRWdCQUlCQUNnQUFCRklBQUNDUUFnQUFnUlFBQUFpa0FBQkFJQVVBQUFJcEFBQVFTQUVBZ0VBS0FBQUVVZ0FBSUpBQ0FBQ0JGQUFBQ0tRQUFFQWdCUUFBQWlrQUFCQklBUUNBUUFvQUFBUlNBQUFna0FJQUFJRVVBQUFJcEFBQVFDQUZBQUFDS1FBQUVFZ0JBSUJBQ2dBQUJGSUFBQ0NRQWdBQWdSUUFBQWlrQUFCQUlBVUFBQUw5YXZRRGtPdm5ULy9kL0ROKyt2eWJIWjRFbnZQN2YvOTY4OC80NS9mLzIrRkpZRDBGZ0ZQc0VmYVAvbHlsZ0NQc0VmYVAvbHlsZ0RNb0FCemlxTUIvNXQ5V0NIakdVWUgvekwrdEVIQUVCWUJkakF6OGV4UUNIakV5OE85UkNEaUNBc0FtTXdmL0xhL1ByQWl3TEhNSC95MnZ6NndJc0lVQ3dHb1ZRLytheTgraERHU3BHUHJYWEg0T1pZQzFGQUFlMWlYNHIzRXJrS0ZMOEYvalZvQzFGQUR1Nmh6OGJ5a0NQWFVPL3JjVUFSNmxBSEJUVXZDL3BRajBrQlQ4YnlrQzNPTXZBWEpWY3ZoZk1vZTZrc1Ava2psd2l4c0F2aUh3M25NYlVJdkFlODl0QU5lNEFlQUw0Zjh4ODVtZjhQK1krWERKRFFDQ2JRVzNBWE1TYkk5ekc4QXJOd0RoaFA5enpHMGV3djg1NW9ZQ0VFeUliV04rNHdteGJjd3ZtMWNBZ1FUWGZyd1NHRU53N2NjcmdWeHVBTUlJLzJPWTYzbUUvekhNTlk4Q0VFUklIY3Q4anlla2ptVytXUlNBRU1McEhPWjhIT0YwRG5QT29RQUVFRXJuTXUvOUNhVnptWGNHQmFBNVlUU0d1ZTlIR0kxaDd2MHBBSTBKb2JITWZ6c2hOSmI1OTZZQU5DVjg1bUFQenhNK2M3Q0h2aFNBaG9UT1hPeGpQYUV6Ri92b1NRRUFnRUFLUUROT20zT3lsOGM1YmM3Slh2cFJBQm9STW5Pem4vdUV6TnpzcHhjRm9BbmhVb005M1NaY2FyQ25QaFFBQUFpa0FEVGdWRm1MZmIzblZGbUxmZldnQUJRblRHcXl0NitFU1UzMlZwOENBQUNCRklEQ25DSnJzeitueU9yc3J6WUZvQ2poMFVQeUhvVkhEL1pZbHdJQUFJRVVnSUtTVDQwZEplN1RxYkVYKzZ4SkFRQ0FRQXBBTVltbnhRUkplM1ZhN01sZTYxRUFBQ0NRQWxCSTBpa3hVY0orblJKN3M5OWFGQUFBQ0tRQUFFQWdCYUNJaE90aGV1L1o5WEFHZTY1REFRQ0FRQXBBQVoxUGhielhjZDlPaFZuc3V3WUZBQUFDS1FBQUVFZ0JBSUJBQ3NEa09yNFA1cjVPZS9jK09KTzl6MDhCQUlCQUNnQUFCRklBQUNDUUFqQ3hUdStCV2EvRC9yMEh6bWIvYzFNQUFDQ1FBZ0FBZ1JRQUFBaWtBQUJBSUFWZ1VoMitBTVoybFg4UGZBR01aZkY3TURNRkFBQUNLUUFBRUVnQkFJQkFDZ0FBQkZJQUFDQ1FBZ0FBZ1JRQUFBaWtBQUJBSUFVQUFBSXBBQUFRU0FFQWdFQUtBQUFFVWdBQUlKQUNBQUNCRkFBQUNLUUFBRUFnQldCU1AzMyt6ZWhIWUFLVmZ3LysrZjMvUmo4Q0UvQjdNQzhGQUFBQ0tRQUFFRWdCQUlCQUNnQUFCRklBSmxiNUMyQnMxMkgvdmdDV3pmN25wZ0FBUUNBRkFBQUNLUUFBRUVnQm1GeUg5OENzMTJudjNnTm5zdmY1S1FBQUVFZ0JBSUJBQ2dBQUJGSUFDdWowUHBqN091N2IrK0FzOWwyREFnQUFnUlNBSWpxZUNubXY4NTZkQ2pQWWN4MEtBQUFFVWdBQUlKQUNVRWpuNjJFeTl1dDZ1RGY3clVVQkFJQkFDa0F4Q2FmRVJFbDdkVXJzeVY3clVRQUFJSkFDVUZEU2FURkI0ajZkRm51eHo1b1VBQUFJcEFBVWxYaHE3Q2g1ajA2TlBkaGpYUXBBWWNuaDBZSDlDWS9xN0s4MkJRQUFBaWtBeFRsRjFtUnZYemxGMW1SdjlTa0FEUWlUV3V6clBXRlNpMzMxb0FBQVFDQUZvQW1ueWhyczZUYW55aHJzcVE4Rm9CSGhNamY3dVUrNHpNMStlbEVBbWhFeWM3S1h4d21aT2RsTFB3b0FBQVJTQUJweTJweUxmYXpudERrWCsraEpBV2hLNk16QkhwNG5kT1pnRDMwcEFJMEpuN0hNZnp2aE01YjU5NllBTkNlRXhqRDMvUWloTWN5OVB3VWdnREE2bDNudlR4aWR5N3d6S0FBaGhOSTV6UGs0UXVrYzVweERBUWdpbkk1bHZzY1RUc2N5M3l3S1FCZ2hkUXh6UFkrUU9vYTU1dm5WNkFmZ2ZLOWg5Zk9uL3c1K2t2b0UveGl2WWZYN2YvOTY4SlBVSi9oenVRRUlKcnkyTWIveGhOYzI1cGROQVFnbnhKNWpidk1RWXM4eE43d0N3Q3VCRlFUL25Md1NlSnpnNTVVYkFMNFFiaDh6bi9rSnQ0K1pENWZjQVBBTnR3SHZDZjVhM0FhOEovaTV4ZzBBVndtOUYrWlFsOUI3WVE3YzRnYUFtNUp2QXdSL0Q4bTNBWUtmZXhRQTdrb3FBb0svcDZRaUlQaDVsQUxBd3pvWEFjR2ZvWE1SRVB5c3BRQ3cybVZZVmk0RFFqL1haVmhXTGdOQ255MFVBRGFwZUNzZytMbFU4VlpBOExNSEJZQmR2QTNWbVFxQndPY1JiME4xcGtJZzhEbUNBc0FoUmhZQ2djOGVSaFlDZ2M4WkZBQk9jUzJVOXlnRndwNnpYQXZsUFVxQnNHZVVUOHV5TEQvOCtNdm4wUThDQUp6ajczLzkweWQvQ1JBQUFpa0FBQkJJQVFDQVFBb0FBQVJTQUFBZ2tBSUFBSUVVQUFBSTlOMnl2UHgvd05FUEFnQWM3elh6M1FBQVFDQUZBQUFDS1FBQUVFZ0JBSUJBWHdxQUx3SUNRRytYV2U4R0FBQUNLUUFBRUVnQkFJQkEzeFFBM3dNQWdKN2VacndiQUFBSXBBQUFRQ0FGQUFBQ3ZTc0F2Z2NBQUwxY3kzWTNBQUFRU0FFQWdFQlhDNERYQUFEUXc2MU1kd01BQUlFVUFBQUlkTE1BZUEwQUFMVjlsT1Z1QUFBZ2tBSUFBSUUrTEFCZUF3QkFUZmN5M0EwQUFBUzZXd0RjQWdCQUxZOWt0eHNBQUFpa0FBQkFvSWNLZ05jQUFGRERvNW50QmdBQUFqMWNBTndDQU1EYzFtUzFHd0FBQ0xTcUFMZ0ZBSUE1cmMxb053QUFFR2gxQVhBTEFBQnplU2FiM1FBQVFLQ25Db0JiQUFDWXc3T1o3QVlBQUFJOVhRRGNBZ0RBV0Z1eWVOTU5nQklBQUdOc3pXQ3ZBQUFnME9ZQzRCWUFBTTYxUi9hNkFRQ0FRTHNVQUxjQUFIQ092VEozdHhzQUpRQUFqclZuMW5vRkFBQ0JkaTBBYmdFQTRCaDdaK3p1TndCS0FBRHM2NGhzUGVRVmdCSUFBUHM0S2xOOUJ3QUFBaDFXQU53Q0FNQTJSMmJwb1RjQVNnQUFQT2ZvREQzOEZZQVNBQURybkpHZHZnTUFBSUZPS1FCdUFRRGdNV2RsNW1rM0FFb0FBSHpzekt3ODlSV0FFZ0FBMTUyZGthZC9CMEFKQUlCdmpjakdJVjhDVkFJQTRNV29UQnoydndDVUFBRFNqY3pDb2Y4TlVBa0FJTlhvREJ6K2R3QkdEd0FBempaRDlnMHZBTXN5eHlBQTRBeXpaTjRVQldCWjVoa0lBQnhscHF5YnBnQXN5MXlEQVlBOXpaWnhVeFdBWlpsdlFBQ3cxWXpaTmwwQldKWTVCd1VBejVnMTA2WXNBTXN5NzhBQTRGRXpaOW0wQldCWjVoNGNBSHhrOWd5YnVnQXN5L3dEQklDM0ttVFg5QTk0NlljZmYvazgraGtBNEpZS3dmOXEraHVBUzVVR0MwQ1dhaGxWcWdBc1M3MEJBOUJmeFd3cTk4Q1h2QklBWUtTS3dmK3EzQTNBcGNxREI2QzI2aGxVdWdBc1MvMEZBRkJQaCt3cC93RXVlU1VBd0pFNkJQK3I4amNBbHpvdEJvQzVkTXVZVmgvbWt0c0FBUGJRTGZoZnRmeFFseFFCQUo3Uk5maGZ0WG9GY0UzM0JRS3d2NFRzYVA4Qkw3a05BT0FqQ2NIL0t1YURYbElFQUxpVUZQeXY0ajd3SlVVQUlGdGk4TCtLL2VDWEZBR0FMTW5CL3lwK0FKY1VBWURlQlA5WEJuR0RNZ0RRZzlDL3psRHVVQVFBYWhMOEh6T2NGWlFCZ0xrSi9jY1oxSk9VQVlBNUNQM25HTm9PbEFHQWN3bjk3UXp3QUFvQndMNEUvdjRNOUFRS0FjQTZBdjk0Qmp5SVVnRHdRdGlQWWVpVFVoQ0FMZ1Q4blA0UEU5MG1nWHBVaHZ3QUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyJ9XX0=">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kleurenmixen">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#3F638C">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #DDEBF9;
+    --surface: #5680B0;
+    --surface-2: #F1EBE4;
+    --text: #1F3A54;
+    --text-dim: #4C6B85;
+    --text-panel: #FFFFFF;
+    --text-panel-dim: #EAF3FC;
+    --border: #C3D9EE;
+    --accent: #A8445B;
+    --c-rood: #C2534F;
+    --c-wit: #C9AE60;
+    --c-licht: #C9647F;
+    --c-donker: #6C4E92;
+    --tint-rood: #FBEAE8;
+    --tint-wit: #FBF6E9;
+    --tint-licht: #FCEAF0;
+    --tint-donker: #EEE7F6;
+    --shadow: 0 2px 4px rgba(20,40,64,0.12), 0 10px 26px -12px rgba(20,40,64,0.28);
+  }
+  /* Deze pagina blijft altijd licht. */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 24px 28px 60px;
+  }
+  .wrap { max-width: 1900px; margin: 0 auto; }
+
+  .save-toast {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 500;
+    background: var(--text);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .save-toast.show { opacity: 1; transform: translateY(0); }
+  .save-toast.error { background: var(--accent); }
+
+  .readonly-banner {
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+  }
+
+  header { margin-bottom: 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .header-stats { font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .matrix-shell {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .matrix-scroll {
+    overflow: auto;
+    max-height: calc(100vh - 210px);
+  }
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    color: var(--text-panel);
+    font-weight: 700;
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    border-right: 1px solid rgba(255,255,255,0.12);
+    text-align: center;
+    z-index: 2;
+  }
+  thead tr.klant-row th {
+    top: 0;
+    font-size: 12px;
+    background: #3F638C;
+    z-index: 3;
+  }
+  thead tr.serie-row th {
+    top: 29px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-panel);
+  }
+  thead tr.jaar-row th {
+    top: 58px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--text-panel);
+    background: #6E93BE;
+    padding: 4px 10px;
+    font-variant-numeric: tabular-nums;
+  }
+  .jaar-check { color: #4ADE80; font-weight: 700; margin-left: 4px; cursor: help; }
+  thead th.corner {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    background: var(--surface-2);
+    color: var(--text-dim);
+    text-align: left;
+  }
+  thead tr.klant-row th.corner { z-index: 6; }
+
+  tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--surface-2);
+    color: var(--text);
+    text-align: left;
+    font-weight: 600;
+    padding: 5px 10px 5px 8px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 5px 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    background: var(--surface-2);
+  }
+  tbody td.empty { color: #B9AC9C; font-weight: 400; }
+  tbody td.filled { font-weight: 600; }
+
+  tbody tr:hover td:not(.empty) { filter: brightness(0.96); }
+  tbody tr:hover th { background: #E7DFD3; }
+
+  footer {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  :root {
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F6E3E7;
+    --border-panel: rgba(255,255,255,0.25);
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .filter-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .filter-field select {
+    font-family: inherit;
+    font-size: 13.5px;
+    color: var(--text);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 11px;
+    width: 190px;
+  }
+  .filter-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  #filterJaar { width: 100px; }
+  .btn-clear-filter {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .toolbar-right {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .display-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding-left: 6px;
+    margin-left: 6px;
+    border-left: 1px solid var(--border);
+  }
+  .btn-toggle {
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 14px;
+    cursor: pointer;
+    min-width: 60px;
+  }
+  .btn-toggle.on {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+
+  tbody td.has-decimal { background: #D9F2D6 !important; }
+  tbody td.has-opm { box-shadow: inset 0 -3px 0 -1.5px var(--accent); cursor: help; }
+  tbody td.has-sub-layout { text-align: left; }
+  .cell-inner { display: flex; align-items: baseline; width: 100%; }
+  .cell-val { flex: 1 1 auto; text-align: right; }
+  .cell-subwrap { flex: 0 0 28px; text-align: left; padding-left: 2px; }
+  .cell-sub { font-weight: 400; color: var(--text-dim); font-size: 11px; }
+  .btn-new-serie {
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--accent-ink);
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+
+  thead tr.serie-row th.clickable { cursor: pointer; }
+  thead tr.serie-row th.clickable:hover { background: var(--accent); }
+  thead tr.serie-row th.not-hundred { background: #E8C94A; color: #4A3B00; }
+  thead tr.serie-row th.not-hundred:hover { background: #D4B62E; color: #4A3B00; }
+
+  /* ---- Modal ---- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,30,45,0.55);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .modal {
+    --surface: #DDEBF9;
+    --text-panel: #1F3A54;
+    --text-panel-dim: #4C6B85;
+    --border-panel: #C3D9EE;
+    background: var(--bg);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-panel);
+  }
+  .modal-head h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-panel);
+    margin: 0;
+  }
+  .modal-close {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(31,58,84,0.08);
+    color: var(--text-panel);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .modal-body { padding: 12px 16px; max-height: 76vh; overflow-y: auto; }
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface-2);
+  }
+  .modal-actions-row { display: flex; gap: 8px; }
+  .modal-actions .btn-primary { flex: 2; }
+  .modal-actions .btn-secondary, .modal-actions .btn-danger { flex: 1; margin-top: 0; }
+  .btn-copy-year { width: 100%; background: var(--surface); color: var(--text-panel); border: 1px solid var(--border-panel); }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .panel:last-child { margin-bottom: 0; }
+  .panel h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--text-panel);
+  }
+  .panel p.sub { color: var(--text-panel-dim); font-size: 13px; margin: 0 0 8px; line-height: 1.4; }
+
+  .field { margin-bottom: 8px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-panel-dim);
+    margin-bottom: 3px;
+  }
+  .field-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .field-row:last-child { margin-bottom: 0; }
+  .field-row .field { flex: 1; margin-bottom: 0; min-width: 0; }
+  .field-inline { display: flex; align-items: center; gap: 10px; }
+  .field-inline label { margin-bottom: 0; white-space: nowrap; }
+  .field-inline input { flex: 0 0 110px; width: 110px; }
+  .panel select, .panel input[type="text"], .panel input[type="number"], .panel input[type="date"] {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 7px 10px;
+  }
+  .panel select:focus, .panel input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .result-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+  .result-head h2 { margin: 0; }
+  .result-count { font-size: 12px; color: var(--text-panel-dim); font-variant-numeric: tabular-nums; }
+
+  .kleuren-sticky-head {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--surface);
+    margin: -10px -12px 0;
+    padding: 10px 12px 6px;
+    border-bottom: 1px solid var(--border-panel);
+  }
+  .kleuren-sticky-head .result-count {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-panel);
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 2px 8px;
+  }
+
+  .btn-primary, .btn-secondary, .btn-danger {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: var(--surface-2); color: var(--accent); border: 1px solid var(--accent); }
+  .btn-add { background: var(--surface-2); color: var(--text-panel); border: 1px solid var(--border-panel); width: 100%; margin-top: 4px; }
+
+  .color-fixed-row {
+    display: grid;
+    grid-template-columns: 1fr 68px 60px 46px;
+    gap: 5px;
+    align-items: center;
+    padding: 0;
+    border-bottom: 1px solid var(--border-panel);
+  }
+  .color-fixed-row:last-child { border-bottom: none; }
+  .color-fixed-row .cf-name { font-size: 13.5px; color: var(--text-panel); }
+  .panel .color-fixed-row input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 6px;
+    line-height: 16px;
+    text-align: right;
+    -moz-appearance: textfield;
+  }
+  .color-fixed-row input::-webkit-outer-spin-button,
+  .color-fixed-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .panel .color-fixed-row input.cf-sub { text-align: center; font-size: 12.5px; }
+  .panel .color-fixed-row input.cf-opm { text-align: left; font-size: 12px; }
+  .color-fixed-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .color-fixed-row input:not(:placeholder-shown) { border-color: var(--accent); background: var(--accent-soft); }
+  .fixed-color-head {
+    display: grid;
+    grid-template-columns: 1fr 68px 60px 46px;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-panel-dim);
+    padding-bottom: 4px;
+  }
+  .fixed-color-head span:not(:first-child) { text-align: center; }
+
+  .subhead {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-panel-dim);
+    margin: 10px 0 6px;
+  }
+  .color-edit-row {
+    display: grid;
+    grid-template-columns: 1fr 68px 60px 46px 30px;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .panel .color-edit-row input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 6px;
+    -moz-appearance: textfield;
+  }
+  .color-edit-row input::-webkit-outer-spin-button,
+  .color-edit-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .panel .color-edit-row input.ce-sub { text-align: center; font-size: 12.5px; }
+  .panel .color-edit-row input.ce-opm { text-align: left; font-size: 12px; }
+  .color-edit-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .ce-remove {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border-panel);
+    background: var(--surface-2);
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .empty-note {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 14px 12px 40px; }
+    header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+    .filter-bar { width: 100%; gap: 8px; }
+    .filter-field { flex: 1 1 42%; min-width: 110px; }
+    .filter-field select { width: 100%; box-sizing: border-box; }
+    #filterJaar { width: 100%; }
+    .btn-clear-filter { flex: 0 0 auto; }
+    .toolbar-right { width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
+    .display-bar { width: 100%; justify-content: space-between; border-left: none; padding-left: 0; margin-left: 0; }
+    .btn-new-serie { width: 100%; }
+    .modal-overlay { padding: 0; align-items: stretch; }
+    .modal { max-width: 100%; width: 100%; border-radius: 0; max-height: 100vh; display: flex; flex-direction: column; }
+    .modal-body { max-height: none; flex: 1; }
+  }
+
+  @media print {
+    body { padding: 0; background: #FFFFFF; }
+    .toolbar, .header-stats, footer, .modal-overlay, .save-toast, .readonly-banner { display: none !important; }
+    .wrap { max-width: none; }
+    .matrix-shell { box-shadow: none; border: none; border-radius: 0; }
+    .matrix-scroll { overflow: visible; max-height: none; }
+    thead th { position: static; }
+    table { font-size: 10.5px; }
+    thead th, thead th.corner, tbody th, tbody td {
+      border-bottom: 1px solid #000000 !important;
+      border-right: 1px solid #000000 !important;
+    }
+    thead tr.serie-row th, thead tr.jaar-row th {
+      border: 1.5px solid #000000 !important;
+    }
+    thead th, thead th.corner, thead tr.klant-row th, thead tr.serie-row th, thead tr.jaar-row th {
+      background: #FFFFFF !important;
+      color: #000000 !important;
+      font-weight: 800 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    thead tr.serie-row th.not-hundred { color: #A67C00 !important; }
+    .jaar-check { color: #000000 !important; }
+  }
+
+  /* ---- Inloggen / delen ---- */
+  .auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .auth-box {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    max-width: 380px;
+    width: 100%;
+    padding: 28px 26px;
+    text-align: center;
+  }
+  .auth-box h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .auth-box p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin: 0 0 18px;
+  }
+  .btn-google {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+  }
+  .btn-google:hover { background: var(--tint-wit); }
+  .auth-spinner {
+    width: 26px; height: 26px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    animation: authspin 0.8s linear infinite;
+  }
+  @keyframes authspin { to { transform: rotate(360deg); } }
+  .auth-denied { color: var(--accent); font-weight: 600; font-size: 13.5px; margin-bottom: 14px; }
+  .user-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .user-bar .user-email { font-weight: 600; color: var(--text); }
+  .btn-logout {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .sync-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #4ADE80;
+    margin-right: 5px;
+  }
+  .sync-dot.offline { background: #D9AC42; }
+</style>
+
+<div class="save-toast" id="saveToast"></div>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <div id="authLoading">
+      <div class="auth-spinner"></div>
+      <p>Verbinden…</p>
+    </div>
+    <div id="authSignedOut" style="display:none">
+      <h1>Kleurenmixen</h1>
+      <p>Log in met je Google-account om de gezamenlijke gegevens te bekijken en te bewerken.</p>
+      <button type="button" class="btn-google" id="googleSignInBtn">Inloggen met Google</button>
+    </div>
+    <div id="authDenied" style="display:none">
+      <h1>Geen toegang</h1>
+      <p class="auth-denied" id="authDeniedEmail"></p>
+      <p>Dit account heeft geen toegang tot Kleurenmixen. Vraag om toegevoegd te worden, of log in met een ander account.</p>
+      <button type="button" class="btn-google" id="authDeniedLogoutBtn">Uitloggen</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="appRoot" style="display:none">
+  <header>
+    <h1>Schoneveld - Vollebregt Klantenmixen</h1>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <span class="header-stats" id="headerStats"></span>
+      <div class="user-bar">
+        <span class="sync-dot" id="syncDot" title="Verbonden"></span>
+        <span class="user-email" id="userEmail"></span>
+        <button type="button" class="btn-logout" id="logoutBtn">Uitloggen</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="filter-bar">
+      <div class="filter-field">
+        <label for="filterJaar">Jaar</label>
+        <select id="filterJaar"></select>
+      </div>
+      <div class="filter-field">
+        <label for="filterKlant">Klant</label>
+        <select id="filterKlant"></select>
+      </div>
+      <div class="filter-field">
+        <label for="filterSerie">Serie</label>
+        <select id="filterSerie"></select>
+      </div>
+      <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
+      <button type="button" class="btn-clear-filter" id="printBtn" title="Matrix printen">&#128424; Print</button>
+      <button type="button" class="btn-clear-filter" id="exportBtn" title="Download een backup (JSON) van alle gegevens">&#8681; Backup</button>
+    </div>
+    <div class="toolbar-right">
+      <div class="display-bar">
+        <div class="filter-field">
+          <label for="decimalsBtn">Decimalen</label>
+          <button type="button" class="btn-toggle" id="decimalsBtn" data-value="0">0</button>
+        </div>
+        <div class="filter-field">
+          <label for="subnumBtn">Subnummers</label>
+          <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
+        </div>
+      </div>
+      <button type="button" class="btn-new-serie" id="newSerieBtn">+ Serie aanmaken</button>
+    </div>
+  </div>
+
+  <div class="matrix-shell">
+    <div class="matrix-scroll">
+      <table id="matrixTable"></table>
+    </div>
+  </div>
+
+  <footer>Versie 5.0 — 22 augustus 2026</footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" style="display:none">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Serie aanmaken</h2>
+      <button type="button" class="modal-close" id="modalClose" aria-label="Sluiten">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="panel">
+        <div class="field-row">
+          <div class="field">
+            <label for="fKlantSelect">Klant</label>
+            <select id="fKlantSelect"></select>
+          </div>
+          <div class="field">
+            <label for="fRasSelect">Serie</label>
+            <select id="fRasSelect"></select>
+          </div>
+        </div>
+        <div class="field" id="fKlantNewWrap" style="display:none">
+          <label for="fKlantNew">Naam nieuwe klant</label>
+          <input type="text" id="fKlantNew" placeholder="bijv. Vollebregt">
+        </div>
+        <div class="field" id="fRasNewWrap" style="display:none">
+          <label for="fRasNew">Naam nieuwe serie</label>
+          <input type="text" id="fRasNew" placeholder="bijv. Verano">
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="field field-inline">
+          <label for="fJaar">Jaar</label>
+          <input type="text" id="fJaar" placeholder="2026">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fAanvraag">Aanvraag</label>
+            <input type="date" id="fAanvraag">
+          </div>
+          <div class="field">
+            <label for="fBevestigd">Bevestigd</label>
+            <input type="date" id="fBevestigd">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="kleuren-sticky-head">
+          <div class="result-head">
+            <h2>Kleuren</h2>
+            <span class="result-count" id="editTotalPct"></span>
+          </div>
+          <p class="sub">Vaste volgorde, zoals in de matrix. Vul alleen een percentage in bij de kleuren die je gebruikt.</p>
+          <div class="fixed-color-head"><span>Kleur</span><span>Opm.</span><span>%</span><span>Subnr.</span></div>
+        </div>
+        <div id="editFixedColorRows"></div>
+
+        <p class="subhead">Overige kleur (niet in de lijst)</p>
+        <div id="editColorRows"></div>
+        <button type="button" class="btn-add" id="addColorRowBtn">+ Andere kleur toevoegen</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn-copy-year" id="copyYearBtn" style="display:none">Kopie naar nieuw jaar</button>
+      <div class="modal-actions-row">
+        <button type="button" class="btn-secondary" id="cancelBtn">Annuleren</button>
+        <button type="button" class="btn-danger" id="deleteBtn" style="display:none">Verwijderen</button>
+        <button type="button" class="btn-primary" id="saveBtn">Opslaan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import {
+    getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+  import {
+    getFirestore, doc, getDoc, setDoc, onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBMmvlc2J1uvMCa3-hSeC85AsZIdYVRYEI",
+    authDomain: "kleurenmixen.firebaseapp.com",
+    projectId: "kleurenmixen",
+    storageBucket: "kleurenmixen.firebasestorage.app",
+    messagingSenderId: "266906184067",
+    appId: "1:266906184067:web:40b99a46352fccd7332eb6"
+  };
+  const fbApp = initializeApp(firebaseConfig);
+  const auth = getAuth(fbApp);
+  const db = getFirestore(fbApp);
+  const googleProvider = new GoogleAuthProvider();
+  const recepteDocRef = doc(db, 'recepten', 'data');
+
+  // Zolang er nog geen gezamenlijke data in Firestore staat, dienen deze
+  // recepten als eenmalige startgegevens (bij de allereerste keer opslaan).
+  /*DATA_START*/let DATA = [{"full": "Vollebregt Verano", "grower": "Vollebregt", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "10-02-2026", "bevestigd": "10-02-2026", "colors": [["Red", 20.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 2.0], ["Cream White", 13.0], ["Pure White", 2.0], ["Neon Pink", 11.0], ["Dark Violet", 10.0], ["Deep Wine Red", 7.0], ["Deep Neon Flamed", 7.0], ["Neon Flamed", 2.0], ["Fuiji Red", 6.0], ["Fuiji Wine Red", 6.0], ["Fuiji Dark violet", 2.0], ["Fuji Neon Pink", 3.0], ["Victoria White with Eye", 4.0]], "agg": {"Rood": 26.0, "Wit": 15.0, "Licht": 23.0, "Donker": 32.0, "Totaal": 96.0}, "submix": [["Fuji Neon Pink", 20.0], ["Fuji Salmon Pink", 25.0], ["Fuji Dark violet", 27.5], ["Fuji Wine red", 27.5]]}, {"full": "Vollebregt Carino", "grower": "Vollebregt", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "05-02-2026", "bevestigd": "06-02-2026", "colors": [["Red", 14.0], ["Light Salmon with Eye", 10.0], ["Pink with eye", 2.0], ["Cream White", 9.0], ["Pure White", 9.0], ["Neon Pink", 12.0], ["Deep dark violet", 2.0], ["Dark Violet", 7.0], ["Deep Wine Red", 5.0], ["Wine Red", 2.0], ["Deep Neon Flamed", 4.0], ["Fuiji Red", 5.0], ["Fuiji Wine Red", 5.0], ["Fuiji Magenta", 7.0], ["Fuji Neon Pink", 7.0]], "agg": {"Rood": 19.0, "Wit": 18.0, "Licht": 38.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Allure", "grower": "Vollebregt", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "10-10-2025", "bevestigd": "10-10-2025", "colors": [["Red", 7.0], ["White with eye", 0.0], ["Pure White", 17.0], ["Neon Pink", 14.0], ["Light Neon Pink", 4.0], ["Lavender", 3.0], ["Dark Violet", 12.0], ["Wine Red", 12.0], ["Deep Salmon Flamed", 0.0], ["Neon Flamed", 11.0], ["Fuiji Red", 2.0], ["Fuiji Wine Red", 6.0], ["Fuiji Dark violet", 6.0], ["Fuji Neon Pink", 6.0]], "agg": {"Rood": 9.0, "Wit": 17.0, "Licht": 38.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Macro", "grower": "Vollebregt", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "20-02-2026", "bevestigd": "20-02-2026", "colors": [["Red", 19.0], ["Light Salmon Pink", 9.0], ["White with eye", 0.0], ["Pure White", 16.0], ["Neon Pink", 10.0], ["Light Violet", 2.0], ["Dark Violet", 13.0], ["Wine Red", 4.0], ["Neon Flamed", 6.0], ["Fuiji Red", 7.0], ["Fuiji Dark violet", 8.0], ["Fuji Neon Pink", 6.0]], "agg": {"Rood": 26.0, "Wit": 16.0, "Licht": 33.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Vintro", "grower": "Vollebregt", "ras": "Vintro", "laatste_wijziging": "2026", "aanvraag": "12-03-2026", "bevestigd": "12-03-2026", "colors": [["Red", 22.0], ["Cream White", 18.0], ["Neon Pink", 22.0], ["Dark Violet", 22.0], ["Salmon Flamed", 16.0]], "agg": {"Rood": 22.0, "Wit": 18.0, "Licht": 38.0, "Donker": 22.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld XL", "grower": "Schoneveld", "ras": "XL", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 19.0], ["Light Salmon Pink", 6.0], ["Cream White", 2.0], ["Pure White", 16.0], ["Neon Pink", 12.0], ["Light Violet", 3.0], ["Dark Violet", 12.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Fuiji Red", 2.0], ["Fuiji Wine Red", 2.0], ["Fuiji Salmon Pink", 3.0]], "agg": {"Rood": 21.0, "Wit": 18.0, "Licht": 42.0, "Donker": 19.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Compact", "grower": "Schoneveld", "ras": "Compact", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 11.0], ["Salmon red", 11.0], ["Light Salmon with Eye", 5.0], ["Pure White", 14.0], ["Neon Pink", 11.0], ["Light Violet", 5.0], ["Dark Violet", 11.0], ["Dark Violet with Edge", 6.0], ["Wine Red", 4.0], ["Salmon Flamed", 12.0], ["Violet Flamed", 8.0], ["Violet Dip Flamed", 2.0]], "agg": {"Rood": 22.0, "Wit": 14.0, "Licht": 43.0, "Donker": 15.0, "Totaal": 94.0}, "submix": []}, {"full": "Schoneveld Picasso", "grower": "Schoneveld", "ras": "Picasso", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 21.0], ["Light with Eye", 5.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Dark Violet", 16.0], ["Wine Red", 11.0], ["Violet Flamed", 6.0], ["Wine Red Flamed", 6.0]], "agg": {"Rood": 21.0, "Wit": 20.0, "Licht": 32.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Mini Winter", "grower": "Schoneveld", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 21.0], ["Light Salmon with Eye", 10.0], ["Cream White", 12.0], ["Pure White", 4.0], ["Deep Neon Pink", 8.0], ["Light Neon Pink", 8.0], ["Deep dark violet", 14.0], ["Deep Wine Red", 5.0], ["Salmon Flamed", 5.0], ["Neon Flamed", 2.0], ["Violet Flamed", 5.0], ["Wine Red Flamed", 3.0], ["Fuiji Magenta", 3.0]], "agg": {"Rood": 21.0, "Wit": 16.0, "Licht": 36.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Mini Winter", "grower": "Endhoven", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Light Salmon with Eye", 9.0], ["Cream White", 16.0], ["Pure White", 4.0], ["Deep Neon Pink", 10.0], ["Light Neon Pink", 6.0], ["Deep dark violet", 13.0], ["Deep Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Neon Flamed", 3.0], ["Violet Flamed", 7.0], ["Wine Red Flamed", 7.0]], "agg": {"Rood": 17.0, "Wit": 20.0, "Licht": 36.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Rijke Mini Winter", "grower": "Rijke", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 10.0], ["Cream White", 35.0], ["Deep Neon Pink", 25.0], ["Deep dark violet", 15.0], ["Deep Wine Red", 15.0]], "agg": {"Rood": 10.0, "Wit": 35.0, "Licht": 0.0, "Donker": 55.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Donatello", "grower": "Schoneveld", "ras": "Donatello", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 19.0], ["Light Salmon with Eye", 8.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Light Violet", 5.0], ["Dark Violet", 12.0], ["Deep Wine Red", 9.0], ["Neon Flamed", 7.0], ["Wine Red Flamed", 5.0]], "agg": {"Rood": 19.0, "Wit": 20.0, "Licht": 40.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Donatello", "grower": "Endhoven", "ras": "Donatello", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 19.0], ["Light Salmon with Eye", 8.0], ["Light with Eye", 0.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Light Violet", 5.0], ["Dark Violet", 12.0], ["Deep Wine Red", 9.0], ["Neon Flamed", 7.0], ["Wine Red Flamed", 5.0]], "agg": {"Rood": 19.0, "Wit": 20.0, "Licht": 40.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Rembrandt", "grower": "Schoneveld", "ras": "Rembrandt", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 5.0], ["Salmon red", 12.0], ["Pure White", 17.0], ["Neon Pink", 17.0], ["Orchid", 6.0], ["Light Violet", 5.0], ["Dark Violet", 14.0], ["Wine Red", 13.0], ["Neon Flamed", 11.0]], "agg": {"Rood": 17.0, "Wit": 17.0, "Licht": 39.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Elegante", "grower": "Schoneveld", "ras": "Elegante", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 20.0], ["Pure White", 22.0], ["Neon Pink", 10.0], ["Light Neon Pink", 5.0], ["Dark Violet", 15.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Fuiji Dark violet", 5.0]], "agg": {"Rood": 20.0, "Wit": 22.0, "Licht": 33.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Sassenhof/Bolk Elegante", "grower": "Sassenhof/Bolk", "ras": "Elegante", "laatste_wijziging": "2026", "aanvraag": "25-11-2025", "bevestigd": "25-11-2025", "colors": [["Red", 10.0], ["Pure White", 15.0], ["Neon Pink", 15.0], ["Dark Violet", 15.0], ["Neon Flamed", 15.0], ["Violet Flamed", 15.0], ["Fuiji Dark violet", 15.0]], "agg": {"Rood": 10.0, "Wit": 15.0, "Licht": 45.0, "Donker": 30.0, "Totaal": 100.0}, "submix": []}, {"full": "Sassenhof/Bolk Verano", "grower": "Sassenhof/Bolk", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "26-11-2025", "bevestigd": "12-12-2025", "colors": [["Red", 10.0], ["Light Salmon with Eye", 5.0], ["Light with Eye", 3.0], ["Cream White", 8.0], ["Pure White", 8.0], ["Neon Pink", 7.0], ["Light Violet", 3.0], ["Dark Violet", 8.0], ["Deep Wine Red", 2.0], ["Deep Neon Flamed", 2.0], ["Neon Flamed", 5.0], ["Violet Flamed", 5.0], ["Fuiji Red", 5.0], ["Fuiji Wine Red", 4.0], ["Fuiji Dark violet", 7.0], ["Fuji Neon Pink", 8.0], ["Victoria White with Eye", 10.0]], "agg": {"Rood": 15.0, "Wit": 16.0, "Licht": 36.0, "Donker": 23.0, "Totaal": 90.0}, "submix": []}, {"full": "Rijke Verano", "grower": "Rijke", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "10-02-2026", "bevestigd": "10-02-2026", "colors": [["Red", 17.0], ["Light Salmon with Eye", 8.0], ["Pink with eye", 10.0], ["Cream White", 6.0], ["Pure White", 16.0], ["Neon Pink", 5.0], ["Dark Violet", 20.0], ["Deep Wine Red", 3.0], ["Deep Neon Flamed", 7.0], ["Violet Flamed", 4.0], ["Wine Red Flamed", 4.0]], "agg": {"Rood": 17.0, "Wit": 22.0, "Licht": 31.0, "Donker": 30.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Carino", "grower": "Bergcamp", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "18-12-2025", "bevestigd": "18-12-2025", "colors": [["Red", 18.0], ["Pink with eye", 4.0], ["Cream White", 6.0], ["Pure White", 12.0], ["Neon Pink", 16.0], ["Deep dark violet", 5.0], ["Dark Violet", 10.0], ["Deep Wine Red", 5.0], ["Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 10.0], ["Fuiji Magenta", 4.0], ["Fuji Neon Pink", 2.0]], "agg": {"Rood": 18.0, "Wit": 18.0, "Licht": 30.0, "Donker": 34.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Winter Carino", "grower": "Bergcamp", "ras": "Winter Carino", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 18.0], ["Pink with eye", 3.0], ["Cream White", 13.0], ["Pure White", 5.0], ["Neon Pink", 16.0], ["Deep dark violet", 9.0], ["Dark Violet", 7.0], ["Deep Wine Red", 10.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 10.0], ["Fuiji Magenta", 3.0], ["Fuji Neon Pink", 2.0]], "agg": {"Rood": 18.0, "Wit": 18.0, "Licht": 28.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Carino Fuji", "grower": "Bergcamp", "ras": "Carino Fuji", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Fuiji Red", 25.0], ["Fuiji Wine Red", 25.0], ["Fuiji Magenta", 25.0], ["Fuji Neon Pink", 25.0]], "agg": {"Rood": 25.0, "Wit": 0.0, "Licht": 50.0, "Donker": 25.0, "Totaal": 100.0}, "submix": [["Fuji Neon Pink", 32.5], ["Fuji Wine red", 15.0], ["Fuji Red", 20.0], ["Fuji Magenta", 32.5]]}, {"full": "Sassenhof/Bolk Carino", "grower": "Sassenhof/Bolk", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "26-11-2025", "bevestigd": "12-12-2025", "colors": [["Red", 10.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 10.0], ["Cream White", 18.0], ["Neon Pink", 7.0], ["Light Violet", 4.0], ["Deep dark violet", 12.0], ["Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 5.0], ["Wine Red Flamed", 5.0], ["Fuiji Red", 4.0], ["Fuiji Wine Red", 5.0], ["Fuji Neon Pink", 7.0]], "agg": {"Rood": 14.0, "Wit": 18.0, "Licht": 42.0, "Donker": 26.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Carino", "grower": "Endhoven", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 2.0], ["Cream White", 15.0], ["Neon Pink", 14.0], ["Light Violet", 3.0], ["Dark Violet", 10.0], ["Deep Wine Red", 5.0], ["Wine Red", 4.0], ["Salmon Flamed", 5.0], ["Deep Neon Flamed", 7.0], ["Wine Red Flamed", 7.0], ["Fuiji Red", 3.0], ["Fuiji Wine Red", 3.0]], "agg": {"Rood": 20.0, "Wit": 15.0, "Licht": 36.0, "Donker": 29.0, "Totaal": 100.0}, "submix": []}, {"full": "Carino Mix Unity", "grower": "Carino Mix Unity", "ras": "Carino Mix Unity", "laatste_wijziging": "2026", "aanvraag": "26-09-2025", "bevestigd": "26-09-2025", "colors": [["Red", 19.0], ["Light Salmon with Eye", 16.0], ["Cream White", 21.0], ["Neon Pink", 17.0], ["Light Violet", 6.0], ["Dark Violet", 10.0], ["Wine Red", 11.0]], "agg": {"Rood": 19.0, "Wit": 21.0, "Licht": 39.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Petticoat", "grower": "Bergcamp", "ras": "Petticoat", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Light with Eye", 34.0], ["Neon Pink", 33.0], ["Dark Violet", 33.0]], "agg": {"Rood": 0.0, "Wit": 0.0, "Licht": 67.0, "Donker": 33.0, "Totaal": 100.0}, "submix": []}, {"full": "Sassenhof/Bolk Allure", "grower": "Sassenhof/Bolk", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "15-01-2026", "bevestigd": "16-01-2026", "colors": [["Red", 9.0], ["Pure White", 13.0], ["Light Neon Pink", 11.0], ["Lavender", 1.0], ["Dark Violet", 11.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 8.0], ["Wine Red Flamed", 6.0], ["Fuiji Red", 4.0], ["Fuiji Wine Red", 10.0], ["Fuiji Dark violet", 9.0], ["Fuji Neon Pink", 4.0]], "agg": {"Rood": 13.0, "Wit": 13.0, "Licht": 39.0, "Donker": 35.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Allure", "grower": "Endhoven", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 16.0], ["Dark Salmon Pink", 6.0], ["Light with Eye", 2.0], ["Cream White", 7.0], ["Pure White", 7.0], ["Neon Pink", 6.0], ["Light Neon Pink", 5.0], ["Lavender", 5.0], ["Dark Violet", 13.0], ["Wine Red", 8.0], ["Deep Salmon Flamed", 4.0], ["Neon Flamed", 5.0], ["Violet Flamed", 3.0], ["Wine Red Flamed", 8.0], ["Fuiji Wine Red", 2.0], ["Fuiji Dark violet", 3.0]], "agg": {"Rood": 16.0, "Wit": 14.0, "Licht": 34.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Kester Macro", "grower": "Kester", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "26-03-2026", "bevestigd": "26-03-2026", "colors": [["Red", 9.0], ["Light Salmon Pink", 15.0], ["Cream White", 16.0], ["Neon Pink", 17.0], ["Dark Violet", 12.0], ["Wine Red", 12.0], ["Neon Flamed", 10.0], ["Fuiji Red", 9.0]], "agg": {"Rood": 18.0, "Wit": 16.0, "Licht": 42.0, "Donker": 24.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Macro", "grower": "Endhoven", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Dark Salmon Pink", 3.0], ["Light Salmon Pink", 9.0], ["Pure White", 13.0], ["Neon Pink", 10.0], ["Light Violet", 8.0], ["Dark Violet", 10.0], ["Wine Red", 7.0], ["Neon Flamed", 5.0], ["Violet Flamed", 5.0], ["Wine Red Flamed", 4.0], ["Fuiji Red", 6.0], ["Fuiji Dark violet", 3.0]], "agg": {"Rood": 23.0, "Wit": 13.0, "Licht": 41.0, "Donker": 23.0, "Totaal": 100.0}, "submix": []}, {"full": "MCM Enthoven Macro", "grower": "MCM Enthoven", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "21-10-2025", "bevestigd": "29-10-2025", "colors": [["Red", 15.0], ["Light Salmon Pink", 3.0], ["Cream White", 5.0], ["Pure White", 5.0], ["Neon Pink", 11.0], ["Dark Violet", 15.0], ["Wine Red", 4.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Wine Red Flamed", 9.0], ["Fuiji Red", 6.0], ["Fuiji Dark violet", 5.0], ["Fuji Neon Pink", 4.0]], "agg": {"Rood": 21.0, "Wit": 10.0, "Licht": 45.0, "Donker": 24.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Merengue", "grower": "Bergcamp", "ras": "Merengue", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Salmon red", 21.0], ["Pure White", 17.0], ["Neon Pink", 20.0], ["Dark Violet", 19.0], ["Wine Red", 13.0], ["Neon Flamed", 10.0]], "agg": {"Rood": 21.0, "Wit": 17.0, "Licht": 30.0, "Donker": 32.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Vintro", "grower": "Schoneveld", "ras": "Vintro", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 16.0], ["Cream White", 28.0], ["Neon Pink", 23.0], ["Dark Violet", 22.0], ["Salmon Flamed", 11.0]], "agg": {"Rood": 16.0, "Wit": 28.0, "Licht": 34.0, "Donker": 22.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Leopardo", "grower": "Schoneveld", "ras": "Leopardo", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 20.0], ["Dark Salmon Pink", 5.0], ["Pink with eye", 6.0], ["Light with Eye", 4.0], ["Cream White", 15.0], ["Neon Pink", 12.0], ["Light Neon Pink", 5.0], ["Dark Violet", 15.0], ["Wine Red", 6.0], ["Salmon Flamed", 6.0], ["Violet Flamed", 6.0]], "agg": {"Rood": 20.0, "Wit": 15.0, "Licht": 39.0, "Donker": 26.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Paso Doble", "grower": "Schoneveld", "ras": "Paso Doble", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Light Salmon Pink", 17.0], ["Pure White", 17.0], ["Neon Pink", 17.0], ["Salmon Flamed", 17.0], ["Neon Flamed", 14.0], ["Violet Flamed", 18.0]], "agg": {"Rood": 0.0, "Wit": 17.0, "Licht": 83.0, "Donker": 0.0, "Totaal": 100.0}, "submix": []}];/*DATA_END*/
+
+  const MASTER_COLORS = ["Red", "Salmon red", "Dark Salmon Pink", "Light Salmon Pink", "Light Salmon with Eye", "Pink with eye", "Light with Eye", "White with eye", "Cream White", "Pure White", "Deep Neon Pink", "Neon Pink", "Light Neon Pink", "Orchid", "Light Violet", "Lavender", "Deep dark violet", "Dark Violet", "Dark Violet with Edge", "Deep Wine Red", "Wine Red", "Magenta", "Deep Salmon Flamed", "Salmon Flamed", "Deep Neon Flamed", "Neon Flamed", "Violet Flamed", "Violet Dip Flamed", "Wine Red Flamed", "Fuiji Red", "Fuiji Wine Red", "Fuiji Dark violet", "Fuiji Magenta", "Fuji Neon Pink", "Fuiji Salmon Pink", "Victoria Light Pink", "Victoria White with Eye"];
+  const MASTER_COLOR_CATEGORY = {"Red": "Rood", "Salmon red": "Rood", "Fuiji Red": "Rood", "Cream White": "Wit", "Pure White": "Wit", "Light Salmon Pink": "Licht", "Light Salmon with Eye": "Licht", "Pink with eye": "Licht", "Light with Eye": "Licht", "Neon Pink": "Licht", "Light Neon Pink": "Licht", "Orchid": "Licht", "Light Violet": "Licht", "Lavender": "Licht", "Salmon Flamed": "Licht", "Neon Flamed": "Licht", "Violet Flamed": "Licht", "Violet Dip Flamed": "Licht", "Wine Red Flamed": "Licht", "Fuiji Magenta": "Licht", "Fuji Neon Pink": "Licht", "Fuiji Salmon Pink": "Licht", "Magenta": "Licht", "Dark Salmon Pink": "Donker", "White with eye": "Donker", "Deep Neon Pink": "Donker", "Deep dark violet": "Donker", "Dark Violet": "Donker", "Deep Wine Red": "Donker", "Wine Red": "Donker", "Deep Salmon Flamed": "Donker", "Deep Neon Flamed": "Donker", "Fuiji Wine Red": "Donker", "Fuiji Dark violet": "Donker", "Dark Violet with Edge": null, "Victoria White with Eye": null, "Victoria Light Pink": null};
+
+  // ---------- Inloggen & gezamenlijke data (Firebase) ----------
+  // Deze pagina deelt de gegevens live via Firestore: iedereen die inlogt
+  // met een toegestaan Google-account ziet en bewerkt dezelfde data.
+  function showSaveToast(msg, isError) {
+    const el = document.getElementById('saveToast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.toggle('error', !!isError);
+    el.classList.add('show');
+    clearTimeout(showSaveToast._t);
+    showSaveToast._t = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+  function downloadBackup() {
+    try {
+      const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kleurmengsels-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showSaveToast('Backup gedownload ✓', false);
+    } catch (e) {
+      showSaveToast('Backup mislukt, probeer opnieuw', true);
+    }
+  }
+
+  let firestoreReady = false;
+  let unsubscribeData = null;
+
+  async function syncToFirestore() {
+    if (!firestoreReady) return;
+    try {
+      await setDoc(recepteDocRef, { items: DATA });
+      const dot = document.getElementById('syncDot');
+      if (dot) { dot.classList.remove('offline'); dot.title = 'Opgeslagen'; }
+    } catch (e) {
+      showSaveToast('Opslaan mislukt, probeer opnieuw', true);
+      const dot = document.getElementById('syncDot');
+      if (dot) { dot.classList.add('offline'); dot.title = 'Niet opgeslagen'; }
+    }
+  }
+
+  function startSharedDataSync() {
+    if (unsubscribeData) return;
+    unsubscribeData = onSnapshot(recepteDocRef, async (snap) => {
+      if (snap.exists()) {
+        DATA = snap.data().items || [];
+      } else {
+        // Eerste keer: nog geen gezamenlijke data — deze pagina's
+        // startgegevens worden gebruikt om Firestore te vullen.
+        try { await setDoc(recepteDocRef, { items: DATA }); } catch (e) { /* laat lokaal zien, probeer later opnieuw */ }
+      }
+      buildMatrix();
+    }, (err) => {
+      showSaveToast('Verbinding met gezamenlijke data verbroken', true);
+    });
+  }
+
+  function stopSharedDataSync() {
+    if (unsubscribeData) { unsubscribeData(); unsubscribeData = null; }
+    firestoreReady = false;
+  }
+
+  function showAuthState(state, email) {
+    document.getElementById('authLoading').style.display = state === 'loading' ? '' : 'none';
+    document.getElementById('authSignedOut').style.display = state === 'signedOut' ? '' : 'none';
+    document.getElementById('authDenied').style.display = state === 'denied' ? '' : 'none';
+    document.getElementById('authOverlay').style.display = state === 'ok' ? 'none' : 'flex';
+    document.getElementById('appRoot').style.display = state === 'ok' ? '' : 'none';
+    if (state === 'denied') document.getElementById('authDeniedEmail').textContent = email || '';
+  }
+
+  document.getElementById('googleSignInBtn').addEventListener('click', () => {
+    signInWithPopup(auth, googleProvider).catch(() => {
+      showSaveToast('Inloggen mislukt, probeer opnieuw', true);
+    });
+  });
+  document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+  document.getElementById('authDeniedLogoutBtn').addEventListener('click', () => signOut(auth));
+
+  onAuthStateChanged(auth, async (user) => {
+    stopSharedDataSync();
+    if (!user) {
+      showAuthState('signedOut');
+      return;
+    }
+    showAuthState('loading');
+    const email = (user.email || '').toLowerCase();
+    try {
+      const editorSnap = await getDoc(doc(db, 'editors', email));
+      if (!editorSnap.exists()) {
+        showAuthState('denied', email);
+        return;
+      }
+    } catch (e) {
+      showAuthState('denied', email);
+      return;
+    }
+    document.getElementById('userEmail').textContent = email;
+    firestoreReady = true;
+    showAuthState('ok');
+    startSharedDataSync();
+  });
+
+  function fmtPct(v) {
+    return v.toFixed(1).replace('.', ',') + '%';
+  }
+
+  let decimalPlaces = 0;
+  let showSubnummers = false;
+
+  function fmtMatrixPct(v) {
+    return v.toFixed(decimalPlaces).replace('.', ',') + '%';
+  }
+  function hasDecimal(v) {
+    return Math.abs(v - Math.round(v)) > 0.001;
+  }
+  function columnTotal(col) {
+    return (col.colors || []).reduce((sum, c) => sum + (typeof c[1] === 'number' ? c[1] : 0), 0);
+  }
+
+  function getGrowers() {
+    return [...new Set(DATA.map(d => d.grower))];
+  }
+
+  function groupByKlant(data) {
+    const map = new Map();
+    data.forEach(col => {
+      if (!map.has(col.grower)) map.set(col.grower, []);
+      map.get(col.grower).push(col);
+    });
+    return map;
+  }
+
+  function extraColorsInOrder(data) {
+    const known = new Set(MASTER_COLORS);
+    const extra = new Set();
+    data.forEach(col => col.colors.forEach(([naam]) => {
+      if (!known.has(naam)) extra.add(naam);
+    }));
+    return Array.from(extra).sort();
+  }
+
+  function filteredDataForMatrix() {
+    const jFilter = document.getElementById('filterJaar').value;
+    const kFilter = document.getElementById('filterKlant').value;
+    const sFilter = document.getElementById('filterSerie').value;
+    return DATA.filter(col =>
+      (!jFilter || col.laatste_wijziging === jFilter) &&
+      (!kFilter || col.grower === kFilter) &&
+      (!sFilter || col.ras === sFilter)
+    );
+  }
+
+  let jaarFilterInitialized = false;
+
+  function fillFilterOptions() {
+    const jSel = document.getElementById('filterJaar');
+    const kSel = document.getElementById('filterKlant');
+    const sSel = document.getElementById('filterSerie');
+    const jCurrent = jSel.value;
+    const kCurrent = kSel.value;
+    const sCurrent = sSel.value;
+
+    const jaren = [...new Set(DATA.map(d => d.laatste_wijziging).filter(Boolean))].sort((a, b) => b.localeCompare(a));
+    const klanten = [...new Set(DATA.map(d => d.grower))].sort((a, b) => a.localeCompare(b));
+    const series = [...new Set(DATA.map(d => d.ras))].sort((a, b) => a.localeCompare(b));
+
+    jSel.innerHTML = '<option value="">Alle jaren</option>' +
+      jaren.map(j => '<option value="' + escapeAttr(j) + '">' + j + '</option>').join('');
+    kSel.innerHTML = '<option value="">Alle klanten</option>' +
+      klanten.map(g => '<option value="' + escapeAttr(g) + '">' + g + '</option>').join('');
+    sSel.innerHTML = '<option value="">Alle series</option>' +
+      series.map(r => '<option value="' + escapeAttr(r) + '">' + r + '</option>').join('');
+
+    if (!jaarFilterInitialized) {
+      if (jaren.includes('2026')) jSel.value = '2026';
+      jaarFilterInitialized = true;
+    } else if (jaren.includes(jCurrent)) {
+      jSel.value = jCurrent;
+    }
+    if (klanten.includes(kCurrent)) kSel.value = kCurrent;
+    if (series.includes(sCurrent)) sSel.value = sCurrent;
+  }
+
+  function buildMatrix() {
+    fillFilterOptions();
+    const filtered = filteredDataForMatrix();
+    const groups = groupByKlant(filtered);
+
+    const usedColors = new Set();
+    filtered.forEach(col => col.colors.forEach(([naam]) => usedColors.add(naam)));
+    const rows = MASTER_COLORS.concat(extraColorsInOrder(filtered)).filter(k => usedColors.has(k));
+
+    document.getElementById('headerStats').textContent =
+      groups.size + ' klanten · ' + rows.length + ' kleuren · ' + filtered.length + ' series';
+
+    const table = document.getElementById('matrixTable');
+    table.innerHTML = '';
+
+    if (!filtered.length) {
+      const emptyRow = document.createElement('p');
+      emptyRow.className = 'empty-note';
+      emptyRow.textContent = 'Geen klant/serie combinatie gevonden voor dit filter.';
+      table.parentElement.appendChild(emptyRow);
+      return;
+    }
+    const oldEmpty = table.parentElement.querySelector('.empty-note');
+    if (oldEmpty) oldEmpty.remove();
+
+    const thead = document.createElement('thead');
+    const klantRow = document.createElement('tr');
+    klantRow.className = 'klant-row';
+    let klantHtml = '<th class="corner" rowspan="3"></th>';
+    groups.forEach((cols, klant) => {
+      klantHtml += '<th colspan="' + cols.length + '">' + klant + '</th>';
+    });
+    klantRow.innerHTML = klantHtml;
+    thead.appendChild(klantRow);
+
+    const serieRow = document.createElement('tr');
+    serieRow.className = 'serie-row';
+    let serieHtml = '';
+    groups.forEach(cols => {
+      cols.forEach(col => {
+        const total = columnTotal(col);
+        const notHundred = Math.abs(total - 100) > 0.05;
+        const cls = 'clickable' + (notHundred ? ' not-hundred' : '');
+        const title = notHundred
+          ? 'Totaal: ' + total.toFixed(1).replace('.', ',') + '% (geen 100%) — klik om te bewerken'
+          : 'Klik om te bewerken';
+        serieHtml += '<th class="' + cls + '" data-grower="' + escapeAttr(col.grower) + '" data-ras="' + escapeAttr(col.ras) + '" data-jaar="' + escapeAttr(col.laatste_wijziging || '') + '" title="' + escapeAttr(title) + '">' + col.ras + '</th>';
+      });
+    });
+    serieRow.innerHTML = serieHtml;
+    thead.appendChild(serieRow);
+
+    const jaarRow = document.createElement('tr');
+    jaarRow.className = 'jaar-row';
+    let jaarHtml = '';
+    groups.forEach(cols => {
+      cols.forEach(col => {
+        const jaar = col.laatste_wijziging || '–';
+        const checkHtml = col.bevestigd
+          ? '<span class="jaar-check" title="Bevestigd: ' + escapeAttr(col.bevestigd) + '">&#10003;</span>'
+          : '';
+        jaarHtml += '<th class="jaar-cell">' + jaar + checkHtml + '</th>';
+      });
+    });
+    jaarRow.innerHTML = jaarHtml;
+    thead.appendChild(jaarRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    rows.forEach(kleur => {
+      const cat = MASTER_COLOR_CATEGORY[kleur] || null;
+      const tr = document.createElement('tr');
+      let rowHtml = '<th>' + kleur + '</th>';
+      groups.forEach(cols => {
+        cols.forEach(col => {
+          const found = col.colors.find(([n]) => n === kleur);
+          if (found) {
+            const decCls = hasDecimal(found[1]) ? ' has-decimal' : '';
+            const opm = found[3];
+            const opmCls = opm ? ' has-opm' : '';
+            const titleAttr = opm ? ' title="' + escapeAttr(opm) + '"' : '';
+            let cellContent;
+            let subLayoutCls = '';
+            if (showSubnummers) {
+              subLayoutCls = ' has-sub-layout';
+              const subInner = found[2] ? '(' + escapeAttr(String(found[2])) + ')' : '';
+              cellContent = '<span class="cell-inner"><span class="cell-val">' + fmtMatrixPct(found[1]) + '</span><span class="cell-subwrap"><span class="cell-sub">' + subInner + '</span></span></span>';
+            } else {
+              cellContent = fmtMatrixPct(found[1]);
+            }
+            rowHtml += '<td class="filled cat-' + (cat || '') + decCls + opmCls + subLayoutCls + '"' + titleAttr + '>' + cellContent + '</td>';
+          } else {
+            rowHtml += '<td class="empty">–</td>';
+          }
+        });
+      });
+      tr.innerHTML = rowHtml;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+  }
+
+  function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  const filterJaarEl = document.getElementById('filterJaar');
+  const filterKlantEl = document.getElementById('filterKlant');
+  const filterSerieEl = document.getElementById('filterSerie');
+  const clearFilterBtn = document.getElementById('clearFilterBtn');
+  filterJaarEl.addEventListener('change', buildMatrix);
+  filterKlantEl.addEventListener('change', buildMatrix);
+  filterSerieEl.addEventListener('change', buildMatrix);
+  clearFilterBtn.addEventListener('click', () => {
+    filterJaarEl.value = '';
+    filterKlantEl.value = '';
+    filterSerieEl.value = '';
+    buildMatrix();
+  });
+
+  const printBtn = document.getElementById('printBtn');
+  printBtn.addEventListener('click', () => {
+    if (!filterKlantEl.value && !filterSerieEl.value) {
+      alert('Filter eerst op Klant en/of Serie voor je print. Printen van de volledige matrix is niet toegestaan.');
+      return;
+    }
+    window.print();
+  });
+
+  const exportBtn = document.getElementById('exportBtn');
+  exportBtn.addEventListener('click', downloadBackup);
+
+  const decimalsBtn = document.getElementById('decimalsBtn');
+  const subnumBtn = document.getElementById('subnumBtn');
+  decimalsBtn.addEventListener('click', () => {
+    decimalPlaces = decimalPlaces === 0 ? 1 : 0;
+    decimalsBtn.textContent = String(decimalPlaces);
+    decimalsBtn.dataset.value = String(decimalPlaces);
+    decimalsBtn.classList.toggle('on', decimalPlaces === 1);
+    buildMatrix();
+  });
+  subnumBtn.addEventListener('click', () => {
+    showSubnummers = !showSubnummers;
+    subnumBtn.textContent = showSubnummers ? 'Ja' : 'Nee';
+    subnumBtn.dataset.value = showSubnummers ? 'ja' : 'nee';
+    subnumBtn.classList.toggle('on', showSubnummers);
+    buildMatrix();
+  });
+
+  // De matrix wordt voor het eerst gevuld zodra de gezamenlijke data is
+  // opgehaald (zie startSharedDataSync hierboven, na inloggen).
+
+  // ---------- Invoeromgeving (modal) ----------
+
+  const MASTER_COLORS_LC = MASTER_COLORS.map(c => c.toLowerCase());
+  const NEW_VALUE = '__nieuw__';
+  let editingKey = null;
+  let copyMode = false;
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const fKlantSelect = document.getElementById('fKlantSelect');
+  const fKlantNewWrap = document.getElementById('fKlantNewWrap');
+  const fKlantNew = document.getElementById('fKlantNew');
+  const fRasSelect = document.getElementById('fRasSelect');
+  const fRasNewWrap = document.getElementById('fRasNewWrap');
+  const fRasNew = document.getElementById('fRasNew');
+  const editFixedColorRowsEl = document.getElementById('editFixedColorRows');
+  const editColorRowsEl = document.getElementById('editColorRows');
+  const editTotalPctEl = document.getElementById('editTotalPct');
+  const addColorRowBtn = document.getElementById('addColorRowBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
+  const copyYearBtn = document.getElementById('copyYearBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const newSerieBtn = document.getElementById('newSerieBtn');
+  const modalClose = document.getElementById('modalClose');
+
+  function buildFixedColorRows() {
+    editFixedColorRowsEl.innerHTML = MASTER_COLORS.map(name =>
+      '<div class="color-fixed-row">' +
+        '<span class="cf-name">' + name + '</span>' +
+        '<input type="text" class="cf-opm" data-color="' + escapeAttr(name) + '" placeholder="–">' +
+        '<input type="number" class="cf-pct" data-color="' + escapeAttr(name) + '" placeholder="–" step="0.1" min="0" max="100">' +
+        '<input type="text" class="cf-sub" data-color="' + escapeAttr(name) + '" placeholder="–">' +
+      '</div>'
+    ).join('');
+    editFixedColorRowsEl.querySelectorAll('.cf-pct').forEach(inp => inp.addEventListener('input', updateEditTotal));
+  }
+  buildFixedColorRows();
+
+  function newColorRow(name, pct, sub, opm) {
+    const row = document.createElement('div');
+    row.className = 'color-edit-row';
+    row.innerHTML =
+      '<input type="text" class="ce-name" placeholder="Kleurnaam" value="' + escapeAttr(name || '') + '">' +
+      '<input type="text" class="ce-opm" placeholder="opm" value="' + escapeAttr(opm || '') + '">' +
+      '<input type="number" class="ce-pct" placeholder="%" step="0.1" min="0" max="100" value="' + (pct === undefined || pct === '' ? '' : pct) + '">' +
+      '<input type="text" class="ce-sub" placeholder="sub" value="' + escapeAttr(sub || '') + '">' +
+      '<button type="button" class="ce-remove" aria-label="Verwijderen">&#10005;</button>';
+    row.querySelector('.ce-remove').addEventListener('click', () => { row.remove(); updateEditTotal(); });
+    row.querySelector('.ce-pct').addEventListener('input', updateEditTotal);
+    editColorRowsEl.appendChild(row);
+  }
+  addColorRowBtn.addEventListener('click', () => newColorRow());
+
+  function computeEditDistribution() {
+    const dist = { Rood: 0, Wit: 0, Licht: 0, Donker: 0 };
+    let uncategorized = 0;
+    editFixedColorRowsEl.querySelectorAll('.cf-pct').forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (isNaN(v)) return;
+      const cat = MASTER_COLOR_CATEGORY[inp.dataset.color];
+      if (cat) dist[cat] += v; else uncategorized += v;
+    });
+    return { dist, uncategorized };
+  }
+
+  function updateEditTotal() {
+    let total = 0;
+    editFixedColorRowsEl.querySelectorAll('.cf-pct').forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v)) total += v;
+    });
+    document.querySelectorAll('.color-edit-row').forEach(r => {
+      const v = parseFloat(r.querySelector('.ce-pct').value);
+      if (!isNaN(v)) total += v;
+    });
+    editTotalPctEl.textContent = 'Totaal: ' + total.toFixed(1).replace('.', ',') + '%';
+    editTotalPctEl.style.color = Math.abs(total - 100) < 0.05 ? '' : 'var(--accent)';
+  }
+
+  function clearFixedColorRows() {
+    editFixedColorRowsEl.querySelectorAll('.cf-pct').forEach(inp => inp.value = '');
+    editFixedColorRowsEl.querySelectorAll('.cf-sub').forEach(inp => inp.value = '');
+    editFixedColorRowsEl.querySelectorAll('.cf-opm').forEach(inp => inp.value = '');
+  }
+
+  function ddmmyyyyToISO(s) {
+    const m = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s || '');
+    return m ? (m[3] + '-' + m[2] + '-' + m[1]) : '';
+  }
+  function isoToDdmmyyyy(s) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+    return m ? (m[3] + '-' + m[2] + '-' + m[1]) : '';
+  }
+
+  function clearDataFields() {
+    document.getElementById('fJaar').value = '';
+    document.getElementById('fAanvraag').value = '';
+    document.getElementById('fBevestigd').value = '';
+    clearFixedColorRows();
+    editColorRowsEl.innerHTML = '';
+    updateEditTotal();
+  }
+
+  function loadDataFields(col) {
+    document.getElementById('fJaar').value = col.laatste_wijziging || '';
+    document.getElementById('fAanvraag').value = ddmmyyyyToISO(col.aanvraag);
+    document.getElementById('fBevestigd').value = ddmmyyyyToISO(col.bevestigd);
+
+    clearFixedColorRows();
+    editColorRowsEl.innerHTML = '';
+    (col.colors || []).forEach(([n, p, s, o]) => {
+      const idx = MASTER_COLORS_LC.indexOf(n.trim().toLowerCase());
+      if (idx > -1) {
+        editFixedColorRowsEl.querySelectorAll('.cf-pct')[idx].value = p;
+        editFixedColorRowsEl.querySelectorAll('.cf-sub')[idx].value = s || '';
+        editFixedColorRowsEl.querySelectorAll('.cf-opm')[idx].value = o || '';
+      } else {
+        newColorRow(n, p, s, o);
+      }
+    });
+
+    updateEditTotal();
+  }
+
+  function fillFKlantSelect() {
+    const current = fKlantSelect.value;
+    fKlantSelect.innerHTML = '';
+    getGrowers().forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g; opt.textContent = g;
+      fKlantSelect.appendChild(opt);
+    });
+    const newOpt = document.createElement('option');
+    newOpt.value = NEW_VALUE; newOpt.textContent = '➕ Nieuwe klant toevoegen';
+    fKlantSelect.appendChild(newOpt);
+    if (current && [...fKlantSelect.options].some(o => o.value === current)) fKlantSelect.value = current;
+  }
+
+  function fillFRasSelect() {
+    const g = fKlantSelect.value;
+    const current = fRasSelect.value;
+    fRasSelect.innerHTML = '';
+    if (g !== NEW_VALUE) {
+      DATA.filter(d => d.grower === g).forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.ras; opt.textContent = d.ras;
+        fRasSelect.appendChild(opt);
+      });
+    }
+    const newOpt = document.createElement('option');
+    newOpt.value = NEW_VALUE; newOpt.textContent = '➕ Nieuwe serie toevoegen';
+    fRasSelect.appendChild(newOpt);
+    const options = [...fRasSelect.options].map(o => o.value);
+    if (g === NEW_VALUE) {
+      fRasSelect.value = NEW_VALUE;
+    } else if (current && options.includes(current)) {
+      fRasSelect.value = current;
+    }
+  }
+
+  function updateNewWraps() {
+    fKlantNewWrap.style.display = fKlantSelect.value === NEW_VALUE ? '' : 'none';
+    fRasNewWrap.style.display = fRasSelect.value === NEW_VALUE ? '' : 'none';
+  }
+
+  function currentGrowerValue() {
+    return fKlantSelect.value === NEW_VALUE ? fKlantNew.value.trim() : fKlantSelect.value;
+  }
+  function currentRasValue() {
+    return fRasSelect.value === NEW_VALUE ? fRasNew.value.trim() : fRasSelect.value;
+  }
+
+  function findColumn(grower, ras, jaar) {
+    const matches = DATA.filter(d => d.grower === grower && d.ras === ras);
+    if (matches.length === 0) return null;
+    if (jaar) {
+      const exact = matches.find(d => (d.laatste_wijziging || '') === jaar);
+      if (exact) return exact;
+    }
+    const jFilter = document.getElementById('filterJaar').value;
+    if (jFilter) {
+      const byFilter = matches.find(d => d.laatste_wijziging === jFilter);
+      if (byFilter) return byFilter;
+    }
+    const sorted = [...matches].sort((a, b) => (b.laatste_wijziging || '').localeCompare(a.laatste_wijziging || ''));
+    return sorted[0];
+  }
+
+  function onComboChange() {
+    if (fKlantSelect.value !== NEW_VALUE && fRasSelect.value !== NEW_VALUE) {
+      const col = findColumn(fKlantSelect.value, fRasSelect.value, null);
+      if (col) {
+        editingKey = { grower: col.grower, ras: col.ras, jaar: col.laatste_wijziging || '' };
+        loadDataFields(col);
+        deleteBtn.style.display = '';
+        copyYearBtn.style.display = '';
+        modalTitle.textContent = 'Serie bewerken: ' + col.grower + ' ' + col.ras + (col.laatste_wijziging ? ' (' + col.laatste_wijziging + ')' : '');
+        return;
+      }
+    }
+    editingKey = null;
+    clearDataFields();
+    deleteBtn.style.display = 'none';
+    copyYearBtn.style.display = 'none';
+    modalTitle.textContent = 'Serie aanmaken';
+  }
+
+  let lastKlantVal = null;
+  let lastRasVal = null;
+  function rememberComboValues() {
+    lastKlantVal = fKlantSelect.value;
+    lastRasVal = fRasSelect.value;
+  }
+
+  fKlantSelect.addEventListener('change', () => {
+    if (editingKey && !confirm('Je wijzigt de klant van een bestaand recept. Klopt dit?')) {
+      fKlantSelect.value = lastKlantVal;
+      return;
+    }
+    fillFRasSelect(); updateNewWraps(); onComboChange(); rememberComboValues();
+  });
+  fRasSelect.addEventListener('change', () => {
+    if (editingKey && !confirm('Je wijzigt de serie van een bestaand recept. Klopt dit?')) {
+      fRasSelect.value = lastRasVal;
+      return;
+    }
+    updateNewWraps(); onComboChange(); rememberComboValues();
+  });
+  fKlantNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; });
+  fRasNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; });
+
+  function openModal(grower, ras, jaar) {
+    copyMode = false;
+    fillFKlantSelect();
+    fKlantSelect.value = grower || NEW_VALUE;
+    fillFRasSelect();
+    if (ras) { fRasSelect.value = ras; } else if (!grower) { fRasSelect.value = NEW_VALUE; }
+    updateNewWraps();
+    if (grower && ras && jaar) {
+      const col = findColumn(grower, ras, jaar);
+      if (col) {
+        editingKey = { grower: col.grower, ras: col.ras, jaar: col.laatste_wijziging || '' };
+        loadDataFields(col);
+        deleteBtn.style.display = '';
+        copyYearBtn.style.display = '';
+        modalTitle.textContent = 'Serie bewerken: ' + col.grower + ' ' + col.ras + (col.laatste_wijziging ? ' (' + col.laatste_wijziging + ')' : '');
+      } else {
+        onComboChange();
+      }
+    } else {
+      onComboChange();
+    }
+    rememberComboValues();
+    if (!grower) { fKlantNew.focus(); }
+    modalOverlay.style.display = 'flex';
+  }
+  function closeModal() {
+    modalOverlay.style.display = 'none';
+  }
+
+  newSerieBtn.addEventListener('click', () => openModal());
+  modalClose.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+  document.getElementById('matrixTable').addEventListener('click', (e) => {
+    const th = e.target.closest('th.clickable');
+    if (!th) return;
+    openModal(th.dataset.grower, th.dataset.ras, th.dataset.jaar);
+  });
+
+  saveBtn.addEventListener('click', () => {
+    const grower = currentGrowerValue();
+    const ras = currentRasValue();
+    if (!grower || !ras) { alert('Vul in elk geval Klant en Serie in.'); return; }
+
+    const fixedColors = [...editFixedColorRowsEl.querySelectorAll('.cf-pct')]
+      .map(inp => {
+        const subInp = editFixedColorRowsEl.querySelector('.cf-sub[data-color="' + CSS.escape(inp.dataset.color) + '"]');
+        const opmInp = editFixedColorRowsEl.querySelector('.cf-opm[data-color="' + CSS.escape(inp.dataset.color) + '"]');
+        const sub = subInp ? subInp.value.trim() : '';
+        const opm = opmInp ? opmInp.value.trim() : '';
+        return [inp.dataset.color, parseFloat(inp.value), sub || null, opm || null];
+      })
+      .filter(([n, p]) => !isNaN(p));
+    const customColors = [...document.querySelectorAll('.color-edit-row')].map(r => {
+      const name = r.querySelector('.ce-name').value.trim();
+      const pct = parseFloat(r.querySelector('.ce-pct').value);
+      const sub = r.querySelector('.ce-sub').value.trim();
+      const opm = r.querySelector('.ce-opm').value.trim();
+      return [name, pct, sub || null, opm || null];
+    }).filter(([n, p]) => n && !isNaN(p));
+    const colorsArr = [...fixedColors, ...customColors];
+
+    const { dist } = computeEditDistribution();
+    const agg = {
+      Rood: Math.round(dist.Rood * 10) / 10,
+      Wit: Math.round(dist.Wit * 10) / 10,
+      Licht: Math.round(dist.Licht * 10) / 10,
+      Donker: Math.round(dist.Donker * 10) / 10
+    };
+    agg.Totaal = Math.round((dist.Rood + dist.Wit + dist.Licht + dist.Donker) * 10) / 10;
+
+    const newJaar = document.getElementById('fJaar').value.trim() || null;
+
+    const newCol = {
+      full: grower + ' ' + ras,
+      grower, ras,
+      laatste_wijziging: newJaar,
+      aanvraag: isoToDdmmyyyy(document.getElementById('fAanvraag').value) || null,
+      bevestigd: isoToDdmmyyyy(document.getElementById('fBevestigd').value) || null,
+      colors: colorsArr,
+      agg,
+      submix: (editingKey && editingKey.grower === grower && editingKey.ras === ras && currentEditColumnByKey(editingKey))
+        ? currentEditColumnByKey(editingKey).submix : []
+    };
+
+    const collisionExists = DATA.some(d => d.grower === grower && d.ras === ras && (d.laatste_wijziging || '') === (newJaar || '') &&
+      !(editingKey && !copyMode && editingKey.grower === grower && editingKey.ras === ras && (editingKey.jaar || '') === (newJaar || '')));
+    if (collisionExists) {
+      if (!confirm('Er bestaat al een recept voor "' + grower + ' ' + ras + '" in jaar ' + (newJaar || '(geen jaar)') + '. Overschrijven?')) return;
+      DATA = DATA.filter(d => !(d.grower === grower && d.ras === ras && (d.laatste_wijziging || '') === (newJaar || '')));
+    }
+
+    if (editingKey && !copyMode) {
+      DATA = DATA.filter(d => !(d.grower === editingKey.grower && d.ras === editingKey.ras && (d.laatste_wijziging || '') === (editingKey.jaar || '')));
+    } else if (!editingKey) {
+      DATA = DATA.filter(d => !(d.grower === grower && d.ras === ras && (d.laatste_wijziging || '') === (newJaar || '')));
+    }
+    DATA.push(newCol);
+    copyMode = false;
+
+    buildMatrix();
+    closeModal();
+    syncToFirestore();
+  });
+
+  function currentEditColumnByKey(key) {
+    return DATA.find(d => d.grower === key.grower && d.ras === key.ras && (d.laatste_wijziging || '') === (key.jaar || ''));
+  }
+
+  deleteBtn.addEventListener('click', () => {
+    if (!editingKey) return;
+    if (!confirm('Recept "' + editingKey.grower + ' ' + editingKey.ras + '" (' + (editingKey.jaar || 'geen jaar') + ') verwijderen?')) return;
+    DATA = DATA.filter(d => !(d.grower === editingKey.grower && d.ras === editingKey.ras && (d.laatste_wijziging || '') === (editingKey.jaar || '')));
+    buildMatrix();
+    closeModal();
+    syncToFirestore();
+  });
+
+  copyYearBtn.addEventListener('click', () => {
+    if (!editingKey) return;
+    const jaarEl = document.getElementById('fJaar');
+    const curYear = parseInt(jaarEl.value, 10);
+    if (isNaN(curYear)) { alert('Vul eerst een geldig jaar in bij Jaar.'); return; }
+    const nextYear = String(curYear + 1);
+    if (!confirm('Kopie maken naar jaar ' + nextYear + '? Weet je het zeker?')) return;
+    jaarEl.value = nextYear;
+    document.getElementById('fAanvraag').value = '';
+    document.getElementById('fBevestigd').value = '';
+    copyMode = true;
+    modalTitle.textContent = 'Serie bewerken: ' + editingKey.grower + ' ' + editingKey.ras + ' (kopie ' + nextYear + ')';
+  });
+</script>
