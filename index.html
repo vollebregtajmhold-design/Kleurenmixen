@@ -409,7 +409,7 @@
   .field-inline { display: flex; align-items: center; gap: 10px; }
   .field-inline label { margin-bottom: 0; white-space: nowrap; }
   .field-inline input { flex: 0 0 110px; width: 110px; }
-  .panel select, .panel input[type="text"], .panel input[type="number"], .panel input[type="date"] {
+  .panel select, .panel input[type="text"], .panel input[type="number"], .panel input[type="date"], .panel textarea {
     width: 100%;
     font-family: inherit;
     font-size: 14.5px;
@@ -419,7 +419,14 @@
     border-radius: 11px;
     padding: 7px 10px;
   }
-  .panel select:focus, .panel input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .panel textarea {
+    resize: vertical;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .panel select:focus, .panel input:focus, .panel textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
   .result-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
   .result-head h2 { margin: 0; }
@@ -864,6 +871,13 @@
             <input type="date" id="fBevestigd">
           </div>
         </div>
+      </div>
+
+      <div class="panel">
+        <h2>Plakken vanuit Excel</h2>
+        <p class="sub">Plak hier twee kolommen (kleurnaam en percentage) rechtstreeks vanuit Excel. Kleuren die al in de vaste lijst hieronder staan worden automatisch ingevuld; onbekende kleurnamen worden toegevoegd bij "Overige kleur".</p>
+        <textarea id="pasteArea" rows="4" placeholder="Bijv.:&#10;Red	20&#10;Cream White	13&#10;Neon Pink	11"></textarea>
+        <button type="button" class="btn-add" id="pasteFillBtn">Kleuren invullen vanuit plakken</button>
       </div>
 
       <div class="panel">
@@ -1383,6 +1397,55 @@
   }
   addColorRowBtn.addEventListener('click', () => newColorRow());
 
+  const pasteArea = document.getElementById('pasteArea');
+  const pasteFillBtn = document.getElementById('pasteFillBtn');
+  function findExistingCustomColorRow(name) {
+    const rows = [...editColorRowsEl.querySelectorAll('.color-edit-row')];
+    return rows.find(r => r.querySelector('.ce-name').value.trim().toLowerCase() === name.toLowerCase());
+  }
+  pasteFillBtn.addEventListener('click', () => {
+    const raw = pasteArea.value;
+    if (!raw.trim()) { alert('Plak eerst gegevens uit Excel in het vak.'); return; }
+    const pctInputs = editFixedColorRowsEl.querySelectorAll('.cf-pct');
+    let filled = 0;
+    let skipped = [];
+    let notInList = [];
+    raw.split(/\r?\n/).forEach(line => {
+      if (!line.trim()) return;
+      let parts = line.split('\t');
+      if (parts.length < 2) parts = line.split(/\s{2,}|;/);
+      parts = parts.map(p => p.trim()).filter(p => p !== '');
+      if (parts.length < 2) { skipped.push(line); return; }
+      const naam = parts[0];
+      let pct = null;
+      for (let i = 1; i < parts.length; i++) {
+        const v = parseFloat(parts[i].replace('%', '').replace(',', '.'));
+        if (!isNaN(v)) { pct = v; break; }
+      }
+      if (pct === null) { skipped.push(line); return; }
+      const idx = MASTER_COLORS_LC.indexOf(naam.toLowerCase());
+      if (idx > -1) {
+        pctInputs[idx].value = pct;
+        filled++;
+      } else {
+        const existing = findExistingCustomColorRow(naam);
+        if (existing) {
+          existing.querySelector('.ce-pct').value = pct;
+        } else {
+          newColorRow(naam, pct);
+        }
+        filled++;
+        notInList.push(naam);
+      }
+    });
+    updateEditTotal();
+    pasteArea.value = '';
+    let msg = filled + ' kleur(en) ingevuld.';
+    if (notInList.length) msg += '\n\nNiet in de vaste lijst (toegevoegd bij "Overige kleur"): ' + notInList.join(', ') + '.';
+    if (skipped.length) msg += '\n\n' + skipped.length + ' regel(s) niet herkend (geen naam + percentage gevonden).';
+    alert(msg);
+  });
+
   function computeEditDistribution() {
     const dist = { Rood: 0, Wit: 0, Licht: 0, Donker: 0 };
     let uncategorized = 0;
@@ -1430,6 +1493,7 @@
     document.getElementById('fBevestigd').value = '';
     clearFixedColorRows();
     editColorRowsEl.innerHTML = '';
+    document.getElementById('pasteArea').value = '';
     updateEditTotal();
   }
 
@@ -1440,6 +1504,7 @@
 
     clearFixedColorRows();
     editColorRowsEl.innerHTML = '';
+    document.getElementById('pasteArea').value = '';
     (col.colors || []).forEach(([n, p, s, o]) => {
       const idx = MASTER_COLORS_LC.indexOf(n.trim().toLowerCase());
       if (idx > -1) {
