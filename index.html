@@ -147,6 +147,7 @@
     font-variant-numeric: tabular-nums;
   }
   .jaar-check { color: #4ADE80; font-weight: 700; margin-left: 4px; cursor: help; }
+  .notitie-icon { font-size: 12px; margin-left: 3px; cursor: help; opacity: 0.85; }
   thead th.corner {
     position: sticky;
     left: 0;
@@ -444,7 +445,7 @@
   .field-inline { display: flex; align-items: center; gap: 10px; }
   .field-inline label { margin-bottom: 0; white-space: nowrap; }
   .field-inline input { flex: 0 0 110px; width: 110px; }
-  .panel select, .panel input[type="text"], .panel input[type="number"], .panel input[type="date"] {
+  .panel select, .panel input[type="text"], .panel input[type="number"], .panel input[type="date"], .panel textarea {
     width: 100%;
     font-family: inherit;
     font-size: 14.5px;
@@ -454,7 +455,13 @@
     border-radius: 11px;
     padding: 7px 10px;
   }
-  .panel select:focus, .panel input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .panel textarea {
+    resize: vertical;
+    box-sizing: border-box;
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+  .panel select:focus, .panel input:focus, .panel textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
   .result-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
   .result-head h2 { margin: 0; }
@@ -904,6 +911,10 @@
             <input type="date" id="fBevestigd">
           </div>
         </div>
+        <div class="field">
+          <label for="fNotitie">Notitie</label>
+          <textarea id="fNotitie" rows="2" placeholder="Bijv. bijzonderheden over deze serie"></textarea>
+        </div>
       </div>
 
       <div class="panel">
@@ -939,7 +950,8 @@
     getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
   import {
-    getFirestore, doc, getDoc, setDoc, onSnapshot
+    initializeFirestore, persistentLocalCache, persistentSingleTabManager,
+    doc, getDoc, setDoc, onSnapshot
   } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -952,7 +964,14 @@
   };
   const fbApp = initializeApp(firebaseConfig);
   const auth = getAuth(fbApp);
-  const db = getFirestore(fbApp);
+  // Lokale cache (IndexedDB): bij het opnieuw openen/verversen van de pagina
+  // toont de matrix direct de laatst bekende gegevens, terwijl Firestore op
+  // de achtergrond de nieuwste versie ophaalt. Dit voorkomt dat je op mobiel
+  // (vooral op een wisselende verbinding) telkens moet wachten tot alles
+  // opnieuw is opgehaald voor er iets te zien is.
+  const db = initializeFirestore(fbApp, {
+    localCache: persistentLocalCache({ tabManager: persistentSingleTabManager() })
+  });
   const googleProvider = new GoogleAuthProvider();
   const recepteDocRef = doc(db, 'recepten', 'data');
 
@@ -1264,7 +1283,8 @@
         const title = notHundred
           ? 'Totaal: ' + total.toFixed(1).replace('.', ',') + '% (geen 100%) — klik om te bewerken'
           : 'Klik om te bewerken';
-        serieHtml += '<th class="' + cls + '" data-grower="' + escapeAttr(col.grower) + '" data-ras="' + escapeAttr(col.ras) + '" data-jaar="' + escapeAttr(col.laatste_wijziging || '') + '" title="' + escapeAttr(title) + '">' + col.ras + '</th>';
+        const notitieIcon = col.notitie ? ' <span class="notitie-icon" title="' + escapeAttr(col.notitie) + '">&#128221;</span>' : '';
+        serieHtml += '<th class="' + cls + '" data-grower="' + escapeAttr(col.grower) + '" data-ras="' + escapeAttr(col.ras) + '" data-jaar="' + escapeAttr(col.laatste_wijziging || '') + '" title="' + escapeAttr(title) + '">' + col.ras + notitieIcon + '</th>';
       });
     });
     serieRow.innerHTML = serieHtml;
@@ -1509,6 +1529,7 @@
     document.getElementById('fJaar').value = '';
     document.getElementById('fAanvraag').value = '';
     document.getElementById('fBevestigd').value = '';
+    document.getElementById('fNotitie').value = '';
     clearFixedColorRows();
     editColorRowsEl.innerHTML = '';
     updateEditTotal();
@@ -1518,6 +1539,7 @@
     document.getElementById('fJaar').value = col.laatste_wijziging || '';
     document.getElementById('fAanvraag').value = ddmmyyyyToISO(col.aanvraag);
     document.getElementById('fBevestigd').value = ddmmyyyyToISO(col.bevestigd);
+    document.getElementById('fNotitie').value = col.notitie || '';
 
     clearFixedColorRows();
     editColorRowsEl.innerHTML = '';
@@ -1722,6 +1744,7 @@
       laatste_wijziging: newJaar,
       aanvraag: isoToDdmmyyyy(document.getElementById('fAanvraag').value) || null,
       bevestigd: isoToDdmmyyyy(document.getElementById('fBevestigd').value) || null,
+      notitie: document.getElementById('fNotitie').value.trim() || null,
       colors: colorsArr,
       agg,
       submix: (editingKey && editingKey.grower === grower && editingKey.ras === ras && currentEditColumnByKey(editingKey))
