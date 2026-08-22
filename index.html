@@ -874,10 +874,28 @@
   let firestoreReady = false;
   let unsubscribeData = null;
 
+  // Firestore ondersteunt geen "geneste arrays" (een array direct in een
+  // array). colors/submix zijn arrays van arrays ([naam, %, ...]), dus die
+  // zetten we bij het opslaan om naar objecten, en bij het lezen weer terug.
+  function encodeForFirestore(data) {
+    return (data || []).map(rec => ({
+      ...rec,
+      colors: (rec.colors || []).map(c => ({ n: c[0], p: c[1], s: c[2] != null ? c[2] : null, o: c[3] != null ? c[3] : null })),
+      submix: (rec.submix || []).map(c => ({ n: c[0], p: c[1] }))
+    }));
+  }
+  function decodeFromFirestore(items) {
+    return (items || []).map(rec => ({
+      ...rec,
+      colors: (rec.colors || []).map(c => [c.n, c.p, c.s != null ? c.s : null, c.o != null ? c.o : null]),
+      submix: (rec.submix || []).map(c => [c.n, c.p])
+    }));
+  }
+
   async function syncToFirestore() {
     if (!firestoreReady) return;
     try {
-      await setDoc(recepteDocRef, { items: DATA });
+      await setDoc(recepteDocRef, { items: encodeForFirestore(DATA) });
       const dot = document.getElementById('syncDot');
       if (dot) { dot.classList.remove('offline'); dot.title = 'Opgeslagen'; }
     } catch (e) {
@@ -892,11 +910,11 @@
     if (unsubscribeData) return;
     unsubscribeData = onSnapshot(recepteDocRef, async (snap) => {
       if (snap.exists()) {
-        DATA = snap.data().items || [];
+        DATA = decodeFromFirestore(snap.data().items);
       } else {
         // Eerste keer: nog geen gezamenlijke data — deze pagina's
         // startgegevens worden gebruikt om Firestore te vullen.
-        try { await setDoc(recepteDocRef, { items: DATA }); } catch (e) { /* laat lokaal zien, probeer later opnieuw */ }
+        try { await setDoc(recepteDocRef, { items: encodeForFirestore(DATA) }); } catch (e) { /* laat lokaal zien, probeer later opnieuw */ }
       }
       buildMatrix();
     }, (err) => {
