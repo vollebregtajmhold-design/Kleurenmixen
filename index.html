@@ -834,6 +834,7 @@
           <select id="filterSerie"></select>
         </div>
         <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
+        <button type="button" class="btn-clear-filter" id="mergeEndhovenBtn" title="Eenmalig: klant Endhoven Vroeg/Laat samenvoegen naar Endhoven">&#9998; Endhoven samenvoegen</button>
         <div class="export-menu" id="exportMenu">
           <button type="button" class="btn-clear-filter" id="exportMenuBtn" title="Exportopties">&#8681; Exporteren <span class="caret">&#9662;</span></button>
           <div class="export-menu-dropdown" id="exportMenuDropdown">
@@ -1356,6 +1357,44 @@
     filterKlantEl.value = '';
     filterSerieEl.value = '';
     buildMatrix();
+  });
+
+  const mergeEndhovenBtn = document.getElementById('mergeEndhovenBtn');
+  mergeEndhovenBtn.addEventListener('click', () => {
+    const pattern = /^Endhoven\s+(Vroeg|Laat)$/i;
+    const matches = DATA.filter(d => pattern.test((d.grower || '').trim()));
+    if (!matches.length) {
+      alert('Geen series gevonden met klant "Endhoven Vroeg" of "Endhoven Laat". Mogelijk is dit al samengevoegd.');
+      mergeEndhovenBtn.remove();
+      return;
+    }
+    if (!confirm(matches.length + ' serie(s) van "Endhoven Vroeg"/"Endhoven Laat" samenvoegen naar klant "Endhoven" (vroeg/laat komt in de notitie te staan)?')) return;
+
+    let merged = 0;
+    const skipped = [];
+    matches.forEach(d => {
+      const m = pattern.exec(d.grower.trim());
+      const label = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+      const collision = DATA.some(other => other !== d && other.grower === 'Endhoven' && other.ras === d.ras && (other.laatste_wijziging || '') === (d.laatste_wijziging || ''));
+      if (collision) {
+        skipped.push(d.grower + ' ' + d.ras + ' (' + (d.laatste_wijziging || 'geen jaar') + ')');
+        return;
+      }
+      d.grower = 'Endhoven';
+      d.full = 'Endhoven ' + d.ras;
+      d.notitie = d.notitie ? (d.notitie + ' — ' + label) : label;
+      merged++;
+    });
+
+    buildMatrix();
+    syncToFirestore();
+    let msg = merged + ' serie(s) samengevoegd naar klant "Endhoven".';
+    if (skipped.length) {
+      msg += '\n\nNiet samengevoegd, want klant "Endhoven" heeft al een serie met dezelfde naam + jaar. Pas dit handmatig aan: ' + skipped.join(', ') + '.';
+    } else {
+      mergeEndhovenBtn.remove();
+    }
+    alert(msg);
   });
 
   // Op mobiel: header/werkbalk standaard verbergen, zodat direct de matrix
