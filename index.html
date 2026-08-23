@@ -38,8 +38,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: linear-gradient(160deg, var(--bg-2) 0%, var(--bg) 55%, #E9E7F8 100%);
-    background-attachment: fixed;
+    background: #F6F8FB;
     color: var(--text);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -81,11 +80,12 @@
   header { margin-bottom: 20px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   h1 {
     font-family: 'Fraunces', Georgia, serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 23px;
     line-height: 1.2;
     margin: 0;
     letter-spacing: -0.01em;
+    color: #10192B;
   }
   .header-stats { font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
@@ -93,15 +93,10 @@
     position: relative;
     background: #FFFFFF;
     border: 1px solid var(--border);
-    border-radius: 22px;
+    border-left: 5px solid var(--accent);
+    border-radius: 18px;
     box-shadow: var(--shadow);
     overflow: hidden;
-  }
-  .matrix-shell::before {
-    content: '';
-    display: block;
-    height: 5px;
-    background: linear-gradient(90deg, var(--c-rood), var(--c-wit), var(--c-licht), var(--c-donker));
   }
   .matrix-scroll {
     overflow: auto;
@@ -227,25 +222,25 @@
     font-family: inherit;
     font-size: 13.5px;
     color: var(--text);
-    background: var(--tint-blue);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid #DDE3EC;
+    border-radius: 999px;
     padding: 8px 11px;
     width: 190px;
     transition: background 0.15s ease, border-color 0.15s ease;
   }
-  .filter-field select:hover { background: #FFFFFF; }
+  .filter-field select:hover { border-color: var(--accent); }
   .filter-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   #filterJaar { width: 100px; }
   .btn-clear-filter {
     font-family: inherit;
     font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-dim);
-    background: var(--tint-blue);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 8px 13px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 14px;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
   }
@@ -305,15 +300,15 @@
     font-size: 13.5px;
     font-weight: 600;
     color: var(--text);
-    background: var(--tint-blue);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid #DDE3EC;
+    border-radius: 999px;
     padding: 8px 14px;
     cursor: pointer;
     min-width: 60px;
     transition: background 0.15s ease;
   }
-  .btn-toggle:hover { background: #FFFFFF; }
+  .btn-toggle:hover { border-color: var(--accent); }
   .btn-toggle.on {
     background: var(--accent);
     color: var(--accent-ink);
@@ -330,11 +325,11 @@
   .btn-new-serie {
     font-family: inherit;
     font-size: 13.5px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--accent-ink);
     background: var(--accent);
     border: none;
-    border-radius: 13px;
+    border-radius: 999px;
     padding: 10px 18px;
     cursor: pointer;
     box-shadow: 0 6px 16px -6px rgba(168,68,91,0.55);
@@ -690,20 +685,14 @@
     position: relative;
     background: #FFFFFF;
     border: 1px solid var(--border);
-    border-radius: 22px;
+    border-left: 5px solid var(--accent);
+    border-radius: 18px;
     box-shadow: var(--shadow);
     max-width: 380px;
     width: 100%;
     padding: 30px 26px 28px;
     text-align: center;
     overflow: hidden;
-  }
-  .auth-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--c-rood), var(--c-wit), var(--c-licht), var(--c-donker));
   }
   .auth-box h1 {
     font-family: 'Fraunces', Georgia, serif;
