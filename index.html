@@ -914,6 +914,10 @@
           <label for="fNotitie">Notitie</label>
           <textarea id="fNotitie" rows="2" placeholder="Bijv. bijzonderheden over deze serie"></textarea>
         </div>
+        <div class="field">
+          <label for="fAantallen">Aantallen verwacht</label>
+          <textarea id="fAantallen" rows="2" placeholder="Bijv. 500 trays"></textarea>
+        </div>
       </div>
 
       <div class="panel">
@@ -1531,6 +1535,7 @@
     document.getElementById('fAanvraag').value = '';
     document.getElementById('fBevestigd').value = '';
     document.getElementById('fNotitie').value = '';
+    document.getElementById('fAantallen').value = '';
     const bevestigdDoorEl = document.getElementById('bevestigdDoorInfo');
     bevestigdDoorEl.style.display = 'none';
     bevestigdDoorEl.textContent = '';
@@ -1544,6 +1549,7 @@
     document.getElementById('fAanvraag').value = ddmmyyyyToISO(col.aanvraag);
     document.getElementById('fBevestigd').value = ddmmyyyyToISO(col.bevestigd);
     document.getElementById('fNotitie').value = col.notitie || '';
+    document.getElementById('fAantallen').value = col.aantallen_verwacht || '';
     const bevestigdDoorEl = document.getElementById('bevestigdDoorInfo');
     if (col.bevestigd && col.bevestigd_door) {
       bevestigdDoorEl.textContent = 'Bevestigd door ' + col.bevestigd_door;
@@ -1772,6 +1778,7 @@
       bevestigd: newBevestigd,
       bevestigd_door: bevestigdDoor,
       notitie: document.getElementById('fNotitie').value.trim() || null,
+      aantallen_verwacht: document.getElementById('fAantallen').value.trim() || null,
       colors: colorsArr,
       agg,
       submix: (prevRecord) ? prevRecord.submix : []
