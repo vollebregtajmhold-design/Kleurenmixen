@@ -145,7 +145,7 @@
     border-bottom: 1px solid rgba(31,58,84,0.15);
     border-right: 1px solid rgba(31,58,84,0.1);
   }
-  .jaar-check { color: #4ADE80; font-weight: 700; margin-left: 4px; cursor: help; }
+  .jaar-check { color: #0F6B36; font-weight: 700; margin-left: 4px; cursor: help; }
   .notitie-icon { font-size: 12px; margin-left: 3px; cursor: help; opacity: 0.85; }
   thead th.corner {
     position: sticky;
@@ -343,7 +343,7 @@
   .btn-new-serie:active { transform: scale(0.97); }
 
   thead tr.serie-row th.clickable { cursor: pointer; }
-  thead tr.serie-row th.clickable:hover { background: var(--accent); }
+  thead tr.serie-row th.clickable:hover { background: var(--accent); color: #FFFFFF; }
   thead tr.serie-row th.not-hundred { background: #E8C94A; color: #4A3B00; }
   thead tr.serie-row th.not-hundred:hover { background: #D4B62E; color: #4A3B00; }
 
@@ -839,10 +839,6 @@
       <div class="toolbar-right">
         <div class="display-bar">
           <div class="filter-field">
-            <label for="decimalsBtn">Decimalen</label>
-            <button type="button" class="btn-toggle" id="decimalsBtn" data-value="0">0</button>
-          </div>
-          <div class="filter-field">
             <label for="subnumBtn">Subnummers</label>
             <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
           </div>
@@ -1153,11 +1149,14 @@
     return v.toFixed(1).replace('.', ',') + '%';
   }
 
-  let decimalPlaces = 0;
   let showSubnummers = false;
 
   function fmtMatrixPct(v) {
-    return v.toFixed(decimalPlaces).replace('.', ',') + '%';
+    // Toon precies de ingevulde decimalen: geen afronden naar een vast aantal
+    // en geen overbodige nullen. Alleen afronden op 2 decimalen om
+    // rekenkundige afrondingsfouten (bijv. 0.1 + 0.2) op te vangen.
+    const rounded = Math.round(v * 100) / 100;
+    return String(rounded).replace('.', ',') + '%';
   }
   function hasDecimal(v) {
     return Math.abs(v - Math.round(v)) > 0.001;
@@ -1403,15 +1402,7 @@
     downloadCsv();
   });
 
-  const decimalsBtn = document.getElementById('decimalsBtn');
   const subnumBtn = document.getElementById('subnumBtn');
-  decimalsBtn.addEventListener('click', () => {
-    decimalPlaces = decimalPlaces === 0 ? 1 : 0;
-    decimalsBtn.textContent = String(decimalPlaces);
-    decimalsBtn.dataset.value = String(decimalPlaces);
-    decimalsBtn.classList.toggle('on', decimalPlaces === 1);
-    buildMatrix();
-  });
   subnumBtn.addEventListener('click', () => {
     showSubnummers = !showSubnummers;
     subnumBtn.textContent = showSubnummers ? 'Ja' : 'Nee';
