@@ -1203,8 +1203,15 @@
   }
 
   function groupByKlant(data) {
+    const sorted = [...data].sort((a, b) => {
+      const g = (a.grower || '').localeCompare(b.grower || '');
+      if (g !== 0) return g;
+      const r = (a.ras || '').localeCompare(b.ras || '');
+      if (r !== 0) return r;
+      return (a.laatste_wijziging || '').localeCompare(b.laatste_wijziging || '');
+    });
     const map = new Map();
-    data.forEach(col => {
+    sorted.forEach(col => {
       if (!map.has(col.grower)) map.set(col.grower, []);
       map.get(col.grower).push(col);
     });
