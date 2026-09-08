@@ -301,6 +301,83 @@
   }
   .export-menu-dropdown button:hover { background: var(--tint-blue); }
 
+  .serie-selectie-wrap { position: relative; margin-top: 6px; }
+  .serie-selectie-toggle {
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    padding: 2px 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .serie-selectie-toggle:hover { color: var(--accent); }
+  .serie-selectie-toggle .caret { display: inline-block; font-size: 10px; transition: transform 0.15s ease; }
+  .serie-selectie-wrap.open .serie-selectie-toggle .caret { transform: rotate(180deg); }
+  .serie-selectie-toggle .count-badge {
+    background: var(--accent);
+    color: #FFFFFF;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    line-height: 1.4;
+  }
+  .serie-selectie-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 8px;
+    width: 210px;
+    max-height: 260px;
+    overflow-y: auto;
+    z-index: 20;
+  }
+  .serie-selectie-wrap.open .serie-selectie-dropdown { display: block; }
+  .serie-selectie-wrap .serie-selectie-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 4px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--text);
+    border-radius: 8px;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  .serie-selectie-item:hover { background: var(--tint-blue); }
+  .serie-selectie-item input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; flex: 0 0 auto; }
+  .serie-selectie-empty { font-size: 12.5px; color: var(--text-dim); padding: 4px; }
+  .serie-selectie-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 6px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .serie-selectie-footer button {
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+  }
+
   .toolbar-right {
     display: flex;
     align-items: flex-end;
@@ -849,6 +926,13 @@
         <div class="filter-field">
           <label for="filterSerie">Serie</label>
           <select id="filterSerie"></select>
+          <div class="serie-selectie-wrap" id="serieSelectieWrap">
+            <button type="button" class="serie-selectie-toggle" id="serieSelectieToggle">
+              Selectie maken<span class="count-badge" id="serieSelectieCount" style="display:none;"></span>
+              <span class="caret">&#9662;</span>
+            </button>
+            <div class="serie-selectie-dropdown" id="serieSelectieDropdown"></div>
+          </div>
         </div>
         <div class="filter-field">
           <label for="subnumBtn">Subnummers</label>
@@ -1234,11 +1318,61 @@
     return DATA.filter(col =>
       (!jFilter || col.laatste_wijziging === jFilter) &&
       (!kFilter || col.grower === kFilter) &&
-      (!sFilter || col.ras === sFilter)
+      (selectedSeries.size ? selectedSeries.has(col.ras) : (!sFilter || col.ras === sFilter))
     );
   }
 
   let jaarFilterInitialized = false;
+  const selectedSeries = new Set();
+
+  function updateSerieSelectieUI() {
+    const countEl = document.getElementById('serieSelectieCount');
+    if (selectedSeries.size) {
+      countEl.textContent = String(selectedSeries.size);
+      countEl.style.display = '';
+    } else {
+      countEl.style.display = 'none';
+    }
+  }
+
+  function renderSerieSelectiePanel(series) {
+    const dropdown = document.getElementById('serieSelectieDropdown');
+    if (!series.length) {
+      dropdown.innerHTML = '<p class="serie-selectie-empty">Geen series beschikbaar.</p>';
+      updateSerieSelectieUI();
+      return;
+    }
+    let html = series.map(s => {
+      const checked = selectedSeries.has(s) ? ' checked' : '';
+      return '<label class="serie-selectie-item"><input type="checkbox" class="serie-selectie-checkbox" value="' + escapeAttr(s) + '"' + checked + '> ' + s + '</label>';
+    }).join('');
+    html += '<div class="serie-selectie-footer"><button type="button" id="serieSelectieWisBtn">Selectie wissen</button></div>';
+    dropdown.innerHTML = html;
+
+    dropdown.querySelectorAll('.serie-selectie-checkbox').forEach(cb => {
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          selectedSeries.add(cb.value);
+          document.getElementById('filterSerie').value = '';
+        } else {
+          selectedSeries.delete(cb.value);
+        }
+        updateSerieSelectieUI();
+        buildMatrix();
+      });
+    });
+    const wisBtn = document.getElementById('serieSelectieWisBtn');
+    if (wisBtn) {
+      wisBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectedSeries.clear();
+        renderSerieSelectiePanel(series);
+        updateSerieSelectieUI();
+        buildMatrix();
+      });
+    }
+    updateSerieSelectieUI();
+  }
 
   function fillFilterOptions() {
     const jSel = document.getElementById('filterJaar');
@@ -1267,6 +1401,10 @@
     }
     if (klanten.includes(kCurrent)) kSel.value = kCurrent;
     if (series.includes(sCurrent)) sSel.value = sCurrent;
+
+    const seriesSet = new Set(series);
+    selectedSeries.forEach(s => { if (!seriesSet.has(s)) selectedSeries.delete(s); });
+    renderSerieSelectiePanel(series);
   }
 
   function buildMatrix() {
@@ -1383,12 +1521,28 @@
   const clearFilterBtn = document.getElementById('clearFilterBtn');
   filterJaarEl.addEventListener('change', buildMatrix);
   filterKlantEl.addEventListener('change', buildMatrix);
-  filterSerieEl.addEventListener('change', buildMatrix);
+  filterSerieEl.addEventListener('change', () => {
+    if (filterSerieEl.value) selectedSeries.clear();
+    buildMatrix();
+  });
   clearFilterBtn.addEventListener('click', () => {
     filterJaarEl.value = '';
     filterKlantEl.value = '';
     filterSerieEl.value = '';
+    selectedSeries.clear();
     buildMatrix();
+  });
+
+  const serieSelectieWrap = document.getElementById('serieSelectieWrap');
+  const serieSelectieToggle = document.getElementById('serieSelectieToggle');
+  serieSelectieToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    serieSelectieWrap.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (serieSelectieWrap.classList.contains('open') && !serieSelectieWrap.contains(e.target)) {
+      serieSelectieWrap.classList.remove('open');
+    }
   });
 
   // Op mobiel: header/werkbalk standaard verbergen, zodat direct de matrix
@@ -1424,7 +1578,7 @@
   const printBtn = document.getElementById('printBtn');
   printBtn.addEventListener('click', () => {
     exportMenu.classList.remove('open');
-    if (!filterKlantEl.value && !filterSerieEl.value) {
+    if (!filterKlantEl.value && !filterSerieEl.value && !selectedSeries.size) {
       alert('Filter eerst op Klant en/of Serie voor je print. Printen van de volledige matrix is niet toegestaan.');
       return;
     }
