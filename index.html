@@ -301,6 +301,33 @@
   }
   .export-menu-dropdown button:hover { background: var(--tint-blue); }
 
+  .view-toggle {
+    display: flex;
+    background: #FFFFFF;
+    border: 1px solid #DDE3EC;
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .view-toggle-btn {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    padding: 7px 13px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .view-toggle-btn:hover { color: var(--text); }
+  .view-toggle-btn.on {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .cell-sub-only { color: var(--c-rood); font-weight: 700; }
+
   .serie-selectie-wrap { position: relative; margin-top: 6px; }
   .serie-selectie-toggle {
     font-family: inherit;
@@ -939,6 +966,13 @@
           <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
         </div>
         <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
+        <div class="filter-field">
+          <label>Weergave</label>
+          <div class="view-toggle" id="viewToggle">
+            <button type="button" class="view-toggle-btn on" id="viewModeMixenBtn" data-mode="mixen">Mixen</button>
+            <button type="button" class="view-toggle-btn" id="viewModeKleurBtn" data-mode="kleur">Op kleur</button>
+          </div>
+        </div>
         <div class="export-menu" id="exportMenu">
           <button type="button" class="btn-clear-filter" id="exportMenuBtn" title="Exportopties">&#8681; Exporteren <span class="caret">&#9662;</span></button>
           <div class="export-menu-dropdown" id="exportMenuDropdown">
@@ -1267,6 +1301,7 @@
   }
 
   let showSubnummers = false;
+  let viewMode = 'mixen';
 
   function fmtMatrixPct(v) {
     // Toon precies de ingevulde decimalen: geen afronden naar een vast aantal
@@ -1436,9 +1471,13 @@
     const klantRow = document.createElement('tr');
     klantRow.className = 'klant-row';
     let klantHtml = '<th class="corner" rowspan="3"></th>';
-    groups.forEach((cols, klant) => {
-      klantHtml += '<th colspan="' + cols.length + '">' + klant + '</th>';
-    });
+    if (viewMode === 'kleur') {
+      klantHtml += '<th colspan="' + filtered.length + '">Op kleur</th>';
+    } else {
+      groups.forEach((cols, klant) => {
+        klantHtml += '<th colspan="' + cols.length + '">' + klant + '</th>';
+      });
+    }
     klantRow.innerHTML = klantHtml;
     thead.appendChild(klantRow);
 
@@ -1448,7 +1487,7 @@
     groups.forEach(cols => {
       cols.forEach(col => {
         const total = columnTotal(col);
-        const notHundred = Math.abs(total - 100) > 0.05;
+        const notHundred = viewMode === 'mixen' && Math.abs(total - 100) > 0.05;
         const cls = 'clickable' + (notHundred ? ' not-hundred' : '');
         const title = notHundred
           ? 'Totaal: ' + total.toFixed(1).replace('.', ',') + '% (geen 100%) — klik om te bewerken'
@@ -1485,7 +1524,14 @@
       groups.forEach(cols => {
         cols.forEach(col => {
           const found = col.colors.find(([n]) => n === kleur);
-          if (found) {
+          if (viewMode === 'kleur') {
+            const subVal = found && found[2] ? String(found[2]) : null;
+            if (subVal) {
+              rowHtml += '<td class="filled cat-' + (cat || '') + '"><span class="cell-sub-only">(' + escapeAttr(subVal) + ')</span></td>';
+            } else {
+              rowHtml += '<td class="empty">–</td>';
+            }
+          } else if (found) {
             const decCls = hasDecimal(found[1]) ? ' has-decimal' : '';
             const opm = found[3];
             const opmCls = opm ? ' has-opm' : '';
@@ -1531,6 +1577,17 @@
     filterSerieEl.value = '';
     selectedSeries.clear();
     buildMatrix();
+  });
+
+  const viewModeMixenBtn = document.getElementById('viewModeMixenBtn');
+  const viewModeKleurBtn = document.getElementById('viewModeKleurBtn');
+  [viewModeMixenBtn, viewModeKleurBtn].forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewMode = btn.dataset.mode;
+      viewModeMixenBtn.classList.toggle('on', viewMode === 'mixen');
+      viewModeKleurBtn.classList.toggle('on', viewMode === 'kleur');
+      buildMatrix();
+    });
   });
 
   const serieSelectieWrap = document.getElementById('serieSelectieWrap');
