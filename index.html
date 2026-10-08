@@ -969,7 +969,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.4 — 8 oktober 2026</footer>
+  <footer id="appFooter">Versie 5.5 — 8 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1091,6 +1091,11 @@
   // Speciale klantnaam voor losse "kleurreferentie" series: alleen kleur + subnummer,
   // geen percentages, geen 100%-check, en los gehouden van de normale mixen-weergave.
   const OP_KLEUR_KLANT = 'Op kleur';
+  // Vergelijk ongevoelig voor hoofd-/kleine letters: oudere records kunnen zijn
+  // opgeslagen als "Op Kleur" i.p.v. "Op kleur" en moeten toch herkend worden.
+  function isOpKleurGrower(naam) {
+    return (naam || '').trim().toLowerCase() === OP_KLEUR_KLANT.toLowerCase();
+  }
 
   const MASTER_COLORS = ["Red", "Salmon red", "Dark Salmon Pink", "Light Salmon Pink", "Light Salmon with Eye", "Pink with eye", "Light with Eye", "White with eye", "Cream White", "Pure White", "Deep Neon Pink", "Neon Pink", "Light Neon Pink", "Orchid", "Light Violet", "Lavender", "Deep dark violet", "Dark Violet", "Dark Violet with Edge", "Deep Wine Red", "Wine Red", "Magenta", "Deep Salmon Flamed", "Salmon Flamed", "Deep Neon Flamed", "Neon Flamed", "Violet Flamed", "Violet Dip Flamed", "Wine Red Flamed", "Fuiji Red", "Fuiji Wine Red", "Fuiji Dark violet", "Fuiji Magenta", "Fuji Neon Pink", "Fuiji Salmon Pink", "Victoria Light Pink", "Victoria White with Eye"];
   const MASTER_COLOR_CATEGORY = {"Red": "Rood", "Salmon red": "Rood", "Fuiji Red": "Rood", "Cream White": "Wit", "Pure White": "Wit", "Light Salmon Pink": "Licht", "Light Salmon with Eye": "Licht", "Pink with eye": "Licht", "Light with Eye": "Licht", "Neon Pink": "Licht", "Light Neon Pink": "Licht", "Orchid": "Licht", "Light Violet": "Licht", "Lavender": "Licht", "Salmon Flamed": "Licht", "Neon Flamed": "Licht", "Violet Flamed": "Licht", "Violet Dip Flamed": "Licht", "Wine Red Flamed": "Licht", "Fuiji Magenta": "Licht", "Fuji Neon Pink": "Licht", "Fuiji Salmon Pink": "Licht", "Magenta": "Licht", "Dark Salmon Pink": "Donker", "White with eye": "Donker", "Deep Neon Pink": "Donker", "Deep dark violet": "Donker", "Dark Violet": "Donker", "Deep Wine Red": "Donker", "Wine Red": "Donker", "Deep Salmon Flamed": "Donker", "Deep Neon Flamed": "Donker", "Fuiji Wine Red": "Donker", "Fuiji Dark violet": "Donker", "Dark Violet with Edge": null, "Victoria White with Eye": null, "Victoria Light Pink": null};
@@ -1328,7 +1333,7 @@
     return DATA.filter(col =>
       // "Op kleur" is een losse klant: alleen zichtbaar als hij specifiek
       // geselecteerd is bij Klant, nooit vermengd met de overige klanten.
-      (selKlant.size ? selKlant.has(col.grower) : col.grower !== OP_KLEUR_KLANT) &&
+      (selKlant.size ? selKlant.has(col.grower) : !isOpKleurGrower(col.grower)) &&
       (!selJaar.size || selJaar.has(col.laatste_wijziging)) &&
       (!selSerie.size || selSerie.has(col.ras))
     );
@@ -1453,7 +1458,7 @@
     groups.forEach(cols => {
       cols.forEach(col => {
         const total = columnTotal(col);
-        const notHundred = col.grower !== OP_KLEUR_KLANT && Math.abs(total - 100) > 0.05;
+        const notHundred = !isOpKleurGrower(col.grower) && Math.abs(total - 100) > 0.05;
         const cls = 'clickable' + (notHundred ? ' not-hundred' : '');
         const title = notHundred
           ? 'Totaal: ' + total.toFixed(1).replace('.', ',') + '% (geen 100%) — klik om te bewerken'
@@ -1490,7 +1495,7 @@
       groups.forEach(cols => {
         cols.forEach(col => {
           const found = col.colors.find(([n]) => n === kleur);
-          if (col.grower === OP_KLEUR_KLANT) {
+          if (isOpKleurGrower(col.grower)) {
             const subVal = found && found[2] ? String(found[2]) : null;
             if (subVal) {
               rowHtml += '<td class="filled cat-' + (cat || '') + '"><span class="cell-sub-only">(' + escapeAttr(subVal) + ')</span></td>';
@@ -1808,7 +1813,7 @@
   }
 
   function updateOpKleurMode() {
-    editModal.classList.toggle('op-kleur-mode', currentGrowerValue() === OP_KLEUR_KLANT);
+    editModal.classList.toggle('op-kleur-mode', isOpKleurGrower(currentGrowerValue()));
   }
 
   function updateNewWraps() {
@@ -1916,13 +1921,17 @@
   });
 
   saveBtn.addEventListener('click', () => {
-    const grower = currentGrowerValue();
+    const rawGrower = currentGrowerValue();
+    // Normaliseer naar de vaste schrijfwijze "Op kleur", ook als iemand per
+    // ongeluk "Op Kleur" (of een andere hoofdletter-variant) heeft getypt —
+    // zo blijven alle Op kleur-records herkenbaar en consistent opgeslagen.
+    const grower = isOpKleurGrower(rawGrower) ? OP_KLEUR_KLANT : rawGrower;
     const ras = currentRasValue();
     if (!grower || !ras) { alert('Vul in elk geval Klant en Serie in.'); return; }
 
     // "Op kleur" is een losse klant zonder percentages: een kleur telt daar
     // mee zodra het subnummer is ingevuld, niet op basis van een percentage.
-    const isOpKleur = grower === OP_KLEUR_KLANT;
+    const isOpKleur = isOpKleurGrower(grower);
 
     const fixedColors = [...editFixedColorRowsEl.querySelectorAll('.cf-pct')]
       .map(inp => {
@@ -1955,7 +1964,7 @@
 
     const newJaar = document.getElementById('fJaar').value.trim() || null;
     const newBevestigd = isoToDdmmyyyy(document.getElementById('fBevestigd').value) || null;
-    const prevRecord = (editingKey && editingKey.grower === grower && editingKey.ras === ras)
+    const prevRecord = (editingKey && (editingKey.grower === grower || (isOpKleurGrower(editingKey.grower) && isOpKleur)) && editingKey.ras === ras)
       ? currentEditColumnByKey(editingKey) : null;
     // "Bevestigd door" alleen (opnieuw) vastleggen als de bevestigdatum nieuw is
     // of wijzigt — zo blijft de oorspronkelijke bevestiger zichtbaar als iemand
