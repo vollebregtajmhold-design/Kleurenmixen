@@ -969,7 +969,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.5 — 8 oktober 2026</footer>
+  <footer id="appFooter">Versie 5.6 — 8 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1216,6 +1216,20 @@
     unsubscribeData = onSnapshot(recepteDocRef, async (snap) => {
       if (snap.exists()) {
         DATA = decodeFromFirestore(snap.data().items);
+        // Oudere records kunnen per ongeluk als "Op Kleur" (met hoofdletter)
+        // zijn opgeslagen i.p.v. "Op kleur" — dat gaf dubbele, niet-matchende
+        // klantnamen in de filters. Hier éénmalig gelijktrekken en, als er
+        // iets gecorrigeerd is, direct terugschrijven zodat het voor iedereen
+        // definitief goed staat.
+        let normalized = false;
+        DATA.forEach(d => {
+          if (isOpKleurGrower(d.grower) && d.grower !== OP_KLEUR_KLANT) {
+            d.grower = OP_KLEUR_KLANT;
+            d.full = d.grower + ' ' + d.ras;
+            normalized = true;
+          }
+        });
+        if (normalized) { syncToFirestore(); }
       } else {
         // Eerste keer: nog geen gezamenlijke data — deze pagina's
         // startgegevens worden gebruikt om Firestore te vullen.
