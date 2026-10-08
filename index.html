@@ -969,7 +969,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.3 — 8 oktober 2026</footer>
+  <footer id="appFooter">Versie 5.4 — 8 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1426,6 +1426,9 @@
     const table = document.getElementById('matrixTable');
     table.innerHTML = '';
 
+    const oldEmpty = table.parentElement.querySelector('.empty-note');
+    if (oldEmpty) oldEmpty.remove();
+
     if (!filtered.length) {
       const emptyRow = document.createElement('p');
       emptyRow.className = 'empty-note';
@@ -1433,8 +1436,6 @@
       table.parentElement.appendChild(emptyRow);
       return;
     }
-    const oldEmpty = table.parentElement.querySelector('.empty-note');
-    if (oldEmpty) oldEmpty.remove();
 
     const thead = document.createElement('thead');
     const klantRow = document.createElement('tr');
