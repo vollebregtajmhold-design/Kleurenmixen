@@ -237,20 +237,31 @@
     color: var(--text-dim);
     margin-bottom: 4px;
   }
-  .filter-field select {
+  .multi-select-wrap { position: relative; }
+  .multi-select-btn {
     font-family: inherit;
     font-size: 13.5px;
+    font-weight: 400;
     color: var(--text);
     background: #FFFFFF;
     border: 1px solid #DDE3EC;
     border-radius: 999px;
     padding: 8px 11px;
     width: 190px;
+    text-align: left;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
     transition: background 0.15s ease, border-color 0.15s ease;
   }
-  .filter-field select:hover { border-color: var(--accent); }
-  .filter-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-  #filterJaar { width: 100px; }
+  .multi-select-btn:hover { border-color: var(--accent); }
+  .multi-select-wrap.open .multi-select-btn { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .multi-select-btn .ms-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .multi-select-btn .caret { display: inline-block; font-size: 10px; flex: 0 0 auto; transition: transform 0.15s ease; }
+  .multi-select-wrap.open .multi-select-btn .caret { transform: rotate(180deg); }
+  #jaarSelectWrap .multi-select-btn { width: 100px; }
   .btn-clear-filter {
     font-family: inherit;
     font-size: 12.5px;
@@ -301,60 +312,19 @@
   }
   .export-menu-dropdown button:hover { background: var(--tint-blue); }
 
-  .view-toggle {
-    display: flex;
-    background: #FFFFFF;
-    border: 1px solid #DDE3EC;
-    border-radius: 999px;
-    padding: 3px;
-    gap: 2px;
-  }
-  .view-toggle-btn {
-    font-family: inherit;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-dim);
-    background: transparent;
-    border: none;
-    border-radius: 999px;
-    padding: 7px 13px;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .view-toggle-btn:hover { color: var(--text); }
-  .view-toggle-btn.on {
-    background: var(--accent);
-    color: var(--accent-ink);
-  }
   .cell-sub-only { color: var(--c-rood); font-weight: 700; }
 
-  .serie-selectie-wrap { position: relative; margin-top: 6px; }
-  .serie-selectie-toggle {
-    font-family: inherit;
-    font-size: 11.5px;
-    font-weight: 600;
-    color: var(--text-dim);
-    background: transparent;
-    border: none;
-    padding: 2px 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .serie-selectie-toggle:hover { color: var(--accent); }
-  .serie-selectie-toggle .caret { display: inline-block; font-size: 10px; transition: transform 0.15s ease; }
-  .serie-selectie-wrap.open .serie-selectie-toggle .caret { transform: rotate(180deg); }
-  .serie-selectie-toggle .count-badge {
-    background: var(--accent);
-    color: #FFFFFF;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    line-height: 1.4;
-  }
-  .serie-selectie-dropdown {
+  /* "Op kleur" is een losse klant: in de serie-bewerken modal tonen we dan
+     geen percentage-kolom, alleen kleur + opmerking + subnummer. */
+  .modal.op-kleur-mode .color-fixed-row { grid-template-columns: 1fr 110px 70px; }
+  .modal.op-kleur-mode .color-fixed-row .cf-pct { display: none; }
+  .modal.op-kleur-mode .fixed-color-head { grid-template-columns: 1fr 110px 70px; }
+  .modal.op-kleur-mode .fixed-color-head span:nth-child(3) { display: none; }
+  .modal.op-kleur-mode .color-edit-row { grid-template-columns: 1fr 110px 70px 30px; }
+  .modal.op-kleur-mode .color-edit-row .ce-pct { display: none; }
+  .modal.op-kleur-mode #editTotalPct { display: none; }
+
+  .multi-select-dropdown {
     display: none;
     position: absolute;
     top: calc(100% + 4px);
@@ -369,8 +339,8 @@
     overflow-y: auto;
     z-index: 20;
   }
-  .serie-selectie-wrap.open .serie-selectie-dropdown { display: block; }
-  .serie-selectie-wrap .serie-selectie-item {
+  .multi-select-wrap.open .multi-select-dropdown { display: block; }
+  .multi-select-item {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -384,17 +354,17 @@
     margin-bottom: 0;
     cursor: pointer;
   }
-  .serie-selectie-item:hover { background: var(--tint-blue); }
-  .serie-selectie-item input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; flex: 0 0 auto; }
-  .serie-selectie-empty { font-size: 12.5px; color: var(--text-dim); padding: 4px; }
-  .serie-selectie-footer {
+  .multi-select-item:hover { background: var(--tint-blue); }
+  .multi-select-item input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; flex: 0 0 auto; }
+  .multi-select-empty { font-size: 12.5px; color: var(--text-dim); padding: 4px; }
+  .multi-select-footer {
     display: flex;
     justify-content: flex-end;
     padding-top: 6px;
     margin-top: 4px;
     border-top: 1px solid var(--border);
   }
-  .serie-selectie-footer button {
+  .multi-select-footer button {
     font-family: inherit;
     font-size: 11.5px;
     font-weight: 700;
@@ -753,8 +723,9 @@
     .toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
     .filter-bar { width: 100%; gap: 8px; }
     .filter-field { flex: 1 1 42%; min-width: 110px; }
-    .filter-field select { width: 100%; box-sizing: border-box; }
-    #filterJaar { width: 100%; }
+    .multi-select-wrap { width: 100%; }
+    .multi-select-btn { width: 100%; box-sizing: border-box; }
+    #jaarSelectWrap .multi-select-btn { width: 100%; }
     .btn-clear-filter { flex: 0 0 auto; }
     .toolbar-right { width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
     .btn-new-serie { width: 100%; }
@@ -943,22 +914,33 @@
     <div class="toolbar">
       <div class="filter-bar">
         <div class="filter-field">
-          <label for="filterJaar">Jaar</label>
-          <select id="filterJaar"></select>
-        </div>
-        <div class="filter-field">
-          <label for="filterKlant">Klant</label>
-          <select id="filterKlant"></select>
-        </div>
-        <div class="filter-field">
-          <label for="filterSerie">Serie</label>
-          <select id="filterSerie"></select>
-          <div class="serie-selectie-wrap" id="serieSelectieWrap">
-            <button type="button" class="serie-selectie-toggle" id="serieSelectieToggle">
-              Selectie maken<span class="count-badge" id="serieSelectieCount" style="display:none;"></span>
+          <label>Jaar</label>
+          <div class="multi-select-wrap" id="jaarSelectWrap">
+            <button type="button" class="multi-select-btn" id="jaarSelectBtn">
+              <span class="ms-label">Alle jaren</span>
               <span class="caret">&#9662;</span>
             </button>
-            <div class="serie-selectie-dropdown" id="serieSelectieDropdown"></div>
+            <div class="multi-select-dropdown" id="jaarSelectDropdown"></div>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label>Klant</label>
+          <div class="multi-select-wrap" id="klantSelectWrap">
+            <button type="button" class="multi-select-btn" id="klantSelectBtn">
+              <span class="ms-label">Alle klanten</span>
+              <span class="caret">&#9662;</span>
+            </button>
+            <div class="multi-select-dropdown" id="klantSelectDropdown"></div>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label>Serie</label>
+          <div class="multi-select-wrap" id="serieSelectWrap">
+            <button type="button" class="multi-select-btn" id="serieSelectBtn">
+              <span class="ms-label">Alle series</span>
+              <span class="caret">&#9662;</span>
+            </button>
+            <div class="multi-select-dropdown" id="serieSelectDropdown"></div>
           </div>
         </div>
         <div class="filter-field">
@@ -966,13 +948,6 @@
           <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
         </div>
         <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
-        <div class="filter-field">
-          <label>Weergave</label>
-          <div class="view-toggle" id="viewToggle">
-            <button type="button" class="view-toggle-btn on" id="viewModeMixenBtn" data-mode="mixen">Mixen</button>
-            <button type="button" class="view-toggle-btn" id="viewModeKleurBtn" data-mode="kleur">Op kleur</button>
-          </div>
-        </div>
         <div class="export-menu" id="exportMenu">
           <button type="button" class="btn-clear-filter" id="exportMenuBtn" title="Exportopties">&#8681; Exporteren <span class="caret">&#9662;</span></button>
           <div class="export-menu-dropdown" id="exportMenuDropdown">
@@ -994,11 +969,11 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.0 — 22 augustus 2026</footer>
+  <footer id="appFooter">Versie 5.3 — 8 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
-  <div class="modal">
+  <div class="modal" id="editModal">
     <div class="modal-head">
       <h2 id="modalTitle">Serie aanmaken</h2>
       <button type="button" class="modal-close" id="modalClose" aria-label="Sluiten">&#10005;</button>
@@ -1112,6 +1087,10 @@
   // Zolang er nog geen gezamenlijke data in Firestore staat, dienen deze
   // recepten als eenmalige startgegevens (bij de allereerste keer opslaan).
   /*DATA_START*/let DATA = [{"full": "Vollebregt Verano", "grower": "Vollebregt", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "10-02-2026", "bevestigd": "10-02-2026", "colors": [["Red", 20.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 2.0], ["Cream White", 13.0], ["Pure White", 2.0], ["Neon Pink", 11.0], ["Dark Violet", 10.0], ["Deep Wine Red", 7.0], ["Deep Neon Flamed", 7.0], ["Neon Flamed", 2.0], ["Fuiji Red", 6.0], ["Fuiji Wine Red", 6.0], ["Fuiji Dark violet", 2.0], ["Fuji Neon Pink", 3.0], ["Victoria White with Eye", 4.0]], "agg": {"Rood": 26.0, "Wit": 15.0, "Licht": 23.0, "Donker": 32.0, "Totaal": 96.0}, "submix": [["Fuji Neon Pink", 20.0], ["Fuji Salmon Pink", 25.0], ["Fuji Dark violet", 27.5], ["Fuji Wine red", 27.5]]}, {"full": "Vollebregt Carino", "grower": "Vollebregt", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "05-02-2026", "bevestigd": "06-02-2026", "colors": [["Red", 14.0], ["Light Salmon with Eye", 10.0], ["Pink with eye", 2.0], ["Cream White", 9.0], ["Pure White", 9.0], ["Neon Pink", 12.0], ["Deep dark violet", 2.0], ["Dark Violet", 7.0], ["Deep Wine Red", 5.0], ["Wine Red", 2.0], ["Deep Neon Flamed", 4.0], ["Fuiji Red", 5.0], ["Fuiji Wine Red", 5.0], ["Fuiji Magenta", 7.0], ["Fuji Neon Pink", 7.0]], "agg": {"Rood": 19.0, "Wit": 18.0, "Licht": 38.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Allure", "grower": "Vollebregt", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "10-10-2025", "bevestigd": "10-10-2025", "colors": [["Red", 7.0], ["White with eye", 0.0], ["Pure White", 17.0], ["Neon Pink", 14.0], ["Light Neon Pink", 4.0], ["Lavender", 3.0], ["Dark Violet", 12.0], ["Wine Red", 12.0], ["Deep Salmon Flamed", 0.0], ["Neon Flamed", 11.0], ["Fuiji Red", 2.0], ["Fuiji Wine Red", 6.0], ["Fuiji Dark violet", 6.0], ["Fuji Neon Pink", 6.0]], "agg": {"Rood": 9.0, "Wit": 17.0, "Licht": 38.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Macro", "grower": "Vollebregt", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "20-02-2026", "bevestigd": "20-02-2026", "colors": [["Red", 19.0], ["Light Salmon Pink", 9.0], ["White with eye", 0.0], ["Pure White", 16.0], ["Neon Pink", 10.0], ["Light Violet", 2.0], ["Dark Violet", 13.0], ["Wine Red", 4.0], ["Neon Flamed", 6.0], ["Fuiji Red", 7.0], ["Fuiji Dark violet", 8.0], ["Fuji Neon Pink", 6.0]], "agg": {"Rood": 26.0, "Wit": 16.0, "Licht": 33.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Vollebregt Vintro", "grower": "Vollebregt", "ras": "Vintro", "laatste_wijziging": "2026", "aanvraag": "12-03-2026", "bevestigd": "12-03-2026", "colors": [["Red", 22.0], ["Cream White", 18.0], ["Neon Pink", 22.0], ["Dark Violet", 22.0], ["Salmon Flamed", 16.0]], "agg": {"Rood": 22.0, "Wit": 18.0, "Licht": 38.0, "Donker": 22.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld XL", "grower": "Schoneveld", "ras": "XL", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 19.0], ["Light Salmon Pink", 6.0], ["Cream White", 2.0], ["Pure White", 16.0], ["Neon Pink", 12.0], ["Light Violet", 3.0], ["Dark Violet", 12.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Fuiji Red", 2.0], ["Fuiji Wine Red", 2.0], ["Fuiji Salmon Pink", 3.0]], "agg": {"Rood": 21.0, "Wit": 18.0, "Licht": 42.0, "Donker": 19.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Compact", "grower": "Schoneveld", "ras": "Compact", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 11.0], ["Salmon red", 11.0], ["Light Salmon with Eye", 5.0], ["Pure White", 14.0], ["Neon Pink", 11.0], ["Light Violet", 5.0], ["Dark Violet", 11.0], ["Dark Violet with Edge", 6.0], ["Wine Red", 4.0], ["Salmon Flamed", 12.0], ["Violet Flamed", 8.0], ["Violet Dip Flamed", 2.0]], "agg": {"Rood": 22.0, "Wit": 14.0, "Licht": 43.0, "Donker": 15.0, "Totaal": 94.0}, "submix": []}, {"full": "Schoneveld Picasso", "grower": "Schoneveld", "ras": "Picasso", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 21.0], ["Light with Eye", 5.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Dark Violet", 16.0], ["Wine Red", 11.0], ["Violet Flamed", 6.0], ["Wine Red Flamed", 6.0]], "agg": {"Rood": 21.0, "Wit": 20.0, "Licht": 32.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Mini Winter", "grower": "Schoneveld", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 21.0], ["Light Salmon with Eye", 10.0], ["Cream White", 12.0], ["Pure White", 4.0], ["Deep Neon Pink", 8.0], ["Light Neon Pink", 8.0], ["Deep dark violet", 14.0], ["Deep Wine Red", 5.0], ["Salmon Flamed", 5.0], ["Neon Flamed", 2.0], ["Violet Flamed", 5.0], ["Wine Red Flamed", 3.0], ["Fuiji Magenta", 3.0]], "agg": {"Rood": 21.0, "Wit": 16.0, "Licht": 36.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Mini Winter", "grower": "Endhoven", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Light Salmon with Eye", 9.0], ["Cream White", 16.0], ["Pure White", 4.0], ["Deep Neon Pink", 10.0], ["Light Neon Pink", 6.0], ["Deep dark violet", 13.0], ["Deep Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Neon Flamed", 3.0], ["Violet Flamed", 7.0], ["Wine Red Flamed", 7.0]], "agg": {"Rood": 17.0, "Wit": 20.0, "Licht": 36.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Rijke Mini Winter", "grower": "Rijke", "ras": "Mini Winter", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 10.0], ["Cream White", 35.0], ["Deep Neon Pink", 25.0], ["Deep dark violet", 15.0], ["Deep Wine Red", 15.0]], "agg": {"Rood": 10.0, "Wit": 35.0, "Licht": 0.0, "Donker": 55.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Donatello", "grower": "Schoneveld", "ras": "Donatello", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 19.0], ["Light Salmon with Eye", 8.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Light Violet", 5.0], ["Dark Violet", 12.0], ["Deep Wine Red", 9.0], ["Neon Flamed", 7.0], ["Wine Red Flamed", 5.0]], "agg": {"Rood": 19.0, "Wit": 20.0, "Licht": 40.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Donatello", "grower": "Endhoven", "ras": "Donatello", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 19.0], ["Light Salmon with Eye", 8.0], ["Light with Eye", 0.0], ["Cream White", 20.0], ["Neon Pink", 15.0], ["Light Violet", 5.0], ["Dark Violet", 12.0], ["Deep Wine Red", 9.0], ["Neon Flamed", 7.0], ["Wine Red Flamed", 5.0]], "agg": {"Rood": 19.0, "Wit": 20.0, "Licht": 40.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Rembrandt", "grower": "Schoneveld", "ras": "Rembrandt", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 5.0], ["Salmon red", 12.0], ["Pure White", 17.0], ["Neon Pink", 17.0], ["Orchid", 6.0], ["Light Violet", 5.0], ["Dark Violet", 14.0], ["Wine Red", 13.0], ["Neon Flamed", 11.0]], "agg": {"Rood": 17.0, "Wit": 17.0, "Licht": 39.0, "Donker": 27.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Elegante", "grower": "Schoneveld", "ras": "Elegante", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 20.0], ["Pure White", 22.0], ["Neon Pink", 10.0], ["Light Neon Pink", 5.0], ["Dark Violet", 15.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Fuiji Dark violet", 5.0]], "agg": {"Rood": 20.0, "Wit": 22.0, "Licht": 33.0, "Donker": 25.0, "Totaal": 100.0}, "submix": []}, {"full": "Bolk Elegante", "grower": "Bolk", "ras": "Elegante", "laatste_wijziging": "2026", "aanvraag": "25-11-2025", "bevestigd": "25-11-2025", "colors": [["Red", 10.0], ["Pure White", 15.0], ["Neon Pink", 15.0], ["Dark Violet", 15.0], ["Neon Flamed", 15.0], ["Violet Flamed", 15.0], ["Fuiji Dark violet", 15.0]], "agg": {"Rood": 10.0, "Wit": 15.0, "Licht": 45.0, "Donker": 30.0, "Totaal": 100.0}, "submix": []}, {"full": "Bolk Verano", "grower": "Bolk", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "26-11-2025", "bevestigd": "12-12-2025", "colors": [["Red", 10.0], ["Light Salmon with Eye", 5.0], ["Light with Eye", 3.0], ["Cream White", 8.0], ["Pure White", 8.0], ["Neon Pink", 7.0], ["Light Violet", 3.0], ["Dark Violet", 8.0], ["Deep Wine Red", 2.0], ["Deep Neon Flamed", 2.0], ["Neon Flamed", 5.0], ["Violet Flamed", 5.0], ["Fuiji Red", 5.0], ["Fuiji Wine Red", 4.0], ["Fuiji Dark violet", 7.0], ["Fuji Neon Pink", 8.0], ["Victoria White with Eye", 10.0]], "agg": {"Rood": 15.0, "Wit": 16.0, "Licht": 36.0, "Donker": 23.0, "Totaal": 90.0}, "submix": []}, {"full": "Rijke Verano", "grower": "Rijke", "ras": "Verano", "laatste_wijziging": "2026", "aanvraag": "10-02-2026", "bevestigd": "10-02-2026", "colors": [["Red", 17.0], ["Light Salmon with Eye", 8.0], ["Pink with eye", 10.0], ["Cream White", 6.0], ["Pure White", 16.0], ["Neon Pink", 5.0], ["Dark Violet", 20.0], ["Deep Wine Red", 3.0], ["Deep Neon Flamed", 7.0], ["Violet Flamed", 4.0], ["Wine Red Flamed", 4.0]], "agg": {"Rood": 17.0, "Wit": 22.0, "Licht": 31.0, "Donker": 30.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Carino", "grower": "Bergcamp", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "18-12-2025", "bevestigd": "18-12-2025", "colors": [["Red", 18.0], ["Pink with eye", 4.0], ["Cream White", 6.0], ["Pure White", 12.0], ["Neon Pink", 16.0], ["Deep dark violet", 5.0], ["Dark Violet", 10.0], ["Deep Wine Red", 5.0], ["Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 10.0], ["Fuiji Magenta", 4.0], ["Fuji Neon Pink", 2.0]], "agg": {"Rood": 18.0, "Wit": 18.0, "Licht": 30.0, "Donker": 34.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Winter Carino", "grower": "Bergcamp", "ras": "Winter Carino", "laatste_wijziging": "2026", "aanvraag": null, "bevestigd": null, "colors": [["Red", 18.0], ["Pink with eye", 3.0], ["Cream White", 13.0], ["Pure White", 5.0], ["Neon Pink", 16.0], ["Deep dark violet", 9.0], ["Dark Violet", 7.0], ["Deep Wine Red", 10.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 10.0], ["Fuiji Magenta", 3.0], ["Fuji Neon Pink", 2.0]], "agg": {"Rood": 18.0, "Wit": 18.0, "Licht": 28.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Carino Fuji", "grower": "Bergcamp", "ras": "Carino Fuji", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Fuiji Red", 25.0], ["Fuiji Wine Red", 25.0], ["Fuiji Magenta", 25.0], ["Fuji Neon Pink", 25.0]], "agg": {"Rood": 25.0, "Wit": 0.0, "Licht": 50.0, "Donker": 25.0, "Totaal": 100.0}, "submix": [["Fuji Neon Pink", 32.5], ["Fuji Wine red", 15.0], ["Fuji Red", 20.0], ["Fuji Magenta", 32.5]]}, {"full": "Bolk Carino", "grower": "Bolk", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "26-11-2025", "bevestigd": "12-12-2025", "colors": [["Red", 10.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 10.0], ["Cream White", 18.0], ["Neon Pink", 7.0], ["Light Violet", 4.0], ["Deep dark violet", 12.0], ["Wine Red", 4.0], ["Salmon Flamed", 4.0], ["Deep Neon Flamed", 5.0], ["Wine Red Flamed", 5.0], ["Fuiji Red", 4.0], ["Fuiji Wine Red", 5.0], ["Fuji Neon Pink", 7.0]], "agg": {"Rood": 14.0, "Wit": 18.0, "Licht": 42.0, "Donker": 26.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Carino", "grower": "Endhoven", "ras": "Carino", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Light Salmon with Eye", 5.0], ["Pink with eye", 2.0], ["Cream White", 15.0], ["Neon Pink", 14.0], ["Light Violet", 3.0], ["Dark Violet", 10.0], ["Deep Wine Red", 5.0], ["Wine Red", 4.0], ["Salmon Flamed", 5.0], ["Deep Neon Flamed", 7.0], ["Wine Red Flamed", 7.0], ["Fuiji Red", 3.0], ["Fuiji Wine Red", 3.0]], "agg": {"Rood": 20.0, "Wit": 15.0, "Licht": 36.0, "Donker": 29.0, "Totaal": 100.0}, "submix": []}, {"full": "Carino Mix Unity", "grower": "Carino Mix Unity", "ras": "Carino Mix Unity", "laatste_wijziging": "2026", "aanvraag": "26-09-2025", "bevestigd": "26-09-2025", "colors": [["Red", 19.0], ["Light Salmon with Eye", 16.0], ["Cream White", 21.0], ["Neon Pink", 17.0], ["Light Violet", 6.0], ["Dark Violet", 10.0], ["Wine Red", 11.0]], "agg": {"Rood": 19.0, "Wit": 21.0, "Licht": 39.0, "Donker": 21.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Petticoat", "grower": "Bergcamp", "ras": "Petticoat", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Light with Eye", 34.0], ["Neon Pink", 33.0], ["Dark Violet", 33.0]], "agg": {"Rood": 0.0, "Wit": 0.0, "Licht": 67.0, "Donker": 33.0, "Totaal": 100.0}, "submix": []}, {"full": "Bolk Allure", "grower": "Bolk", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "15-01-2026", "bevestigd": "16-01-2026", "colors": [["Red", 9.0], ["Pure White", 13.0], ["Light Neon Pink", 11.0], ["Lavender", 1.0], ["Dark Violet", 11.0], ["Wine Red", 5.0], ["Neon Flamed", 9.0], ["Violet Flamed", 8.0], ["Wine Red Flamed", 6.0], ["Fuiji Red", 4.0], ["Fuiji Wine Red", 10.0], ["Fuiji Dark violet", 9.0], ["Fuji Neon Pink", 4.0]], "agg": {"Rood": 13.0, "Wit": 13.0, "Licht": 39.0, "Donker": 35.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Allure", "grower": "Endhoven", "ras": "Allure", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 16.0], ["Dark Salmon Pink", 6.0], ["Light with Eye", 2.0], ["Cream White", 7.0], ["Pure White", 7.0], ["Neon Pink", 6.0], ["Light Neon Pink", 5.0], ["Lavender", 5.0], ["Dark Violet", 13.0], ["Wine Red", 8.0], ["Deep Salmon Flamed", 4.0], ["Neon Flamed", 5.0], ["Violet Flamed", 3.0], ["Wine Red Flamed", 8.0], ["Fuiji Wine Red", 2.0], ["Fuiji Dark violet", 3.0]], "agg": {"Rood": 16.0, "Wit": 14.0, "Licht": 34.0, "Donker": 36.0, "Totaal": 100.0}, "submix": []}, {"full": "Kester Macro", "grower": "Kester", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "26-03-2026", "bevestigd": "26-03-2026", "colors": [["Red", 9.0], ["Light Salmon Pink", 15.0], ["Cream White", 16.0], ["Neon Pink", 17.0], ["Dark Violet", 12.0], ["Wine Red", 12.0], ["Neon Flamed", 10.0], ["Fuiji Red", 9.0]], "agg": {"Rood": 18.0, "Wit": 16.0, "Licht": 42.0, "Donker": 24.0, "Totaal": 100.0}, "submix": []}, {"full": "Endhoven Macro", "grower": "Endhoven", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "03-12-2025", "bevestigd": "08-12-2025", "colors": [["Red", 17.0], ["Dark Salmon Pink", 3.0], ["Light Salmon Pink", 9.0], ["Pure White", 13.0], ["Neon Pink", 10.0], ["Light Violet", 8.0], ["Dark Violet", 10.0], ["Wine Red", 7.0], ["Neon Flamed", 5.0], ["Violet Flamed", 5.0], ["Wine Red Flamed", 4.0], ["Fuiji Red", 6.0], ["Fuiji Dark violet", 3.0]], "agg": {"Rood": 23.0, "Wit": 13.0, "Licht": 41.0, "Donker": 23.0, "Totaal": 100.0}, "submix": []}, {"full": "MCM Enthoven Macro", "grower": "MCM Enthoven", "ras": "Macro", "laatste_wijziging": "2026", "aanvraag": "21-10-2025", "bevestigd": "29-10-2025", "colors": [["Red", 15.0], ["Light Salmon Pink", 3.0], ["Cream White", 5.0], ["Pure White", 5.0], ["Neon Pink", 11.0], ["Dark Violet", 15.0], ["Wine Red", 4.0], ["Neon Flamed", 9.0], ["Violet Flamed", 9.0], ["Wine Red Flamed", 9.0], ["Fuiji Red", 6.0], ["Fuiji Dark violet", 5.0], ["Fuji Neon Pink", 4.0]], "agg": {"Rood": 21.0, "Wit": 10.0, "Licht": 45.0, "Donker": 24.0, "Totaal": 100.0}, "submix": []}, {"full": "Bergcamp Merengue", "grower": "Bergcamp", "ras": "Merengue", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Salmon red", 21.0], ["Pure White", 17.0], ["Neon Pink", 20.0], ["Dark Violet", 19.0], ["Wine Red", 13.0], ["Neon Flamed", 10.0]], "agg": {"Rood": 21.0, "Wit": 17.0, "Licht": 30.0, "Donker": 32.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Vintro", "grower": "Schoneveld", "ras": "Vintro", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 16.0], ["Cream White", 28.0], ["Neon Pink", 23.0], ["Dark Violet", 22.0], ["Salmon Flamed", 11.0]], "agg": {"Rood": 16.0, "Wit": 28.0, "Licht": 34.0, "Donker": 22.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Leopardo", "grower": "Schoneveld", "ras": "Leopardo", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Red", 20.0], ["Dark Salmon Pink", 5.0], ["Pink with eye", 6.0], ["Light with Eye", 4.0], ["Cream White", 15.0], ["Neon Pink", 12.0], ["Light Neon Pink", 5.0], ["Dark Violet", 15.0], ["Wine Red", 6.0], ["Salmon Flamed", 6.0], ["Violet Flamed", 6.0]], "agg": {"Rood": 20.0, "Wit": 15.0, "Licht": 39.0, "Donker": 26.0, "Totaal": 100.0}, "submix": []}, {"full": "Schoneveld Paso Doble", "grower": "Schoneveld", "ras": "Paso Doble", "laatste_wijziging": "2026", "aanvraag": "23-09-2025", "bevestigd": "23-09-2025", "colors": [["Light Salmon Pink", 17.0], ["Pure White", 17.0], ["Neon Pink", 17.0], ["Salmon Flamed", 17.0], ["Neon Flamed", 14.0], ["Violet Flamed", 18.0]], "agg": {"Rood": 0.0, "Wit": 17.0, "Licht": 83.0, "Donker": 0.0, "Totaal": 100.0}, "submix": []}];/*DATA_END*/
+
+  // Speciale klantnaam voor losse "kleurreferentie" series: alleen kleur + subnummer,
+  // geen percentages, geen 100%-check, en los gehouden van de normale mixen-weergave.
+  const OP_KLEUR_KLANT = 'Op kleur';
 
   const MASTER_COLORS = ["Red", "Salmon red", "Dark Salmon Pink", "Light Salmon Pink", "Light Salmon with Eye", "Pink with eye", "Light with Eye", "White with eye", "Cream White", "Pure White", "Deep Neon Pink", "Neon Pink", "Light Neon Pink", "Orchid", "Light Violet", "Lavender", "Deep dark violet", "Dark Violet", "Dark Violet with Edge", "Deep Wine Red", "Wine Red", "Magenta", "Deep Salmon Flamed", "Salmon Flamed", "Deep Neon Flamed", "Neon Flamed", "Violet Flamed", "Violet Dip Flamed", "Wine Red Flamed", "Fuiji Red", "Fuiji Wine Red", "Fuiji Dark violet", "Fuiji Magenta", "Fuji Neon Pink", "Fuiji Salmon Pink", "Victoria Light Pink", "Victoria White with Eye"];
   const MASTER_COLOR_CATEGORY = {"Red": "Rood", "Salmon red": "Rood", "Fuiji Red": "Rood", "Cream White": "Wit", "Pure White": "Wit", "Light Salmon Pink": "Licht", "Light Salmon with Eye": "Licht", "Pink with eye": "Licht", "Light with Eye": "Licht", "Neon Pink": "Licht", "Light Neon Pink": "Licht", "Orchid": "Licht", "Light Violet": "Licht", "Lavender": "Licht", "Salmon Flamed": "Licht", "Neon Flamed": "Licht", "Violet Flamed": "Licht", "Violet Dip Flamed": "Licht", "Wine Red Flamed": "Licht", "Fuiji Magenta": "Licht", "Fuji Neon Pink": "Licht", "Fuiji Salmon Pink": "Licht", "Magenta": "Licht", "Dark Salmon Pink": "Donker", "White with eye": "Donker", "Deep Neon Pink": "Donker", "Deep dark violet": "Donker", "Dark Violet": "Donker", "Deep Wine Red": "Donker", "Wine Red": "Donker", "Deep Salmon Flamed": "Donker", "Deep Neon Flamed": "Donker", "Fuiji Wine Red": "Donker", "Fuiji Dark violet": "Donker", "Dark Violet with Edge": null, "Victoria White with Eye": null, "Victoria Light Pink": null};
@@ -1301,7 +1280,6 @@
   }
 
   let showSubnummers = false;
-  let viewMode = 'mixen';
 
   function fmtMatrixPct(v) {
     // Toon precies de ingevulde decimalen: geen afronden naar een vast aantal
@@ -1347,99 +1325,90 @@
   }
 
   function filteredDataForMatrix() {
-    const jFilter = document.getElementById('filterJaar').value;
-    const kFilter = document.getElementById('filterKlant').value;
-    const sFilter = document.getElementById('filterSerie').value;
     return DATA.filter(col =>
-      (!jFilter || col.laatste_wijziging === jFilter) &&
-      (!kFilter || col.grower === kFilter) &&
-      (selectedSeries.size ? selectedSeries.has(col.ras) : (!sFilter || col.ras === sFilter))
+      // "Op kleur" is een losse klant: alleen zichtbaar als hij specifiek
+      // geselecteerd is bij Klant, nooit vermengd met de overige klanten.
+      (selKlant.size ? selKlant.has(col.grower) : col.grower !== OP_KLEUR_KLANT) &&
+      (!selJaar.size || selJaar.has(col.laatste_wijziging)) &&
+      (!selSerie.size || selSerie.has(col.ras))
     );
   }
 
   let jaarFilterInitialized = false;
-  const selectedSeries = new Set();
+  const selJaar = new Set();
+  const selKlant = new Set();
+  const selSerie = new Set();
 
-  function updateSerieSelectieUI() {
-    const countEl = document.getElementById('serieSelectieCount');
-    if (selectedSeries.size) {
-      countEl.textContent = String(selectedSeries.size);
-      countEl.style.display = '';
-    } else {
-      countEl.style.display = 'none';
-    }
+  function multiSelectLabel(sel, allLabel) {
+    if (!sel.size) return allLabel;
+    if (sel.size === 1) return [...sel][0];
+    return sel.size + ' geselecteerd';
   }
 
-  function renderSerieSelectiePanel(series) {
-    const dropdown = document.getElementById('serieSelectieDropdown');
-    if (!series.length) {
-      dropdown.innerHTML = '<p class="serie-selectie-empty">Geen series beschikbaar.</p>';
-      updateSerieSelectieUI();
+  function updateMultiSelectUI(btnId, sel, allLabel) {
+    const btn = document.getElementById(btnId);
+    const labelSpan = btn.querySelector('.ms-label');
+    labelSpan.textContent = multiSelectLabel(sel, allLabel);
+  }
+
+  function renderMultiSelectPanel(dropdownId, btnId, options, sel, allLabel) {
+    const dropdown = document.getElementById(dropdownId);
+    if (!options.length) {
+      dropdown.innerHTML = '<p class="multi-select-empty">Geen opties beschikbaar.</p>';
+      updateMultiSelectUI(btnId, sel, allLabel);
       return;
     }
-    let html = series.map(s => {
-      const checked = selectedSeries.has(s) ? ' checked' : '';
-      return '<label class="serie-selectie-item"><input type="checkbox" class="serie-selectie-checkbox" value="' + escapeAttr(s) + '"' + checked + '> ' + s + '</label>';
+    let html = options.map(o => {
+      const checked = sel.has(o) ? ' checked' : '';
+      return '<label class="multi-select-item"><input type="checkbox" class="ms-checkbox" value="' + escapeAttr(o) + '"' + checked + '> ' + o + '</label>';
     }).join('');
-    html += '<div class="serie-selectie-footer"><button type="button" id="serieSelectieWisBtn">Selectie wissen</button></div>';
+    html += '<div class="multi-select-footer"><button type="button" class="ms-clear-btn">Selectie wissen</button></div>';
     dropdown.innerHTML = html;
 
-    dropdown.querySelectorAll('.serie-selectie-checkbox').forEach(cb => {
+    dropdown.querySelectorAll('.ms-checkbox').forEach(cb => {
       cb.addEventListener('change', () => {
         if (cb.checked) {
-          selectedSeries.add(cb.value);
-          document.getElementById('filterSerie').value = '';
+          sel.add(cb.value);
         } else {
-          selectedSeries.delete(cb.value);
+          sel.delete(cb.value);
         }
-        updateSerieSelectieUI();
+        updateMultiSelectUI(btnId, sel, allLabel);
         buildMatrix();
       });
     });
-    const wisBtn = document.getElementById('serieSelectieWisBtn');
+    const wisBtn = dropdown.querySelector('.ms-clear-btn');
     if (wisBtn) {
       wisBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        selectedSeries.clear();
-        renderSerieSelectiePanel(series);
-        updateSerieSelectieUI();
+        sel.clear();
+        renderMultiSelectPanel(dropdownId, btnId, options, sel, allLabel);
+        updateMultiSelectUI(btnId, sel, allLabel);
         buildMatrix();
       });
     }
-    updateSerieSelectieUI();
+    updateMultiSelectUI(btnId, sel, allLabel);
   }
 
   function fillFilterOptions() {
-    const jSel = document.getElementById('filterJaar');
-    const kSel = document.getElementById('filterKlant');
-    const sSel = document.getElementById('filterSerie');
-    const jCurrent = jSel.value;
-    const kCurrent = kSel.value;
-    const sCurrent = sSel.value;
-
     const jaren = [...new Set(DATA.map(d => d.laatste_wijziging).filter(Boolean))].sort((a, b) => b.localeCompare(a));
     const klanten = [...new Set(DATA.map(d => d.grower))].sort((a, b) => a.localeCompare(b));
     const series = [...new Set(DATA.map(d => d.ras))].sort((a, b) => a.localeCompare(b));
 
-    jSel.innerHTML = '<option value="">Alle jaren</option>' +
-      jaren.map(j => '<option value="' + escapeAttr(j) + '">' + j + '</option>').join('');
-    kSel.innerHTML = '<option value="">Alle klanten</option>' +
-      klanten.map(g => '<option value="' + escapeAttr(g) + '">' + g + '</option>').join('');
-    sSel.innerHTML = '<option value="">Alle series</option>' +
-      series.map(r => '<option value="' + escapeAttr(r) + '">' + r + '</option>').join('');
-
     if (!jaarFilterInitialized) {
-      if (jaren.includes('2026')) jSel.value = '2026';
+      if (jaren.includes('2026')) selJaar.add('2026');
       jaarFilterInitialized = true;
-    } else if (jaren.includes(jCurrent)) {
-      jSel.value = jCurrent;
     }
-    if (klanten.includes(kCurrent)) kSel.value = kCurrent;
-    if (series.includes(sCurrent)) sSel.value = sCurrent;
 
+    const jarenSet = new Set(jaren);
+    selJaar.forEach(j => { if (!jarenSet.has(j)) selJaar.delete(j); });
+    const klantenSet = new Set(klanten);
+    selKlant.forEach(k => { if (!klantenSet.has(k)) selKlant.delete(k); });
     const seriesSet = new Set(series);
-    selectedSeries.forEach(s => { if (!seriesSet.has(s)) selectedSeries.delete(s); });
-    renderSerieSelectiePanel(series);
+    selSerie.forEach(s => { if (!seriesSet.has(s)) selSerie.delete(s); });
+
+    renderMultiSelectPanel('jaarSelectDropdown', 'jaarSelectBtn', jaren, selJaar, 'Alle jaren');
+    renderMultiSelectPanel('klantSelectDropdown', 'klantSelectBtn', klanten, selKlant, 'Alle klanten');
+    renderMultiSelectPanel('serieSelectDropdown', 'serieSelectBtn', series, selSerie, 'Alle series');
   }
 
   function buildMatrix() {
@@ -1471,13 +1440,9 @@
     const klantRow = document.createElement('tr');
     klantRow.className = 'klant-row';
     let klantHtml = '<th class="corner" rowspan="3"></th>';
-    if (viewMode === 'kleur') {
-      klantHtml += '<th colspan="' + filtered.length + '">Op kleur</th>';
-    } else {
-      groups.forEach((cols, klant) => {
-        klantHtml += '<th colspan="' + cols.length + '">' + klant + '</th>';
-      });
-    }
+    groups.forEach((cols, klant) => {
+      klantHtml += '<th colspan="' + cols.length + '">' + klant + '</th>';
+    });
     klantRow.innerHTML = klantHtml;
     thead.appendChild(klantRow);
 
@@ -1487,7 +1452,7 @@
     groups.forEach(cols => {
       cols.forEach(col => {
         const total = columnTotal(col);
-        const notHundred = viewMode === 'mixen' && Math.abs(total - 100) > 0.05;
+        const notHundred = col.grower !== OP_KLEUR_KLANT && Math.abs(total - 100) > 0.05;
         const cls = 'clickable' + (notHundred ? ' not-hundred' : '');
         const title = notHundred
           ? 'Totaal: ' + total.toFixed(1).replace('.', ',') + '% (geen 100%) — klik om te bewerken'
@@ -1524,7 +1489,7 @@
       groups.forEach(cols => {
         cols.forEach(col => {
           const found = col.colors.find(([n]) => n === kleur);
-          if (viewMode === 'kleur') {
+          if (col.grower === OP_KLEUR_KLANT) {
             const subVal = found && found[2] ? String(found[2]) : null;
             if (subVal) {
               rowHtml += '<td class="filled cat-' + (cat || '') + '"><span class="cell-sub-only">(' + escapeAttr(subVal) + ')</span></td>';
@@ -1561,45 +1526,36 @@
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   }
 
-  const filterJaarEl = document.getElementById('filterJaar');
-  const filterKlantEl = document.getElementById('filterKlant');
-  const filterSerieEl = document.getElementById('filterSerie');
   const clearFilterBtn = document.getElementById('clearFilterBtn');
-  filterJaarEl.addEventListener('change', buildMatrix);
-  filterKlantEl.addEventListener('change', buildMatrix);
-  filterSerieEl.addEventListener('change', () => {
-    if (filterSerieEl.value) selectedSeries.clear();
-    buildMatrix();
-  });
   clearFilterBtn.addEventListener('click', () => {
-    filterJaarEl.value = '';
-    filterKlantEl.value = '';
-    filterSerieEl.value = '';
-    selectedSeries.clear();
+    selJaar.clear();
+    selKlant.clear();
+    selSerie.clear();
     buildMatrix();
   });
 
-  const viewModeMixenBtn = document.getElementById('viewModeMixenBtn');
-  const viewModeKleurBtn = document.getElementById('viewModeKleurBtn');
-  [viewModeMixenBtn, viewModeKleurBtn].forEach(btn => {
-    btn.addEventListener('click', () => {
-      viewMode = btn.dataset.mode;
-      viewModeMixenBtn.classList.toggle('on', viewMode === 'mixen');
-      viewModeKleurBtn.classList.toggle('on', viewMode === 'kleur');
-      buildMatrix();
-    });
-  });
+  const jaarSelectWrap = document.getElementById('jaarSelectWrap');
+  const klantSelectWrap = document.getElementById('klantSelectWrap');
+  const serieSelectWrap = document.getElementById('serieSelectWrap');
+  const multiSelectWraps = [jaarSelectWrap, klantSelectWrap, serieSelectWrap];
 
-  const serieSelectieWrap = document.getElementById('serieSelectieWrap');
-  const serieSelectieToggle = document.getElementById('serieSelectieToggle');
-  serieSelectieToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    serieSelectieWrap.classList.toggle('open');
-  });
+  function wireMultiSelectToggle(wrap, btnId) {
+    document.getElementById(btnId).addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wasOpen = wrap.classList.contains('open');
+      multiSelectWraps.forEach(w => w.classList.remove('open'));
+      if (!wasOpen) wrap.classList.add('open');
+    });
+  }
+  wireMultiSelectToggle(jaarSelectWrap, 'jaarSelectBtn');
+  wireMultiSelectToggle(klantSelectWrap, 'klantSelectBtn');
+  wireMultiSelectToggle(serieSelectWrap, 'serieSelectBtn');
   document.addEventListener('click', (e) => {
-    if (serieSelectieWrap.classList.contains('open') && !serieSelectieWrap.contains(e.target)) {
-      serieSelectieWrap.classList.remove('open');
-    }
+    multiSelectWraps.forEach(w => {
+      if (w.classList.contains('open') && !w.contains(e.target)) {
+        w.classList.remove('open');
+      }
+    });
   });
 
   // Op mobiel: header/werkbalk standaard verbergen, zodat direct de matrix
@@ -1635,7 +1591,7 @@
   const printBtn = document.getElementById('printBtn');
   printBtn.addEventListener('click', () => {
     exportMenu.classList.remove('open');
-    if (!filterKlantEl.value && !filterSerieEl.value && !selectedSeries.size) {
+    if (!selKlant.size && !selSerie.size) {
       alert('Filter eerst op Klant en/of Serie voor je print. Printen van de volledige matrix is niet toegestaan.');
       return;
     }
@@ -1674,6 +1630,7 @@
   let copyMode = false;
 
   const modalOverlay = document.getElementById('modalOverlay');
+  const editModal = document.getElementById('editModal');
   const modalTitle = document.getElementById('modalTitle');
   const fKlantSelect = document.getElementById('fKlantSelect');
   const fKlantNewWrap = document.getElementById('fKlantNewWrap');
@@ -1842,16 +1799,21 @@
     }
   }
 
-  function updateNewWraps() {
-    fKlantNewWrap.style.display = fKlantSelect.value === NEW_VALUE ? '' : 'none';
-    fRasNewWrap.style.display = fRasSelect.value === NEW_VALUE ? '' : 'none';
-  }
-
   function currentGrowerValue() {
     return fKlantSelect.value === NEW_VALUE ? fKlantNew.value.trim() : fKlantSelect.value;
   }
   function currentRasValue() {
     return fRasSelect.value === NEW_VALUE ? fRasNew.value.trim() : fRasSelect.value;
+  }
+
+  function updateOpKleurMode() {
+    editModal.classList.toggle('op-kleur-mode', currentGrowerValue() === OP_KLEUR_KLANT);
+  }
+
+  function updateNewWraps() {
+    fKlantNewWrap.style.display = fKlantSelect.value === NEW_VALUE ? '' : 'none';
+    fRasNewWrap.style.display = fRasSelect.value === NEW_VALUE ? '' : 'none';
+    updateOpKleurMode();
   }
 
   function findColumn(grower, ras, jaar) {
@@ -1861,9 +1823,8 @@
       const exact = matches.find(d => (d.laatste_wijziging || '') === jaar);
       if (exact) return exact;
     }
-    const jFilter = document.getElementById('filterJaar').value;
-    if (jFilter) {
-      const byFilter = matches.find(d => d.laatste_wijziging === jFilter);
+    if (selJaar.size) {
+      const byFilter = matches.find(d => selJaar.has(d.laatste_wijziging));
       if (byFilter) return byFilter;
     }
     const sorted = [...matches].sort((a, b) => (b.laatste_wijziging || '').localeCompare(a.laatste_wijziging || ''));
@@ -1910,7 +1871,7 @@
     }
     updateNewWraps(); onComboChange(); rememberComboValues();
   });
-  fKlantNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; });
+  fKlantNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; updateOpKleurMode(); });
   fRasNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; });
 
   function openModal(grower, ras, jaar) {
@@ -1958,22 +1919,28 @@
     const ras = currentRasValue();
     if (!grower || !ras) { alert('Vul in elk geval Klant en Serie in.'); return; }
 
+    // "Op kleur" is een losse klant zonder percentages: een kleur telt daar
+    // mee zodra het subnummer is ingevuld, niet op basis van een percentage.
+    const isOpKleur = grower === OP_KLEUR_KLANT;
+
     const fixedColors = [...editFixedColorRowsEl.querySelectorAll('.cf-pct')]
       .map(inp => {
         const subInp = editFixedColorRowsEl.querySelector('.cf-sub[data-color="' + CSS.escape(inp.dataset.color) + '"]');
         const opmInp = editFixedColorRowsEl.querySelector('.cf-opm[data-color="' + CSS.escape(inp.dataset.color) + '"]');
         const sub = subInp ? subInp.value.trim() : '';
         const opm = opmInp ? opmInp.value.trim() : '';
-        return [inp.dataset.color, parseFloat(inp.value), sub || null, opm || null];
+        const pctVal = parseFloat(inp.value);
+        return { naam: inp.dataset.color, pct: isOpKleur ? 0 : pctVal, sub, opm, keep: isOpKleur ? !!sub : !isNaN(pctVal) };
       })
-      .filter(([n, p]) => !isNaN(p));
+      .filter(r => r.keep)
+      .map(r => [r.naam, r.pct, r.sub || null, r.opm || null]);
     const customColors = [...document.querySelectorAll('.color-edit-row')].map(r => {
       const name = r.querySelector('.ce-name').value.trim();
-      const pct = parseFloat(r.querySelector('.ce-pct').value);
+      const pctVal = parseFloat(r.querySelector('.ce-pct').value);
       const sub = r.querySelector('.ce-sub').value.trim();
       const opm = r.querySelector('.ce-opm').value.trim();
-      return [name, pct, sub || null, opm || null];
-    }).filter(([n, p]) => n && !isNaN(p));
+      return { name, pct: isOpKleur ? 0 : pctVal, sub, opm, keep: name && (isOpKleur ? !!sub : !isNaN(pctVal)) };
+    }).filter(r => r.keep).map(r => [r.name, r.pct, r.sub || null, r.opm || null]);
     const colorsArr = [...fixedColors, ...customColors];
 
     const { dist } = computeEditDistribution();
