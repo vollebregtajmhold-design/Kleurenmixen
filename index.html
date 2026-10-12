@@ -602,7 +602,7 @@
 
   .color-fixed-row {
     display: grid;
-    grid-template-columns: 1fr 68px 60px 46px;
+    grid-template-columns: 1fr 68px 60px 58px;
     gap: 5px;
     align-items: center;
     padding: 0;
@@ -632,7 +632,7 @@
   .color-fixed-row input:not(:placeholder-shown) { border-color: var(--accent); background: var(--accent-soft); }
   .fixed-color-head {
     display: grid;
-    grid-template-columns: 1fr 68px 60px 46px;
+    grid-template-columns: 1fr 68px 60px 58px;
     gap: 5px;
     font-size: 10px;
     font-weight: 600;
@@ -642,6 +642,7 @@
     padding-bottom: 4px;
   }
   .fixed-color-head span:not(:first-child) { text-align: center; }
+  .fixed-color-head span:last-child { line-height: 1.05; align-self: end; }
 
   .subhead {
     font-size: 11.5px;
@@ -653,7 +654,7 @@
   }
   .color-edit-row {
     display: grid;
-    grid-template-columns: 1fr 68px 60px 46px 30px;
+    grid-template-columns: 1fr 68px 60px 58px 30px;
     gap: 5px;
     align-items: center;
     margin-bottom: 6px;
@@ -944,7 +945,7 @@
           </div>
         </div>
         <div class="filter-field">
-          <label for="subnumBtn">Subnummers</label>
+          <label for="subnumBtn">Hybride nrs.</label>
           <button type="button" class="btn-toggle" id="subnumBtn" data-value="nee">Nee</button>
         </div>
         <button type="button" class="btn-clear-filter" id="clearFilterBtn" title="Filter wissen">&#10005; Wissen</button>
@@ -969,7 +970,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.6 — 8 oktober 2026</footer>
+  <footer id="appFooter">Versie 5.8 — 12 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1033,7 +1034,7 @@
             <span class="result-count" id="editTotalPct"></span>
           </div>
           <p class="sub">Vaste volgorde, zoals in de matrix. Vul alleen een percentage in bij de kleuren die je gebruikt.</p>
-          <div class="fixed-color-head"><span>Kleur</span><span>Opm.</span><span>%</span><span>Subnr.</span></div>
+          <div class="fixed-color-head"><span>Kleur</span><span>Opm.</span><span>%</span><span>Hybride nrs.</span></div>
         </div>
         <div id="editFixedColorRows"></div>
 
@@ -1689,7 +1690,7 @@
       '<input type="text" class="ce-name" placeholder="Kleurnaam" value="' + escapeAttr(name || '') + '">' +
       '<input type="text" class="ce-opm" placeholder="opm" value="' + escapeAttr(opm || '') + '">' +
       '<input type="number" class="ce-pct" placeholder="%" step="0.1" min="0" max="100" value="' + (pct === undefined || pct === '' ? '' : pct) + '">' +
-      '<input type="text" class="ce-sub" placeholder="sub" value="' + escapeAttr(sub || '') + '">' +
+      '<input type="text" class="ce-sub" placeholder="hybr." value="' + escapeAttr(sub || '') + '">' +
       '<button type="button" class="ce-remove" aria-label="Verwijderen">&#10005;</button>';
     row.querySelector('.ce-remove').addEventListener('click', () => { row.remove(); updateEditTotal(); });
     row.querySelector('.ce-pct').addEventListener('input', updateEditTotal);
