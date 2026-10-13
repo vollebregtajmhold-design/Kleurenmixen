@@ -693,33 +693,33 @@
     font-size: 14px;
   }
 
-  #mobileChromeToggle { display: none; }
+  #mobileChromeToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  #mobileChromeToggle:hover { border-color: var(--accent); }
+  #appRoot.chrome-collapsed #topChrome,
+  #appRoot.chrome-collapsed #appFooter {
+    display: none;
+  }
+  #appRoot.chrome-collapsed .matrix-scroll {
+    max-height: calc(100vh - 66px);
+  }
 
   @media (max-width: 640px) {
     body { padding: 14px 12px 40px; }
-    #mobileChromeToggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text);
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 7px 14px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-    #appRoot.chrome-collapsed #topChrome,
-    #appRoot.chrome-collapsed #appFooter {
-      display: none;
-    }
-    #appRoot.chrome-collapsed .matrix-scroll {
-      max-height: calc(100vh - 66px);
-    }
     header { flex-direction: column; align-items: flex-start; gap: 6px; }
     .toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
     .filter-bar { width: 100%; gap: 8px; }
@@ -738,6 +738,8 @@
   @media print {
     body { padding: 0; background: #FFFFFF; }
     .toolbar, .header-stats, footer, .modal-overlay, .save-toast, .readonly-banner { display: none !important; }
+    #mobileChromeToggle { display: none !important; }
+    #appRoot.chrome-collapsed #topChrome { display: block !important; }
     .wrap { max-width: none; }
     .matrix-shell { box-shadow: none; border: none; border-radius: 0; }
     .matrix-scroll { overflow: visible; max-height: none; }
@@ -898,7 +900,7 @@
 </div>
 
 <div class="wrap" id="appRoot" style="display:none">
-  <button type="button" id="mobileChromeToggle" title="Menu tonen/verbergen">&#9776; Menu</button>
+  <button type="button" id="mobileChromeToggle" title="Volledig scherm aan/uit">&#9974; Volledig scherm</button>
   <div id="topChrome">
     <header>
       <h1>Schoneveld - Vollebregt Klantenmixen</h1>
@@ -970,7 +972,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.8 — 12 oktober 2026</footer>
+  <footer id="appFooter">Versie 5.9 — 13 oktober 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1588,13 +1590,32 @@
   }
   function updateMobileChromeToggleLabel() {
     mobileChromeToggle.innerHTML = appRootEl.classList.contains('chrome-collapsed')
-      ? '&#9776; Menu'
-      : '&#10005; Menu verbergen';
+      ? '&#9974; Volledig scherm uit'
+      : '&#9974; Volledig scherm';
   }
   updateMobileChromeToggleLabel();
-  mobileChromeToggle.addEventListener('click', () => {
-    appRootEl.classList.toggle('chrome-collapsed');
+  function setChromeCollapsed(collapsed) {
+    appRootEl.classList.toggle('chrome-collapsed', collapsed);
     updateMobileChromeToggleLabel();
+  }
+  mobileChromeToggle.addEventListener('click', () => {
+    const collapse = !appRootEl.classList.contains('chrome-collapsed');
+    setChromeCollapsed(collapse);
+    // Ook het browservenster zelf op volledig scherm zetten (indien ondersteund).
+    try {
+      if (collapse && !document.fullscreenElement && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (!collapse && document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    } catch (e) { /* volledig scherm niet beschikbaar: alleen menu verbergen */ }
+  });
+  // Esc (of andere manier om volledig scherm te verlaten) zet het menu ook weer terug.
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && appRootEl.classList.contains('chrome-collapsed')
+        && !window.matchMedia('(max-width: 640px)').matches) {
+      setChromeCollapsed(false);
+    }
   });
 
   const exportMenu = document.getElementById('exportMenu');
