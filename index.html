@@ -972,7 +972,7 @@
     </div>
   </div>
 
-  <footer id="appFooter">Versie 5.9 — 13 oktober 2026</footer>
+  <footer id="appFooter">Versie 6.0 — 14 november 2026</footer>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" style="display:none">
@@ -1900,8 +1900,26 @@
   }
 
   fKlantSelect.addEventListener('change', () => {
-    if (editingKey && !confirm('Je wijzigt de klant van een bestaand recept. Klopt dit?')) {
-      fKlantSelect.value = lastKlantVal;
+    if (editingKey) {
+      // Bestaande serie bij een andere klant onderbrengen (verplaatsen): de
+      // ingevulde gegevens en de serienaam blijven staan, alleen de klant wijzigt.
+      if (!confirm('Je verplaatst deze serie naar een andere klant. Klopt dit?')) {
+        fKlantSelect.value = lastKlantVal;
+        return;
+      }
+      const keepRas = lastRasVal && lastRasVal !== NEW_VALUE ? lastRasVal : fRasSelect.value;
+      fillFRasSelect();
+      if (keepRas && keepRas !== NEW_VALUE && ![...fRasSelect.options].some(o => o.value === keepRas)) {
+        const opt = document.createElement('option');
+        opt.value = keepRas; opt.textContent = keepRas;
+        fRasSelect.insertBefore(opt, fRasSelect.lastElementChild);
+      }
+      if (keepRas && keepRas !== NEW_VALUE) fRasSelect.value = keepRas;
+      updateNewWraps();
+      const nieuweKlant = currentGrowerValue();
+      modalTitle.textContent = 'Serie verplaatsen: ' + editingKey.grower + ' ' + editingKey.ras +
+        (nieuweKlant ? ' \u2192 ' + nieuweKlant : '');
+      rememberComboValues();
       return;
     }
     fillFRasSelect(); updateNewWraps(); onComboChange(); rememberComboValues();
@@ -1913,7 +1931,12 @@
     }
     updateNewWraps(); onComboChange(); rememberComboValues();
   });
-  fKlantNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; updateOpKleurMode(); });
+  fKlantNew.addEventListener('input', () => {
+    modalTitle.textContent = editingKey
+      ? 'Serie verplaatsen: ' + editingKey.grower + ' ' + editingKey.ras + (fKlantNew.value.trim() ? ' \u2192 ' + fKlantNew.value.trim() : '')
+      : 'Serie aanmaken';
+    updateOpKleurMode();
+  });
   fRasNew.addEventListener('input', () => { modalTitle.textContent = 'Serie aanmaken'; });
 
   function openModal(grower, ras, jaar) {
@@ -2000,8 +2023,9 @@
 
     const newJaar = document.getElementById('fJaar').value.trim() || null;
     const newBevestigd = isoToDdmmyyyy(document.getElementById('fBevestigd').value) || null;
-    const prevRecord = (editingKey && (editingKey.grower === grower || (isOpKleurGrower(editingKey.grower) && isOpKleur)) && editingKey.ras === ras)
-      ? currentEditColumnByKey(editingKey) : null;
+    // Het oorspronkelijke record (ook bij verplaatsen naar een andere klant),
+    // zodat submix en 'bevestigd door' behouden blijven.
+    const prevRecord = editingKey ? currentEditColumnByKey(editingKey) : null;
     // "Bevestigd door" alleen (opnieuw) vastleggen als de bevestigdatum nieuw is
     // of wijzigt — zo blijft de oorspronkelijke bevestiger zichtbaar als iemand
     // later alleen andere velden van dezelfde serie aanpast.
